@@ -1,28 +1,24 @@
-class GUI {
-
-  
-}
-
-class Game
+associationClass Game
 {
-  1 -- 1 Board;
-  1 -- 1 GUI;
-  3..6 -- 1 User;
-  6 -- 1 Character;
-  6 -- 1 Weapon;
-  9 -- 1 Room;
+  1 controlled_by Board controls;
+  3..6 User;
+  //6 Character;
+  //6 Weapon;
+  //9 Room;
+  21 Card;
   
   
   Board map;
   List characters;
   List weapons;
   List rooms;
-  List soluiton;
+  List solution;
 }
 
 class Board
 {
   600 -- 1 Cell;
+  9 -- 1 Room;
   List rooms;
   List cells;
 }
