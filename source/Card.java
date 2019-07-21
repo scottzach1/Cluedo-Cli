@@ -1,29 +1,19 @@
-public abstract class Card {
+public interface Card {
 
 	// ------------------------
 	// MEMBER VARIABLES
 	// ------------------------
 
 	// Card Attributes
-	private String name = "Card";
+	String name = "Card";
 
 	// ------------------------
 	// INTERFACE
 	// ------------------------
+
+	public String getName(String aName);
 	
-	public Card(String aName) {
-		name = aName;
-	}
-
-	public String getName() {
-		return null;
-	}
-
-	public void setName(String n) {
-		name = n;
-	}
-
-	public String toString() {
-		return null;
-	}
+	public void getName();
+	
+	public String toString();
 }
