@@ -1,19 +1,32 @@
-public interface Card {
+public abstract class Card {
 
 	// ------------------------
 	// MEMBER VARIABLES
 	// ------------------------
 
 	// Card Attributes
-	String name = "Card";
+	private String name;
+	
+
+
+	// ------------------------
+	// CONSTRUCTOR
+	// 
+	
+	public Card(String aName) { name = aName; }
 
 	// ------------------------
 	// INTERFACE
 	// ------------------------
 
-	public String getName(String aName);
+	public String getName() {return name;};
 	
-	public void getName();
+	public void setName(String aName) {name = aName;};
 	
-	public String toString();
+	@Override
+	public String toString() {
+		char icon = name.charAt(0);
+		String str = icon + "";
+		return str;
+	}
 }
