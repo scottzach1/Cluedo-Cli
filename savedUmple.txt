@@ -1,7 +1,16 @@
+class GUI {
+
+  
+}
+
 class Game
 {
   1 -- 1 Board;
+  1 -- 1 GUI;
   3..6 -- 1 User;
+  6 -- 1 Character;
+  6 -- 1 Weapon;
+  9 -- 1 Room;
   
   
   Board map;
@@ -36,6 +45,8 @@ class User
   
   Integer userNo;
   String userName;
+  List hand;
+  List knownCards;
 }
 
 class Card
