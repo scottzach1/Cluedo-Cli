@@ -1,8 +1,9 @@
-//Unable to update umple code due to error at [32,2]
 class Game
 {
   1 -- 1 Board;
   3..6 -- 1 User;
+  
+  
   Board map;
   List characters;
   List weapons;
@@ -31,6 +32,8 @@ class Cell
 class User
 {
   1..6 -- 3..6 Card;
+  1 -- 1 Character;
+  
   Integer userNo;
   String userName;
 }
@@ -44,5 +47,18 @@ class Room
 {
   isA Card;
   String name;
+  List cells;
+}
+
+class Character
+{
+  isA Card;
+}
+
+class Weapon
+{
+   isA Card;
+  Room location;
+  1 -- 1 Room;
 }
 
