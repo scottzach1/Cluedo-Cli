@@ -1,0 +1,35 @@
+class Game
+{
+  1 -- 1 Board;
+  3..6 -- 1 User;
+  Board map;
+  List characters;
+  List weapons;
+  List rooms;
+  List soluiton;
+}
+
+class Board
+{
+  600 -- 1 Cell;
+  List rooms;
+  List cells;
+}
+  
+
+class Cell
+{
+  Map neighbors;
+  Character p;
+  Room r;
+  Integer row;
+  Integer col;
+  
+}
+
+class User
+{
+  Integer userNo;
+  String userName;
+}
+
