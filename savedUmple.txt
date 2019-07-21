@@ -1,11 +1,11 @@
 associationClass Game
 {
   1 controlled_by Board controls;
-  3..6 User;
+  3..6 enabled_by User enables;
   //6 Character;
   //6 Weapon;
   //9 Room;
-  21 Card;
+  21 collected_by Card collects;
   
   
   Board map;
@@ -31,7 +31,6 @@ class Cell
   Room r;
   Integer row;
   Integer col;
-  
 }
 
 class User
@@ -53,6 +52,7 @@ class Card
 class Room
 {
   isA Card;
+  * -- 1 Cell;
   String name;
   List cells;
 }
