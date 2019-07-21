@@ -1,0 +1,26 @@
+
+// draw wall boundary top of game
+for (col : cols) print (". - ")
+
+for (row : rows)
+
+    // first we print contents of cell
+
+    print ("|") // left wall
+
+    for (col : cols)
+
+        if (character)  print (" " + nameChar)
+        else            print ("  ")
+
+        if (wall2Right) print("|")
+        else            print (" ")
+
+    // second we print below cell
+
+    print ("|") // left wall
+
+    for (col : cols)
+
+        if (wall above) print (". - ")
+        else            print (".   ")
