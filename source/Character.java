@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Character extends Card {
+public class Character implements Card {
 	
 	public static enum characterAlias{
 		 Miss_Scarlett, 
@@ -25,8 +25,6 @@ public class Character extends Card {
 	// ------------------------
 
 	public Character(User aUser, String aName) {		
-		super(aName);
-		
 		// Set user
 		if (aUser == null || aUser.getCharacter() != null) {
 			throw new RuntimeException("Unable to create Character due to invalid User");
@@ -42,7 +40,21 @@ public class Character extends Card {
 	// INTERFACE
 	// ------------------------
 
+	@Override
+	public String getName(String aName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void getName() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	public String toString() {
 		return "Yet to implement";
 	}
+
 }
