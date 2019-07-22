@@ -3,7 +3,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-
 public class Testing_Code {
 
 	public static void main(String args[]) {
@@ -62,7 +61,7 @@ public class Testing_Code {
 		}
 
 		// Print board:
-		System.out.print("     _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _   \n");
+		System.out.print("   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n");
 		
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
@@ -86,7 +85,7 @@ public class Testing_Code {
 			System.out.println();
 		}
 		
-		System.out.print("     A B C D E F G H I J K L M N O P Q R S T U V W X Y   \n");
+		System.out.print("   A B C D E F G H I J K L M N O P Q R S T U V W X\n");
 
 	}
 
