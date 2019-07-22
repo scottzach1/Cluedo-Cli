@@ -1,3 +1,4 @@
+package testingPackage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -8,14 +9,14 @@ public class Testing_Code {
 	public static void main(String args[]) {
 		int cols = 24;
 		int rows = 25;
-		Map<String, Cell> board = new HashMap<>();
+		Map<String, CellTest> board = new HashMap<>();
 
 		Random rand = new Random();
 		
 		// Create board:
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
-				Cell cell = new Cell(col, row);				
+				CellTest cell = new CellTest(col, row);				
 				String name = col + "," + row;
 				board.put(name, cell);
 				
@@ -34,7 +35,7 @@ public class Testing_Code {
 		for (int row = 0; row < rows; row++) {
 			for (int col = 0; col < cols; col++) {
 				String key = col + "," + row;
-				Cell curCell = board.get(key);
+				CellTest curCell = board.get(key);
 
 				String north = col + "," + (row - 1);
 				String south = col + "," + (row + 1);
@@ -42,20 +43,20 @@ public class Testing_Code {
 				String east = (col + 1) + "," + row;
 
 				if (row - 1 >= 0) {
-					Cell otherCell = board.get(north);
-					curCell.addNeighbor(Cell.direction.NORTH, otherCell);
+					CellTest otherCell = board.get(north);
+					curCell.addNeighbor(CellTest.direction.NORTH, otherCell);
 				}
 				if (row + 1 < rows) {
-					Cell otherCell = board.get(south);
-					curCell.addNeighbor(Cell.direction.SOUTH, otherCell);
+					CellTest otherCell = board.get(south);
+					curCell.addNeighbor(CellTest.direction.SOUTH, otherCell);
 				}
 				if (col - 1 >= 0) {
-					Cell otherCell = board.get(west);
-					curCell.addNeighbor(Cell.direction.WEST, otherCell);
+					CellTest otherCell = board.get(west);
+					curCell.addNeighbor(CellTest.direction.WEST, otherCell);
 				}
 				if (col + 1 < cols) {
-					Cell otherCell = board.get(east);
-					curCell.addNeighbor(Cell.direction.EAST, otherCell);
+					CellTest otherCell = board.get(east);
+					curCell.addNeighbor(CellTest.direction.EAST, otherCell);
 				}
 			}
 		}
@@ -76,7 +77,7 @@ public class Testing_Code {
 				
 				
 				String key = col + "," + row;
-				Cell curCell = board.get(key);
+				CellTest curCell = board.get(key);
 				System.out.print(curCell.toString());
 				
 				
@@ -84,6 +85,8 @@ public class Testing_Code {
 			}
 			System.out.println();
 		}
+		
+		System.out.print("     A B C D E F G H I J K L M N O P Q R S T U V W X Y   \n");
 
 	}
 
