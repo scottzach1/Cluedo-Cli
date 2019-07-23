@@ -1,6 +1,3 @@
-import java.io.IOException;
-import java.io.InputStream;
-
 public class LUI {
 
 	public LUI() {
@@ -37,10 +34,6 @@ public class LUI {
 		// Return the string so that the function calling it can use it.
 		return str.toString();
 
-	}
-
-	public static void main(String[] args) {
-		LUI l = new LUI();
 	}
 
 }
