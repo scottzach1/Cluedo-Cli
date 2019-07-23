@@ -62,7 +62,7 @@ public class Board {
 						cell.setRoom(rooms.get(Room.getEnum(c)));
 					}
 
-					System.out.println(row + " " + col + ": " + c + " " + cell.getType());
+//					System.out.println(row + " " + col + ": " + c + " " + cell.getType());
 				}
 			}
 
