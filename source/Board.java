@@ -2,7 +2,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Board {
 
@@ -12,6 +11,7 @@ public class Board {
 
 	// Board Attributes
 	private Map<Room.RoomAlias, Room> rooms;
+	private Map<Character.CharacterAlias, Character> characters;
 
 	private Cell[][] cells;
 	private int rows, cols;
@@ -24,10 +24,11 @@ public class Board {
 
 		String fname = "MapBase.txt";
 
+		// Setup Rooms
 		rooms = new HashMap<>();
 
-		for (Room.RoomAlias alais : Room.RoomAlias.values()) {
-			rooms.put(alais, new Room(alais.toString()));
+		for (Room.RoomAlias alias : Room.RoomAlias.values()) {
+			rooms.put(alias, new Room(alias.toString()));
 		}
 
 		try {
