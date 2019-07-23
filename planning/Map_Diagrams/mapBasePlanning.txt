@@ -12,7 +12,7 @@ Key:
 _ Empty
 # Wall
 W Weapon
-S Spawn
+0..3 Spawn Locations
 
 Rooms:
 K Kitchen
