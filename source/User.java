@@ -6,6 +6,7 @@ import java.util.*;
 // line 37 "model.ump"
 // line 95 "model.ump"
 public class User {
+	public static int PLAYERS;
 	public static enum playerNo {
 		PLAYER_0, 
 		PLAYER_1, 
@@ -20,7 +21,7 @@ public class User {
 	// ------------------------
 
 	// User Attributes
-	private int userNo;
+	private playerNo userNo;
 	private String userName;
 	private Set<Card> hand;
 	private Set<Card> knownCards;
@@ -32,17 +33,19 @@ public class User {
 
 
 	public User() {
+		User.PLAYERS++;
+		userNo = playerNo.values()[User.PLAYERS];
 	}
 
 	// ------------------------
 	// INTERFACE
 	// ------------------------
 
-	public int getUserNo() {
+	public playerNo getUserNo() {
 		return userNo;
 	}
 
-	public void setUserNo(int userNo) {
+	public void setUserNo(playerNo userNo) {
 		this.userNo = userNo;
 	}
 
@@ -79,6 +82,6 @@ public class User {
 	}
 	
 	public String toString() {
-		return "";
+		return userName + "(" + userNo + ")";
 	}
 }
