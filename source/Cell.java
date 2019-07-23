@@ -12,7 +12,7 @@ public class Cell {
 			case '_': return Type.BLANK;
 		}
 
-		if (Pattern.matches("[0-3]", "sen")) {
+		if (Pattern.matches("[0-4]", c + "")) {
 			return Type.START_PAD;
 		}
 
@@ -41,15 +41,17 @@ public class Cell {
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Cell(int aCol, int aRow, Room aRoom) {
+	public Cell(int aCol, int aRow, Cell.Type aType) {
 		col = aCol;
 		row = aRow;
-		room = aRoom;
+		type = aType;
 	}
 
 	// ------------------------
 	// INTERFACE
 	// ------------------------
+
+	public Type getType() { return type; }
 
 	public Map<Direction, Cell> getNeighbors() {
 		return neighbors;
