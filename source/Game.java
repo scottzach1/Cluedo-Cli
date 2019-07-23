@@ -19,20 +19,44 @@ public class Game {
 	private Set<Weapon> weapons;
 	private Set<Room> rooms;
 	private Card solution[];
+	private LUI lui;
 
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
 
 	public Game() {
-
+		String status = "";
+		while(!status.contentEquals("EXIT")) {
+			lui = new LUI();
+			status = run();
+			System.out.println("STATUS: " + status + "\n\n\n\n\n\n");
+		}
 	}
 
 	// ------------------------
 	// INTERFACE
 	// ------------------------
-	
-	public void run() {
+
+	public String run() {
+		// Intro:
+		// Players
+		int intPlayers = 0;
+		try {
+			String strPlayers = lui.readInput("How many players are there for this game?");
+			if (lui.checkExit(strPlayers)) return "EXIT";
+			if (lui.checkBack(strPlayers)) return "BACK";
+			
+			
+			intPlayers = Integer.parseInt(strPlayers);
+			
+			
+		} catch (Exception ex) {
+			return "UNABLE! " + ex;
+		}
+		
+		return intPlayers + "";
+
 	}
 
 	public Board getMap() {
@@ -74,7 +98,7 @@ public class Game {
 	public void setSolution(Card[] solution) {
 		this.solution = solution;
 	}
-	
+
 	public static void main(String[] args) {
 		// Setup
 		Game g = new Game();
