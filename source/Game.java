@@ -31,6 +31,9 @@ public class Game {
 	// ------------------------
 	// INTERFACE
 	// ------------------------
+	
+	public void run() {
+	}
 
 	public Board getMap() {
 		return map;
@@ -70,6 +73,13 @@ public class Game {
 
 	public void setSolution(Card[] solution) {
 		this.solution = solution;
+	}
+	
+	public static void main(String[] args) {
+		// Setup
+		Game g = new Game();
+		// Play
+		g.run();
 	}
 
 }

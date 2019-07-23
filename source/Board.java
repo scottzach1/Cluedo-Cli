@@ -36,7 +36,6 @@ public class Board {
 				String line = sc.nextLine();
 
 				for (int col = 0; col != cols; ++col) {
-					sc.
 				}
 			}
 
