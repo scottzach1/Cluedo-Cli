@@ -1,8 +1,6 @@
-import java.util.*;
-
 public class Character extends Card {
 	
-	public static enum characterAlias{
+	public static enum CharacterAlias {
 		 MIS_SCARLETT, 
 		 COLONEL_MUSTARD, 
 		 MRS_WHITE, 
@@ -17,7 +15,7 @@ public class Character extends Card {
 
 	// Character Associations
 	private User user;
-	private characterAlias charAlias;
+	private CharacterAlias charAlias;
 	
 
 	// ------------------------
@@ -36,22 +34,22 @@ public class Character extends Card {
 		// Set character alias
 		switch(aName) {
 		case "MIS_SCARLETT":
-			charAlias = characterAlias.MIS_SCARLETT;
+			charAlias = CharacterAlias.MIS_SCARLETT;
 			break;
 		case "COLONEL_MUSTARD":
-			charAlias = characterAlias.COLONEL_MUSTARD;
+			charAlias = CharacterAlias.COLONEL_MUSTARD;
 			break;
 		case "MRS_WHITE":
-			charAlias = characterAlias.MRS_WHITE;
+			charAlias = CharacterAlias.MRS_WHITE;
 			break;
 		case "MR_GREEN":
-			charAlias = characterAlias.MR_GREEN;
+			charAlias = CharacterAlias.MR_GREEN;
 			break;
 		case "MRS_PEACOCK":
-			charAlias = characterAlias.MRS_PEACOCK;
+			charAlias = CharacterAlias.MRS_PEACOCK;
 			break;
 		case "PROFESSOR_PLUM":
-			charAlias = characterAlias.PROFESSOR_PLUM;
+			charAlias = CharacterAlias.PROFESSOR_PLUM;
 			break;
 		default:
 			throw new RuntimeException("Character alias not found.");
@@ -74,12 +72,12 @@ public class Character extends Card {
 	}
 
 
-	public characterAlias getCharAlias() {
+	public CharacterAlias getCharAlias() {
 		return charAlias;
 	}
 
 
-	public void setCharAlias(characterAlias charAlias) {
+	public void setCharAlias(CharacterAlias charAlias) {
 		this.charAlias = charAlias;
 	}
 }

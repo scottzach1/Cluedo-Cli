@@ -1,6 +1,7 @@
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Board {
 
@@ -9,16 +10,26 @@ public class Board {
 	// ------------------------
 
 	// Board Attributes
-	private Set<Room> rooms;
+	private Map<Room.RoomAlias, Room> rooms;
+	private Map<Character.CharacterAlias, Character> characters;
 
-	private int[][] cells;
+	private Cell[][] cells;
 	private int rows, cols;
 
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Board(String fname) {
+	public Board() {
+
+		String fname = "MapBase.txt";
+
+		// Setup Rooms
+		rooms = new HashMap<>();
+
+		for (Room.RoomAlias alias : Room.RoomAlias.values()) {
+			rooms.put(alias, new Room(alias.toString()));
+		}
 
 		try {
 			Scanner sc = new Scanner(new File(fname));
@@ -28,13 +39,31 @@ public class Board {
 			rows = sc.nextInt();
 			cols = sc.nextInt();
 
-			cells = new int[rows][cols];
+			System.out.println("MAP " + rows + " " + cols);
+
+			cells = new Cell[rows][cols];
+
+			sc.next(); // skip '\r'
+			sc.nextLine(); // _ _ _ _ _ ...
 
 			for (int row = 0; row != rows; ++row) {
 				String line = sc.nextLine();
 
-				for (int col = 0; col != cols; ++col) {
-					//TODO
+				int lineIndex = 3; // 01 -> # <- |# ...
+
+				for (int col = 0; col != cols; ++col, lineIndex += 2) {
+					char c = line.charAt(lineIndex);
+
+
+					Cell.Type type = Cell.getType(c);
+					Cell cell = new Cell(row, col, type);
+					cells[row][col] = cell;
+
+					if (type == Cell.Type.ROOM) {
+						cell.setRoom(rooms.get(Room.getEnum(c)));
+					}
+
+//					System.out.println(row + " " + col + ": " + c + " " + cell.getType());
 				}
 			}
 
@@ -42,27 +71,13 @@ public class Board {
 		} catch (Exception e) { System.out.println("File Exception: " + e); }
 	}
 
+	public static void main(String args[]) {
+		Board b = new Board();
+	}
+
 	// ------------------------
 	// INTERFACE
 	// ------------------------
-
-	public Set<Room> getRooms() {
-		return rooms;
-	}
-
-	public void setRooms(Set<Room> rooms) {
-		this.rooms = rooms;
-	}
-
-	public Set<Cell> getCells() {
-		return cells;
-	}
-
-	public void setCells(Set<Cell> cells) {
-		this.cells = cells;
-	}
-
-	
 	
 	public String toString() {
 		return "not yet implemented";
