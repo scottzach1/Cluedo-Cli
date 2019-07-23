@@ -1,0 +1,26 @@
+Dimensions 24 25 // row col
+
+____#########_______
+____#KKKKKKK#_______
+____#KKKKKKK#_______
+____#KKKKKKK#_______
+____#KKKKKKK#_______
+____##_######____BBB
+...
+
+Key:
+_ Empty
+# Wall
+W Weapon
+S Spawn
+
+Rooms:
+K Kitchen
+B Ball Room
+C Conservatory
+A Ballard Room
+D Dining Room
+L Library
+E Lounge
+H Hall
+S Study
