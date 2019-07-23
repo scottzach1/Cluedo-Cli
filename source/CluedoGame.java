@@ -7,7 +7,7 @@ import java.util.Set;
  * Game: Controls the steps of the game, creation of objects, and run time
  * actions.
  */
-public class Game {
+public class CluedoGame {
 
 	// ------------------------
 	// MEMBER VARIABLES
@@ -25,7 +25,7 @@ public class Game {
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Game() {
+	public CluedoGame() {
 		String status = "";
 		while(!status.contentEquals("EXIT")) {
 			lui = new LUI();
@@ -101,7 +101,7 @@ public class Game {
 
 	public static void main(String[] args) {
 		// Setup
-		Game g = new Game();
+		CluedoGame g = new CluedoGame();
 		// Play
 		g.run();
 	}
