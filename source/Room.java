@@ -26,11 +26,8 @@ public class Room extends Card {
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Room(String aName, Set<Cell> aCells, Set<User> aInThisRoom, Weapon aWeapon) {
+	public Room(String aName) {
 		super(aName);
-		cells = aCells;
-		inThisRoom = aInThisRoom;
-		weapon = aWeapon;
 	}
 
 	// ------------------------

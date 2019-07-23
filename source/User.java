@@ -1,13 +1,10 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.29.1.4584.3d417815a modeling language!*/
-
 import java.util.*;
 
-// line 37 "model.ump"
-// line 95 "model.ump"
 public class User {
-	public static int PLAYERS;
-	public static enum playerNo {
+	
+	public static int USERS;
+	
+	public static enum userNo {
 		PLAYER_0, 
 		PLAYER_1, 
 		PLAYER_2, 
@@ -21,7 +18,7 @@ public class User {
 	// ------------------------
 
 	// User Attributes
-	private playerNo userNo;
+	private userNo userNum;
 	private String userName;
 	private Set<Card> hand;
 	private Set<Card> knownCards;
@@ -33,20 +30,16 @@ public class User {
 
 
 	public User() {
-		User.PLAYERS++;
-		userNo = playerNo.values()[User.PLAYERS];
+		User.USERS++;
+		userNum = userNo.values()[User.USERS];
 	}
 
 	// ------------------------
 	// INTERFACE
 	// ------------------------
 
-	public playerNo getUserNo() {
-		return userNo;
-	}
-
-	public void setUserNo(playerNo userNo) {
-		this.userNo = userNo;
+	public userNo getUserNo() {
+		return userNum;
 	}
 
 	public String getUserName() {
@@ -82,6 +75,6 @@ public class User {
 	}
 	
 	public String toString() {
-		return userName + "(" + userNo + ")";
+		return userName + "(" + userNum + ")";
 	}
 }
