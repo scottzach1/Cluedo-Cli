@@ -1,11 +1,9 @@
 associationClass Game
 {
-  1 controlled_by Board controls;
-  3..6 enabled_by User enables;
-  //6 Character;
-  //6 Weapon;
-  //9 Room;
-  21 collected_by Card collects;
+  1 Board controls;
+  3..6 User enables;
+  1 LUI;
+  21 Card collects;
   
   
   Board map;
@@ -13,6 +11,11 @@ associationClass Game
   List weapons;
   List rooms;
   List solution;
+}
+
+class LUI {  
+  readInput(){}
+  checkExit(){}
 }
 
 class Board
@@ -26,6 +29,7 @@ class Board
 
 class Cell
 {
+  1 -- 1 Character;
   Map neighbors;
   Character p;
   Room r;
@@ -68,4 +72,3 @@ class Weapon
   Room location;
   1 -- 1 Room;
 }
-
