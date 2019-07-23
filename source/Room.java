@@ -2,7 +2,7 @@ import java.util.Set;
 
 public class Room extends Card {
 	
-	public static enum roomAlias{
+	public static enum RoomAlias {
 		 KITCHEN, 
 		 BALLROOM, 
 		 CONSERVATORY, 
@@ -13,6 +13,22 @@ public class Room extends Card {
 		 HALL,
 		 STUDY;
 	}
+
+	public static RoomAlias getEnum(char c) {
+		switch (c) {
+			case 'K': return RoomAlias.KITCHEN;
+			case 'B': return RoomAlias.BALLROOM;
+			case 'C': return RoomAlias.CONSERVATORY;
+			case 'A': return RoomAlias.BILLARD_ROOM;
+			case 'D': return RoomAlias.DINING_ROOM;
+			case 'L': return RoomAlias.LIBRARY;
+			case 'E': return RoomAlias.LOUNGE;
+			case 'H': return RoomAlias.HALL;
+			case 'S': return RoomAlias.STUDY;
+			default: throw new IllegalStateException("Unexpected Character For Room: " + c);
+		}
+	}
+
 	// ------------------------
 	// MEMBER VARIABLES
 	// ------------------------
