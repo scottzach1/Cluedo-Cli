@@ -1,6 +1,6 @@
 public class Character extends Card {
 	
-	public static enum CharacterAlias {
+	public enum CharacterAlias {
 		 MISS_SCARLETT, 
 		 COLONEL_MUSTARD, 
 		 MRS_WHITE, 

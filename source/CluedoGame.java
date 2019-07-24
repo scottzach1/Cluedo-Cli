@@ -1,5 +1,3 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.*;
 
 /* Created by Harrison Cook and Zac Scott - 2019 */
@@ -15,7 +13,7 @@ public class CluedoGame {
 	// ------------------------
 
 	// Game Attributes
-	private Board map;
+	private Board board;
 	private Map<Character.CharacterAlias, Character> characters;
 	private Map<Weapon.WeaponAlais, Weapon> weapons;
 	private Map<Room.RoomAlias, Room> rooms;
@@ -30,11 +28,11 @@ public class CluedoGame {
 	public CluedoGame() {
 		String status = "";
 		lui = new LUI();
-		map = new Board();
+		board = new Board();
 
-		this.rooms = map.getRooms();
-		this.characters = map.getCharacters();
-		this.weapons = map.getWeapons();
+		this.rooms = board.getRooms();
+		this.characters = board.getCharacters();
+		this.weapons = board.getWeapons();
 
 		this.users = new ArrayList<>();
 	}
