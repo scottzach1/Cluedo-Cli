@@ -103,6 +103,11 @@ public class LUI {
 		}
 		return players;
 	}
+	
+	public String userNameCreation(String name) {
+		input = readInput(name + ", What is your name?", name);
+		return input;
+	}
 
 	public String characterSelection(int players) {
 		StringBuilder str = new StringBuilder();
@@ -117,6 +122,9 @@ public class LUI {
 		// Ask each player what they want from all players available.
 		clearConsole();
 		for (int p = 0; p < players; p++) {
+			// Get username
+			String userName = userNameCreation("Player "+ (p+1));
+			
 			// Set up for players output;
 			String characterChoice = "";
 
@@ -127,7 +135,7 @@ public class LUI {
 				for (int i = 0; i < characters.size(); i++)
 					System.out.println("[" + (i + 1) + "]" + " " + characters.get(i));
 				// Ask player for a character
-				input = readInput("Choose your character", "Player " + (p + 1));
+				input = readInput("Choose your character", userName);
 
 				// Set the players character
 				int characterNumber = stringToInt(input) - 1;
@@ -144,7 +152,7 @@ public class LUI {
 			}
 
 			clearConsole();
-			str.append("Player-" + p + ":" + "Character-" + characterChoice + "\n");
+			str.append("Player-" + p + ":" + "UserName-" + userName + ":" + "Character-" + characterChoice + "\n");
 		}
 
 		return str.toString();
@@ -201,7 +209,7 @@ public class LUI {
 		for (int i = 0; i < 5; i++) {
 			System.out.print(" .");
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				return;
 			}
