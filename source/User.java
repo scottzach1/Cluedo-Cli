@@ -17,7 +17,6 @@ public class User {
 	// MEMBER VARIABLES
 	// ------------------------
 
-	// User Attributes
 	private userNo userNum;
 	private String userName;
 	private Set<Card> hand;
