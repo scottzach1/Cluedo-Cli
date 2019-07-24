@@ -1,7 +1,7 @@
 public class Character extends Card {
 	
 	public static enum CharacterAlias {
-		 MIS_SCARLETT, 
+		 MISS_SCARLETT, 
 		 COLONEL_MUSTARD, 
 		 MRS_WHITE, 
 		 MR_GREEN,
@@ -33,8 +33,8 @@ public class Character extends Card {
 		
 		// Set character alias
 		switch(aName) {
-		case "MIS_SCARLETT":
-			charAlias = CharacterAlias.MIS_SCARLETT;
+		case "MISS_SCARLETT":
+			charAlias = CharacterAlias.MISS_SCARLETT;
 			break;
 		case "COLONEL_MUSTARD":
 			charAlias = CharacterAlias.COLONEL_MUSTARD;

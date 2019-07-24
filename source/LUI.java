@@ -125,19 +125,21 @@ public class LUI {
 				System.out.println("Available Characters:\n");
 				// Cycle characters
 				for (int i = 0; i < characters.size(); i++)
-					System.out.println("[" + i + 1 + "]" + " " + characters.get(i));
+					System.out.println("[" + (i + 1) + "]" + " " + characters.get(i));
 				// Ask player for a character
 				input = readInput("Choose your character", "Player " + (p + 1));
 
 				// Set the players character
-				int characterNumber = stringToInt(input);
-				if (characterNumber > 0) {
+				int characterNumber = stringToInt(input) - 1;
+				if (characterNumber >= 0 && characterNumber <= 5) {
 					try {
-						characterChoice = characters.get(characterNumber - 1);
-						characters.remove(characterNumber - 1);
+						characterChoice = characters.get(characterNumber);
+						characters.remove(characterNumber);
 					} catch (Exception e) {
-						System.out.println("Character " + characterNumber + " is not a valid selection");
+						System.out.println("Character " + input + " is no longer available");
 					}
+				} else {
+					System.out.println("You input '" + input + "' is not a valid entry");
 				}
 			}
 
@@ -190,6 +192,19 @@ public class LUI {
 		}
 
 		return isInteger;
+	}
+	
+	public static final void loading(String message) {
+		System.out.println(message);
+		System.out.print("Loading ");
+		for (int i = 0; i < 5; i++) {
+			System.out.print(" .");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				return;
+			}
+		}
 	}
 
 	public final static void clearConsole() {

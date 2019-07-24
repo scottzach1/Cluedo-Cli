@@ -1,5 +1,9 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
+import java.util.Arrays;
 
 /* Created by Harrison Cook and Zac Scott - 2019 */
 
@@ -35,6 +39,7 @@ public class CluedoGame {
 	// ------------------------
 
 	public void run() {
+		//GAME MENU (below) --------------------------------------------------
 		String status = "";
 
 		// Start up menu
@@ -42,25 +47,52 @@ public class CluedoGame {
 			// Intro:
 			status = lui.startUpMenu();
 
-
-			System.out.println("Status = " + status);
-
-			switch (status) {
-			case LUI.HOW:
+			// Switch cases of status
+			if (status.contentEquals(LUI.HOW)) {
 				status = lui.howToPlay();
-			case LUI.QUIT:
+			} else if (status.contentEquals(LUI.QUIT)) {
 				System.out.println("Thanks for playing");
 				return;
-			case LUI.MENU:
-				// Avoid saying invalid input.
-			default:
+			} else if (!status.contentEquals(LUI.MENU) && !status.contentEquals(LUI.PLAY)) {
 				System.out.println("Sorry, '" + status + "' is not a valid input.");
 			}
 		}
+
+		LUI.loading("");
 		
 		status = lui.gameSetup();
+		//GAME MENU (above) --------------------------------------------------
 
-		System.out.println("Status = " + status);
+		String components [] = status.split("\\W");
+		
+/**		Format of components:
+		[0] String : "Players"
+		[1] Integer : Player count
+		[2] String: "Player" 
+		[3] Integer : Player number
+		[4] String: "Character"
+		[5] CharacterAlias : Players Character */
+		
+		int playerCount = 0;
+		try {
+		playerCount = Integer.parseInt(components[1]);
+		} catch (Exception e) {
+			LUI.loading("ERROR ON LOADING GAME");
+			run();
+			return;
+		}
+		
+		// Get rid of the first two (now useless) bits of information
+		String userInformation [] = Arrays.copyOfRange(components, 2, components.length);
+
+		
+		for (int user = 0; user < playerCount; user++) {
+// ZAC -- Create a users here
+			System.out.println(userInformation[1 + (4*user)]);
+			System.out.println(userInformation[3 + (4*user)]);
+		}
+		
+		
 	}
 
 	public Board getMap() {
