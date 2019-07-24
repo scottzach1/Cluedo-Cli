@@ -1,7 +1,5 @@
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Board {
 
@@ -31,6 +29,13 @@ public class Board {
 			rooms.put(alias, new Room(alias.toString()));
 		}
 
+		// Setup Characters
+		characters = new HashMap<>();
+
+		for (Character.CharacterAlias alias : Character.CharacterAlias.values()) {
+			characters.put(alias, new  Character(alias.toString(), null));
+		}
+
 		try {
 			Scanner sc = new Scanner(new File(fname));
 
@@ -44,16 +49,15 @@ public class Board {
 			cells = new Cell[rows][cols];
 
 			sc.next(); // skip '\r'
-			sc.nextLine(); // _ _ _ _ _ ...
+			sc.nextLine(); // skip _ _ _ _ _ ...
 
 			for (int row = 0; row != rows; ++row) {
 				String line = sc.nextLine();
 
-				int lineIndex = 3; // 01 -> # <- |# ...
+				int lineIndex = 3; // skip to cell 01 -> # <- |# ...
 
 				for (int col = 0; col != cols; ++col, lineIndex += 2) {
 					char c = line.charAt(lineIndex);
-
 
 					Cell.Type type = Cell.getType(c);
 					Cell cell = new Cell(row, col, type);
@@ -63,12 +67,24 @@ public class Board {
 						cell.setRoom(rooms.get(Room.getEnum(c)));
 					}
 
+					// TODO: Add get cell.Direction. -> Is there any unique directionality?
+
 //					System.out.println(row + " " + col + ": " + c + " " + cell.getType());
 				}
 			}
 
 
 		} catch (Exception e) { System.out.println("File Exception: " + e); }
+	}
+
+	public Stack<Cell> getPath(Cell start, Cell end, int numSteps) {
+		Stack<Cell> path = new Stack<>();
+		path.push(start);
+		return getPathHelper(path, end, numSteps);
+	}
+
+	public Stack<Cell> getPathHelper(Stack<Cell> path, Cell end, int numStepsLeft) {
+		return null;
 	}
 
 	public static void main(String args[]) {

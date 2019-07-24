@@ -4,12 +4,13 @@ import java.util.regex.Pattern;
 public class Cell {
 
 	public static enum Direction { NORTH, SOUTH, EAST, WEST; }
-	public static enum Type { ROOM, WALL, BLANK, START_PAD; }
+	public static enum Type { ROOM, WALL, BLANK, START_PAD, WEAPON; }
 
 	public static Type getType(char c) {
 		switch (c) {
 			case '#': return Type.WALL;
 			case '_': return Type.BLANK;
+			case 'W': return Type.WEAPON;
 		}
 
 		if (Pattern.matches("[0-4]", c + "")) {
