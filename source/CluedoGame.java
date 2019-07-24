@@ -34,11 +34,33 @@ public class CluedoGame {
 	// INTERFACE
 	// ------------------------
 
-	public String run() {
-		// Intro:
-		String input = "";
-		lui.startUpMenu();
-		return"";
+	public void run() {
+		String status = "";
+
+		// Start up menu
+		while (!status.equals(LUI.PLAY)) {
+			// Intro:
+			status = lui.startUpMenu();
+
+
+			System.out.println("Status = " + status);
+
+			switch (status) {
+			case LUI.HOW:
+				status = lui.howToPlay();
+			case LUI.QUIT:
+				System.out.println("Thanks for playing");
+				return;
+			case LUI.MENU:
+				// Avoid saying invalid input.
+			default:
+				System.out.println("Sorry, '" + status + "' is not a valid input.");
+			}
+		}
+		
+		status = lui.gameSetup();
+
+		System.out.println("Status = " + status);
 	}
 
 	public Board getMap() {
