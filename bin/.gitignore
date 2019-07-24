@@ -1,8 +1,2 @@
-/.idea/
-/MapBase.txt
-/Cell$Direction.class
-/Cell$Type.class
-/Room$RoomAlias.class
-/Character$CharacterAlias.class
-/out/
-/CluedoGame.class
+/invalidInputException.class
+/InvalidInputException.class

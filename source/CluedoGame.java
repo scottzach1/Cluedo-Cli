@@ -27,11 +27,7 @@ public class CluedoGame {
 
 	public CluedoGame() {
 		String status = "";
-		while(!status.contentEquals("EXIT")) {
-			lui = new LUI();
-			status = run();
-			System.out.println("STATUS: " + status + "\n\n\n\n\n\n");
-		}
+		lui = new LUI();
 	}
 
 	// ------------------------
@@ -40,23 +36,9 @@ public class CluedoGame {
 
 	public String run() {
 		// Intro:
-		// Players
-		int intPlayers = 0;
-		try {
-			String strPlayers = lui.readInput("How many players are there for this game?");
-			if (lui.checkExit(strPlayers)) return "EXIT";
-			if (lui.checkBack(strPlayers)) return "BACK";
-			
-			
-			intPlayers = Integer.parseInt(strPlayers);
-			
-			
-		} catch (Exception ex) {
-			return "UNABLE! " + ex;
-		}
-		
-		return intPlayers + "";
-
+		String input = "";
+		lui.startUpMenu();
+		return"";
 	}
 
 	public Board getMap() {
