@@ -21,9 +21,9 @@ public class Character extends Card {
 	// MEMBER VARIABLES
 	// ------------------------
 
-	// Character Associations
 	private User user;
 	private CharacterAlias charAlias;
+	private Cell positionCell;
 	
 
 	// ------------------------
@@ -88,4 +88,14 @@ public class Character extends Card {
 	public void setCharAlias(CharacterAlias charAlias) {
 		this.charAlias = charAlias;
 	}
+	
+	public void setPosition(Cell position) {
+		this.positionCell = position;
+	}
+	
+	public Cell getPosition() {
+		return positionCell;
+	}
+	
+	
 }
