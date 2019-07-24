@@ -88,8 +88,18 @@ public class CluedoGame {
 		
 		for (int user = 0; user < playerCount; user++) {
 // ZAC -- Create a users here
-			System.out.println(userInformation[1 + (4*user)]);
-			System.out.println(userInformation[3 + (4*user)]);
+			// This is the users entered number
+			int userNumber = 0;
+			try {
+				userNumber = Integer.parseInt(userInformation[1 + (4*user)]);
+			} catch (Exception e) {
+				LUI.loading("ERROR ON LOADING GAME");
+				run();
+				return;
+			}
+			// This is the users character alias and string (use whatever, delete the other)
+			String usersCharacterName = userInformation[3 + (4*user)];
+			Character.CharacterAlias usersCharacterAlias = Character.CharacterAlias.valueOf(usersCharacterName);
 		}
 		
 		
