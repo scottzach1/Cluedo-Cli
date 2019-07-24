@@ -61,6 +61,8 @@ public class CluedoGame {
 		LUI.loading("");
 		
 		status = lui.gameSetup();
+		
+		
 		//GAME MENU (above) --------------------------------------------------
 
 		String components [] = status.split("\\W");

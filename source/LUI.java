@@ -182,7 +182,7 @@ public class LUI {
 
 	}
 
-	public int stringToInt(String input) {
+	public static final int stringToInt(String input) {
 		input.replaceAll("\\D\\s", "");
 		int isInteger = -1;
 		try {
