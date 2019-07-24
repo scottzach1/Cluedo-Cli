@@ -1,5 +1,14 @@
 public class Weapon extends Card {
 
+	public static enum WeaponAlais {
+		CANDLE_STICK,
+		DAGGER,
+		LEAD_PIPE,
+		REVOLVER,
+		ROPE,
+		SPANNER;
+	}
+
 	// ------------------------
 	// MEMBER VARIABLES
 	// ------------------------

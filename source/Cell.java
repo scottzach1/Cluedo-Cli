@@ -13,7 +13,7 @@ public class Cell {
 			case 'W': return Type.WEAPON;
 		}
 
-		if (Pattern.matches("[0-4]", c + "")) {
+		if (Pattern.matches("[0-5]", c + "")) {
 			return Type.START_PAD;
 		}
 
@@ -32,6 +32,7 @@ public class Cell {
 	// Cell Attributes
 	private Map<Direction, Cell> neighbors;
 	private Character character;
+	private Weapon weapon;
 	private Room room;
 	private int col;
 	private int row;
@@ -69,6 +70,8 @@ public class Cell {
 	public void setCharacter(Character character) {
 		this.character = character;
 	}
+
+	public void setWeapon(Weapon weapon) { this.weapon = weapon; }
 
 	public Room getRoom() {
 		return room;

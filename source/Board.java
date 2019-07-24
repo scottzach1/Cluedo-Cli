@@ -10,6 +10,7 @@ public class Board {
 	// Board Attributes
 	private Map<Room.RoomAlias, Room> rooms;
 	private Map<Character.CharacterAlias, Character> characters;
+	private Map<Weapon.WeaponAlais, Weapon> weapons;
 
 	private Cell[][] cells;
 	private int rows, cols;
@@ -17,7 +18,6 @@ public class Board {
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
-
 	public Board() {
 
 		String fname = "MapBase.txt";
@@ -36,6 +36,17 @@ public class Board {
 			characters.put(alias, new  Character(alias.toString(), null));
 		}
 
+		// Setup Weapons (Haven't allocated cells yet)
+		List<Weapon.WeaponAlais> weaponAliasList = new ArrayList<>();
+
+		for (Weapon.WeaponAlais alias : Weapon.WeaponAlais.values()) {
+			weapons.put(alias, new Weapon(alias.toString()));
+			weaponAliasList.add(alias);
+		}
+
+		Collections.shuffle(weaponAliasList); // Assign Weapons to rooms in random order.
+
+		// Load Map Based off file.
 		try {
 			Scanner sc = new Scanner(new File(fname));
 
@@ -63,13 +74,16 @@ public class Board {
 					Cell cell = new Cell(row, col, type);
 					cells[row][col] = cell;
 
-					if (type == Cell.Type.ROOM) {
-						cell.setRoom(rooms.get(Room.getEnum(c)));
+					switch (type) {
+						case ROOM: 		cell.setRoom(rooms.get(Room.getEnum(c)));
+						case WEAPON:	Weapon weapon = weapons.get(weaponAliasList.get(weaponAliasList.size()-1));
+										cell.setWeapon(weapon);
+						case START_PAD:	Character character = characters.get(Character.parseAliasFromOrdinal(c));
+										cell.setCharacter(character);
 					}
 
-					// TODO: Add get cell.Direction. -> Is there any unique directionality?
-
-//					System.out.println(row + " " + col + ": " + c + " " + cell.getType());
+					// DEBUG:
+					// System.out.println(row + " " + col + ": " + c + " " + cell.getType());
 				}
 			}
 
@@ -77,13 +91,20 @@ public class Board {
 		} catch (Exception e) { System.out.println("File Exception: " + e); }
 	}
 
+
+
+	Map<Character.CharacterAlias, Character> getCharacters(){ return characters; }
+	Map<Room.RoomAlias, Room> getRooms() { return rooms; }
+	Map<Weapon.WeaponAlais, Weapon> getWeapons() { return weapons; }
+
+
 	public Stack<Cell> getPath(Cell start, Cell end, int numSteps) {
 		Stack<Cell> path = new Stack<>();
 		path.push(start);
 		return getPathHelper(path, end, numSteps);
 	}
-
-	public Stack<Cell> getPathHelper(Stack<Cell> path, Cell end, int numStepsLeft) {
+	 private Stack<Cell> getPathHelper(Stack<Cell> path, Cell end, int numStepsLeft) {
+		// TODO: Implement path finding.
 		return null;
 	}
 
