@@ -18,7 +18,7 @@ public class Board {
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
-	public Board() {
+	Board() {
 
 		String fname = "MapBase.txt";
 
