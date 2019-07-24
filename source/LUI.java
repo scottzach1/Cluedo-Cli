@@ -188,6 +188,7 @@ public class LUI {
 		try {
 			isInteger = Integer.parseInt(input);
 		} catch (Exception e) {
+			System.out.println("Yeetus");
 			// TODO
 		}
 

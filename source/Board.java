@@ -1,7 +1,5 @@
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Board {
 
@@ -12,6 +10,7 @@ public class Board {
 	// Board Attributes
 	private Map<Room.RoomAlias, Room> rooms;
 	private Map<Character.CharacterAlias, Character> characters;
+	private Map<Weapon.WeaponAlais, Weapon> weapons;
 
 	private Cell[][] cells;
 	private int rows, cols;
@@ -19,7 +18,6 @@ public class Board {
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
-
 	public Board() {
 
 		String fname = "MapBase.txt";
@@ -31,6 +29,24 @@ public class Board {
 			rooms.put(alias, new Room(alias.toString()));
 		}
 
+		// Setup Characters
+		characters = new HashMap<>();
+
+		for (Character.CharacterAlias alias : Character.CharacterAlias.values()) {
+			characters.put(alias, new  Character(alias.toString(), null));
+		}
+
+		// Setup Weapons (Haven't allocated cells yet)
+		List<Weapon.WeaponAlais> weaponAliasList = new ArrayList<>();
+
+		for (Weapon.WeaponAlais alias : Weapon.WeaponAlais.values()) {
+			weapons.put(alias, new Weapon(alias.toString()));
+			weaponAliasList.add(alias);
+		}
+
+		Collections.shuffle(weaponAliasList); // Assign Weapons to rooms in random order.
+
+		// Load Map Based off file.
 		try {
 			Scanner sc = new Scanner(new File(fname));
 
@@ -44,31 +60,52 @@ public class Board {
 			cells = new Cell[rows][cols];
 
 			sc.next(); // skip '\r'
-			sc.nextLine(); // _ _ _ _ _ ...
+			sc.nextLine(); // skip _ _ _ _ _ ...
 
 			for (int row = 0; row != rows; ++row) {
 				String line = sc.nextLine();
 
-				int lineIndex = 3; // 01 -> # <- |# ...
+				int lineIndex = 3; // skip to cell 01 -> # <- |# ...
 
 				for (int col = 0; col != cols; ++col, lineIndex += 2) {
 					char c = line.charAt(lineIndex);
-
 
 					Cell.Type type = Cell.getType(c);
 					Cell cell = new Cell(row, col, type);
 					cells[row][col] = cell;
 
-					if (type == Cell.Type.ROOM) {
-						cell.setRoom(rooms.get(Room.getEnum(c)));
+					switch (type) {
+						case ROOM: 		cell.setRoom(rooms.get(Room.getEnum(c)));
+						case WEAPON:	Weapon weapon = weapons.get(weaponAliasList.get(weaponAliasList.size()-1));
+										cell.setWeapon(weapon);
+						case START_PAD:	Character character = characters.get(Character.parseAliasFromOrdinal(c));
+										cell.setCharacter(character);
 					}
 
-//					System.out.println(row + " " + col + ": " + c + " " + cell.getType());
+					// DEBUG:
+					// System.out.println(row + " " + col + ": " + c + " " + cell.getType());
 				}
 			}
 
 
 		} catch (Exception e) { System.out.println("File Exception: " + e); }
+	}
+
+
+
+	Map<Character.CharacterAlias, Character> getCharacters(){ return characters; }
+	Map<Room.RoomAlias, Room> getRooms() { return rooms; }
+	Map<Weapon.WeaponAlais, Weapon> getWeapons() { return weapons; }
+
+
+	public Stack<Cell> getPath(Cell start, Cell end, int numSteps) {
+		Stack<Cell> path = new Stack<>();
+		path.push(start);
+		return getPathHelper(path, end, numSteps);
+	}
+	 private Stack<Cell> getPathHelper(Stack<Cell> path, Cell end, int numStepsLeft) {
+		// TODO: Implement path finding.
+		return null;
 	}
 
 	public static void main(String args[]) {

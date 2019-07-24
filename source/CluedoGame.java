@@ -1,9 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.Arrays;
+import java.util.*;
 
 /* Created by Harrison Cook and Zac Scott - 2019 */
 
@@ -19,9 +16,10 @@ public class CluedoGame {
 
 	// Game Attributes
 	private Board map;
-	private Set<Character> characters;
-	private Set<Weapon> weapons;
-	private Set<Room> rooms;
+	private Map<Character.CharacterAlias, Character> characters;
+	private Map<Weapon.WeaponAlais, Weapon> weapons;
+	private Map<Room.RoomAlias, Room> rooms;
+	private List<User> users;
 	private Card solution[];
 	private LUI lui;
 
@@ -32,6 +30,13 @@ public class CluedoGame {
 	public CluedoGame() {
 		String status = "";
 		lui = new LUI();
+		map = new Board();
+
+		this.rooms = map.getRooms();
+		this.characters = map.getCharacters();
+		this.weapons = map.getWeapons();
+
+		this.users = new ArrayList<>();
 	}
 
 	// ------------------------
@@ -102,49 +107,13 @@ public class CluedoGame {
 			// This is the users character alias and string (use whatever, delete the other)
 			String usersCharacterName = userInformation[3 + (4*user)];
 			Character.CharacterAlias usersCharacterAlias = Character.CharacterAlias.valueOf(usersCharacterName);
+
+			// FIXME: HARRISON, is this what you meant? I stored all users in an ordered list and their Character within them?
+
+			User userObj = new User();
+			userObj.setCharacter(characters.get(usersCharacterAlias));
+			users.add(userObj);
 		}
-		
-		
-	}
-
-	public Board getMap() {
-		return map;
-	}
-
-	public void setMap(Board map) {
-		this.map = map;
-	}
-
-	public Set<Character> getCharacters() {
-		return characters;
-	}
-
-	public void setCharacters(Set<Character> characters) {
-		this.characters = characters;
-	}
-
-	public Set<Weapon> getWeapons() {
-		return weapons;
-	}
-
-	public void setWeapons(Set<Weapon> weapons) {
-		this.weapons = weapons;
-	}
-
-	public Set<Room> getRooms() {
-		return rooms;
-	}
-
-	public void setRooms(Set<Room> rooms) {
-		this.rooms = rooms;
-	}
-
-	public Card[] getSolution() {
-		return solution;
-	}
-
-	public void setSolution(Card[] solution) {
-		this.solution = solution;
 	}
 
 	public static void main(String[] args) {

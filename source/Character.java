@@ -9,6 +9,14 @@ public class Character extends Card {
 		 PROFESSOR_PLUM;
 	}
 
+	public static CharacterAlias parseAliasFromOrdinal(char c) {
+		int i = Integer.parseInt(c + "");
+		for (CharacterAlias alias : CharacterAlias.values()) {
+			if (alias.ordinal() == i) return alias;
+		}
+		throw new IllegalStateException("Error parsing " + c + " as an ordinal for CharacterAlias.");
+	}
+
 	// ------------------------
 	// MEMBER VARIABLES
 	// ------------------------

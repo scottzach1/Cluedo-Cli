@@ -2,7 +2,7 @@ import java.util.*;
 
 public class User {
 	
-	public static int USERS;
+	public static int USERS = 0;
 	
 	public static enum userNo {
 		PLAYER_0, 

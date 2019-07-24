@@ -4,15 +4,16 @@ import java.util.regex.Pattern;
 public class Cell {
 
 	public static enum Direction { NORTH, SOUTH, EAST, WEST; }
-	public static enum Type { ROOM, WALL, BLANK, START_PAD; }
+	public static enum Type { ROOM, WALL, BLANK, START_PAD, WEAPON; }
 
 	public static Type getType(char c) {
 		switch (c) {
 			case '#': return Type.WALL;
 			case '_': return Type.BLANK;
+			case 'W': return Type.WEAPON;
 		}
 
-		if (Pattern.matches("[0-4]", c + "")) {
+		if (Pattern.matches("[0-5]", c + "")) {
 			return Type.START_PAD;
 		}
 
@@ -31,6 +32,7 @@ public class Cell {
 	// Cell Attributes
 	private Map<Direction, Cell> neighbors;
 	private Character character;
+	private Weapon weapon;
 	private Room room;
 	private int col;
 	private int row;
@@ -68,6 +70,8 @@ public class Cell {
 	public void setCharacter(Character character) {
 		this.character = character;
 	}
+
+	public void setWeapon(Weapon weapon) { this.weapon = weapon; }
 
 	public Room getRoom() {
 		return room;
