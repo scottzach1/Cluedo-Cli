@@ -1,75 +1,28 @@
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class Cell {
 
-	public enum Direction { NORTH, SOUTH, EAST, WEST; }
-	public enum Type { ROOM, WALL, BLANK, START_PAD, WEAPON; }
-
-	public static Type getType(char c) {
-		switch (c) {
-			case '#': return Type.WALL;
-			case '_': return Type.BLANK;
-			case 'W': return Type.WEAPON;
-		}
-
-		if (Pattern.matches("[0-5]", c + "")) {
-			return Type.START_PAD;
-		}
-
-		try {
-			Room.getEnum(c);
-			return Type.ROOM;
-		} catch (Exception e) {
-			return Type.BLANK;
-		}
-	}
-
-	Cell go(Direction dir) {
-		Cell goal = null;
-
-		switch (dir) {
-			case EAST: 	goal = board.getCell(row, col + 1); break;
-			case WEST: 	goal = board.getCell(row, col - 1); break;
-			case NORTH:	goal = board.getCell(row - 1, col); break;
-			case SOUTH: goal = board.getCell(row + 1, col); break;
-		}
-
-		// Only return cell if valid cell to land on.
-		return (goal == null || (goal.type != Type.ROOM && goal.type != Type.BLANK)) ? null : goal;
-	}
-
-	Set<Cell> getNeighbours() {
-		Set<Cell> neighbours = new HashSet<>();
-		for (Direction direction : Direction.values()) {
-			neighbours.add(go(direction));
-		}
-		return neighbours;
-	}
+	public enum Direction {NORTH, SOUTH, EAST, WEST;}
+	public enum Type {WALL, BLANK, START_PAD;}
 
 	// ------------------------
 	// MEMBER VARIABLES
 	// ------------------------
 
 	// Cell Attributes
-	private Board board;
-
 	private Character character;
-	private Weapon weapon;
 	private Room room;
 	private int col;
 	private int row;
-
 	private Type type;
+	private HashMap<Direction, Cell> neighbors;
 
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Cell(int aCol, int aRow, Cell.Type aType, Board board) {
+	public Cell(int aCol, int aRow, Cell.Type aType) {
 		col = aCol;
 		row = aRow;
 		type = aType;
@@ -79,31 +32,31 @@ public class Cell {
 	// INTERFACE
 	// ------------------------
 
-	public Type getType() { return type; }
+	public Type getType() {return type;}
 
-	public Character getCharacter() {
-		return character;
-	}
+	public Character getCharacter() {return character;}
+	public void setCharacter(Character character) {this.character = character;}
 
-	public void setCharacter(Character character) {
-		this.character = character;
-	}
+	public Room getRoom() {return room;}
+	public void setRoom(Room room) {this.room = room;}
 
-	void setWeapon(Weapon weapon) { this.weapon = weapon; }
-	Weapon getWeapon() { return weapon; }
-
-	public Room getRoom() {
-		return room;
-	}
-
-	public void setRoom(Room room) {
-		this.room = room;
-	}
-
-	public int getCol() { return col; }
-	public int getRow() { return row; }
+	public int getCol() {return col;}
+	public int getRow() {return row;}
 	
+	public HashMap<Direction, Cell> getNeighbors(){return neighbors;}
+	public void setNeighbor(Direction dir, Cell cell) {neighbors.put(dir, cell);}
+
+	public static Type getType(char c) {
+		if (c == '#') return Type.WALL;
+		if (Pattern.matches("\\d", c + "")) return Type.START_PAD;
+		return Type.BLANK;
+	}	
+
 	public String toString() {
-		return "Yet to implement";
+		if (character != null) return character.toString();
+		if (type == Type.BLANK) return "_";
+		else if (type == Type.WALL) return "#";
+		else if (type == Type.START_PAD) return "$";		
+		return "ERROR ON TYPE";
 	}
 }

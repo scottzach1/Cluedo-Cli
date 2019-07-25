@@ -1,20 +1,7 @@
 public class Character extends Card {
-	
-	public enum CharacterAlias {
-		 MISS_SCARLETT, 
-		 COLONEL_MUSTARD, 
-		 MRS_WHITE, 
-		 MR_GREEN,
-		 MRS_PEACOCK,
-		 PROFESSOR_PLUM;
-	}
 
-	public static CharacterAlias parseAliasFromOrdinal(char c) {
-		int i = Integer.parseInt(c + "");
-		for (CharacterAlias alias : CharacterAlias.values()) {
-			if (alias.ordinal() == i) return alias;
-		}
-		throw new IllegalStateException("Error parsing " + c + " as an ordinal for CharacterAlias.");
+	public enum CharacterAlias {
+		MRS_WHITE, MR_GREEN, MRS_PEACOCK, PROFESSOR_PLUM, MISS_SCARLETT, COLONEL_MUSTARD;
 	}
 
 	// ------------------------
@@ -24,29 +11,16 @@ public class Character extends Card {
 	private User user;
 	private CharacterAlias charAlias;
 	private Cell positionCell;
-	
 
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Character(String aName, User aUser) {	
+	public Character(String aName) {
 		super(aName);
-		
-		// Set user
-		if (aUser == null || aUser.getCharacter() != null) {
-			throw new RuntimeException("Unable to create Character due to invalid User");
-		}
-		user = aUser;
-		
+
 		// Set character alias
-		switch(aName) {
-		case "MISS_SCARLETT":
-			charAlias = CharacterAlias.MISS_SCARLETT;
-			break;
-		case "COLONEL_MUSTARD":
-			charAlias = CharacterAlias.COLONEL_MUSTARD;
-			break;
+		switch (aName) {
 		case "MRS_WHITE":
 			charAlias = CharacterAlias.MRS_WHITE;
 			break;
@@ -59,43 +33,81 @@ public class Character extends Card {
 		case "PROFESSOR_PLUM":
 			charAlias = CharacterAlias.PROFESSOR_PLUM;
 			break;
+		case "MISS_SCARLETT":
+			charAlias = CharacterAlias.MISS_SCARLETT;
+			break;
+		case "COLONEL_MUSTARD":
+			charAlias = CharacterAlias.COLONEL_MUSTARD;
+			break;
 		default:
 			throw new RuntimeException("Character alias not found.");
-		}	
+		}
 	}
-	
-	
+
 	// ------------------------
 	// INTERFACE
 	// ------------------------
-	
 
 	public User getUser() {
 		return user;
 	}
 
-
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 
 	public CharacterAlias getCharAlias() {
 		return charAlias;
 	}
 
-
 	public void setCharAlias(CharacterAlias charAlias) {
 		this.charAlias = charAlias;
 	}
-	
+
 	public void setPosition(Cell position) {
 		this.positionCell = position;
 	}
-	
+
 	public Cell getPosition() {
 		return positionCell;
 	}
+
+	public static CharacterAlias parseAliasFromOrdinal(char c) {
+		int i = Integer.parseInt(c + "");
+		for (CharacterAlias alias : CharacterAlias.values()) {
+			if (alias.ordinal() == i)
+				return alias;
+		}
+		throw new IllegalStateException("Error parsing " + c + " as an ordinal for CharacterAlias.");
+	}
 	
-	
+	public String toString() {
+		String str = "";
+		switch(charAlias) {
+		case MRS_WHITE:
+			str = "W";
+			break;
+		case MR_GREEN:
+			str = "G";
+			break;
+		case MRS_PEACOCK:
+			str = "Q";
+			break;
+		case PROFESSOR_PLUM:
+			str = "P";
+			break;
+		case MISS_SCARLETT:
+			str = "S";
+			break;
+		case COLONEL_MUSTARD:
+			str = "M";
+			break;
+		default:
+			throw new RuntimeException("Character alias not found.");
+		}
+		
+		
+		return str;
+	}
+
 }

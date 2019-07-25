@@ -14,9 +14,6 @@ public class CluedoGame {
 
 	// Game Attributes
 	private Board board;
-	private Map<Character.CharacterAlias, Character> characters;
-	private Map<Weapon.WeaponAlais, Weapon> weapons;
-	private Map<Room.RoomAlias, Room> rooms;
 	private List<User> users;
 	private Card solution[];
 	private LUI lui;
@@ -29,11 +26,6 @@ public class CluedoGame {
 		String status = "";
 		lui = new LUI();
 		board = new Board();
-
-		this.rooms = board.getRooms();
-		this.characters = board.getCharacters();
-		this.weapons = board.getWeapons();
-
 		this.users = new ArrayList<>();
 	}
 
@@ -66,7 +58,7 @@ public class CluedoGame {
 		status = lui.gameSetup();
 		
 		
-		//GAME MENU (above) --------------------------------------------------
+		//USER INFORMATION (below) --------------------------------------------------
 
 		String components [] = status.split("\\W");
 		
@@ -91,7 +83,7 @@ public class CluedoGame {
 		String userInformation [] = Arrays.copyOfRange(components, 2, components.length);
 		
 		for (int user = 0; user < playerCount; user++) {
-// ZAC -- Create a users here
+			
 			// This is the users entered number
 			int userNumber = 0;
 			try {
@@ -102,17 +94,17 @@ public class CluedoGame {
 				return;
 			}
 			
+			// The users entered name preference
 			String userName = userInformation[3 + (6*user)];
 			
-			// This is the users character alias and string (use whatever, delete the other)
+			// This is the users character alias
 			String userCharacterName = userInformation[5 + (6*user)];
 			Character.CharacterAlias userCharacterAlias = Character.CharacterAlias.valueOf(userCharacterName);
 
-			// FIXME: HARRISON, is this what you meant? I stored all users in an ordered list and their Character within them?
-
+			// Create a new user object and store in the games list of users
 			User userObj = new User();
 			userObj.setUserName(userName);
-			userObj.setCharacter(characters.get(userCharacterAlias));
+			userObj.setCharacter(board.getCharacters().get(userCharacterAlias));
 			users.add(userObj);
 		}
 	}
