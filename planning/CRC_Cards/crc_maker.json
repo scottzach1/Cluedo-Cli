@@ -1,0 +1,128 @@
+[
+  {
+    "name": "CluedoGame",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Load Board & Users",
+      "Manage the LUI.",
+      "Controls game play"
+    ],
+    "collaborators": [
+      "Board",
+      "Users",
+      "LUI"
+    ]
+  },
+  {
+    "name": "Board",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Generate Characters, Cells, Weapons and Rooms.",
+      "Update Character, Cell and Weapon and Room information.",
+      "Store Position of Character, Cell and Weapons."
+    ],
+    "collaborators": [
+      "Character",
+      "Cell",
+      "Weapon",
+      "Room."
+    ]
+  },
+  {
+    "name": "User",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Store User information. Ie, name, number.",
+      "Store User Character choice.",
+      "Store a hand of Cards and observed Cards. (Both Sets)"
+    ],
+    "collaborators": [
+      "Character",
+      "Card"
+    ]
+  },
+  {
+    "name": "Card",
+    "superclasses": "",
+    "subclasses": "Character, Weapon, Room",
+    "type": 2,
+    "responsibilities": [
+      "Store Card Name"
+    ],
+    "collaborators": [
+      ""
+    ]
+  },
+  {
+    "name": "Character",
+    "superclasses": "Card",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Store Character information. Ie, name, position, user"
+    ],
+    "collaborators": [
+      "Cell",
+      "User"
+    ]
+  },
+  {
+    "name": "Weapon",
+    "superclasses": "Card",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Store Room weapon is in."
+    ],
+    "collaborators": [
+      "Room"
+    ]
+  },
+  {
+    "name": "Room",
+    "superclasses": "Card",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Store Cells and Weapon it occupies."
+    ],
+    "collaborators": [
+      "Cell",
+      "Weapon."
+    ]
+  },
+  {
+    "name": "Cell",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Stores its Position on Board, and any Character on it.",
+      "Knows its type, and any relevant information. Ie, RoomType -> Room.",
+      "Knows its Neighbour Cells."
+    ],
+    "collaborators": [
+      "Cell",
+      "Room."
+    ]
+  },
+  {
+    "name": "LUI",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Act as an interface between real Users and Game controls. Ie, Retrieve relevant input.",
+      "Display game information to users."
+    ],
+    "collaborators": [
+      "CluedoGame."
+    ]
+  }
+]
