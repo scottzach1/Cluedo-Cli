@@ -72,13 +72,20 @@ public class Character extends Card {
 		return positionCell;
 	}
 
-	public static CharacterAlias parseAliasFromOrdinal(char c) {
+	public static CharacterAlias parseAliasFromOrdinalChar(char c) {
 		int i = Integer.parseInt(c + "");
 		for (CharacterAlias alias : CharacterAlias.values()) {
 			if (alias.ordinal() == i)
 				return alias;
 		}
 		throw new IllegalStateException("Error parsing " + c + " as an ordinal for CharacterAlias.");
+	}	
+	
+	public static CharacterAlias parseAliasFromOrdinalInt(int i) {
+		int sizeOfCharacterValues = Character.CharacterAlias.values().length;
+		if (i >= 0 && i < sizeOfCharacterValues)
+			return Character.CharacterAlias.values()[i];
+		throw new IllegalStateException("Error parsing " + i + " as an ordinal for CharacterAlias.");
 	}
 	
 	public String toString() {

@@ -17,42 +17,73 @@ public class CluedoGame {
 	private List<User> users;
 	private Card solution[];
 	private LUI lui;
+	private Card observations[];
+	private String status;
 
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
 
 	public CluedoGame() {
-		String status = "";
+		status = "";
 		lui = new LUI();
 		board = new Board();
 		this.users = new ArrayList<>();
+		
+		// Create solution
+		generateSolution();
 	}
 
 	// ------------------------
 	// INTERFACE
 	// ------------------------
+	
+	public void gameController() {
+		// Run the main menu first
+		mainMenu();
+		// If the player has chosen to quit
+		if (status.equals("3")) return;
+		
+		
+		// Next set up the game
+		gameSetup();
+		
+		// Run the game by doing rounds, int user is the users turn
+		int user = 0;
+		while (!status.equals("3")) {
+			LUI.clearConsole();
+			board.printBoardState();
+			
+				status = lui.round(users.get(user));	
+				// 1: Move, 2: Hand, 3: Observations, 4: Suggest, 5: Accuse (Solve), 8: Next User, 9: Quit Game
+				
+				// Change the user after prev user has exited their turn
+				if (status.equals("8")) { user = (user+1) % users.size();}
+		}
+	}
+	
 
-	public void run() {
+	public void mainMenu() {
 		//GAME MENU (below) --------------------------------------------------
-		String status = "";
+		status = "";
 
 		// Start up menu
-		while (!status.equals(LUI.PLAY)) {
+		while (!status.equals("1")) {
 			// Intro:
 			status = lui.startUpMenu();
 
-			// Switch cases of status
-			if (status.contentEquals(LUI.HOW)) {
-				status = lui.howToPlay();
-			} else if (status.contentEquals(LUI.QUIT)) {
+			// Switch cases of status, 1: Play, 2: How to Play, 3: Quit
+			if (status.contentEquals("2")) {
+				status = lui.howToPlay() + "MENU";
+			} else if (status.contentEquals("3")) {
 				System.out.println("Thanks for playing");
 				return;
-			} else if (!status.contentEquals(LUI.MENU) && !status.contentEquals(LUI.PLAY)) {
-				System.out.println("Sorry, '" + status + "' is not a valid input.");
 			}
 		}
-
+		
+	}
+	
+	public void gameSetup() {
 		LUI.loading("");
 		
 		status = lui.gameSetup();
@@ -75,7 +106,7 @@ public class CluedoGame {
 		playerCount = Integer.parseInt(components[1]);
 		} catch (Exception e) {
 			LUI.loading("ERROR ON LOADING GAME");
-			run();
+			gameController();
 			return;
 		}
 		
@@ -90,7 +121,7 @@ public class CluedoGame {
 				userNumber = Integer.parseInt(userInformation[1 + (6*user)]);
 			} catch (Exception e) {
 				LUI.loading("ERROR ON LOADING GAME");
-				run();
+				gameController();
 				return;
 			}
 			
@@ -108,12 +139,26 @@ public class CluedoGame {
 			users.add(userObj);
 		}
 	}
+	
+	
+	public void generateSolution(){
+		solution = new Card[3];
+		Random random = new Random();
+		
+		Room room = board.getRooms().get(Room.parseAliasFromOrdinalInt(random.nextInt(9)));
+		Character character = board.getCharacters().get(Character.parseAliasFromOrdinalInt(random.nextInt(6)));		
+		Weapon weapon = board.getWeapons().get(Weapon.parseAliasFromOrdinalInt(random.nextInt(6)));		
+		
+		solution[0] = character;
+		solution[1] = weapon;
+		solution[2] = room;
+		
+	}
 
 	public static void main(String[] args) {
 		// Setup
 		CluedoGame g = new CluedoGame();
-		// Play
-		g.run();
+		g.gameController();
 	}
 
 }

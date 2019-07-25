@@ -14,12 +14,10 @@ import java.util.regex.Pattern;
 public class LUI {
 
 	// Keywords within the interface
-	public static final String UNKNOWN = "???", MENU = "M", PLAY = "P", HOW = "H", QUIT = "Q";
 
 	// ------------------------
 	// INTERFACE
 	// ------------------------
-	private String input = "";
 
 	/** 
 	 * 
@@ -39,25 +37,11 @@ public class LUI {
 	 * */
 	public String startUpMenu() {
 		title();
-
-		input = readInput("\n-[P] Play game\n -[H] How to play\n  -[Q] Quit\n", "USER").toUpperCase();
-
-		switch (input) {
-		case HOW:
-			return HOW;
-		case PLAY:
-			return PLAY;
-		case QUIT:
-			return QUIT;
-		case MENU:
-			return MENU;
-		default:
-			return UNKNOWN;
-		}
+		return readInput("\n-[1] Play game\n -[2] How to play\n  -[3] Quit\n", "USER").toUpperCase();
 	}
 
 	public String howToPlay() {
-		input = readInput(
+		return readInput(
 				"\nAim:\t\tFigure out the mystery to who murdered the butler, what weapon they used, and in what room."
 						+ "\nGame:\t\tThe game is turn based. Upon starting, each player is dealt a hand of cards. These cards are secret"
 						+ "\n\t\tand give you evidence as to who, what and where the murder DIDN'T take place."
@@ -69,10 +53,8 @@ public class LUI {
 						+ "\n\t\tIf a piece of evidence is shown, no more evidence is needed to dispute the claim. You can not hold back evidence,"
 						+ "\n\t\tthis is seen as cheating a players found doing so will have their hand shown to all."
 						+ "\nNavigation:\tThis game is console based. To make any actions, a series of choices will be shown to you with a"
-						+ "\n\t\tkey inside '[]'. Type a key to choose that option."
-						+ "\n\n[ANY] Back to main menu\n",
+						+ "\n\t\tkey inside '[]'. Type a key to choose that option." + "\n\n[ANY] Back to main menu\n",
 				"USER");
-		return MENU;
 	}
 
 	public String gameSetup() {
@@ -92,6 +74,7 @@ public class LUI {
 	}
 
 	public int playerCount() {
+		String input = "";
 		int players = 0;
 		while (players == 0) {
 			input = readInput("How many player do we have today? (3-6 needed)", "USER");
@@ -103,13 +86,15 @@ public class LUI {
 		}
 		return players;
 	}
-	
+
 	public String userNameCreation(String name) {
+		String input = "";
 		input = readInput(name + ", What is your name?", name);
 		return input;
 	}
 
 	public String characterSelection(int players) {
+		String input = "";
 		StringBuilder str = new StringBuilder();
 		// Setup for character names
 		List<String> characters = new ArrayList<>();
@@ -123,8 +108,8 @@ public class LUI {
 		clearConsole();
 		for (int p = 0; p < players; p++) {
 			// Get username
-			String userName = userNameCreation("Player "+ (p+1));
-			
+			String userName = userNameCreation("Player " + (p + 1));
+
 			// Set up for players output;
 			String characterChoice = "";
 
@@ -158,6 +143,72 @@ public class LUI {
 		return str.toString();
 
 	}
+
+	public String round(User user) {
+		StringBuilder str = new StringBuilder();
+		String input = "";
+
+		// Stage one, choose whether to Move, Accuse, Suggest, look at hand, look at
+		// cheat sheet.
+		input = stageOne(user);
+
+		// Deal with the choice made in stage one.
+		input = stageTwo(input);
+
+		return str.toString();
+	}
+
+	private String stageOne(User user) {
+		return readInput(
+				user.getUserName() + " it's your turn:" + "\n-[1] Move " + "\n -[2] Hand" + "\n  -[3] Observations"
+						+ "\n   -[4] Suggest" + "\n    -[5] Accuse (Solve)" + "\n     -[8] Skip turn" + "\n      -[9] Quit Game",
+				user.getUserName());
+	}
+
+	public String stageTwo(String status) {
+		if (status.contentEquals("1"))
+			return movePlayer();
+		if (status.contentEquals("2"))
+			return showHand();
+		if (status.contentEquals("3"))
+			return showObservations();
+		if (status.contentEquals("4"))
+			return suggestion();
+		if (status.contentEquals("5"))
+			return accusation();
+		if (status.contentEquals("8"))
+			return "8";
+		if (status.contentEquals("9"))
+			return "9";
+
+		return "???";
+	}
+
+	private String movePlayer() {
+		// TODO
+		return "";
+	}
+
+	private String showHand() {
+		// TODO
+		return "";
+	}
+	
+	private String showObservations() {
+		// TODO
+		return "";
+	}
+	
+	private String suggestion() {
+		// TODO
+		return "";
+	}
+	
+	private String accusation() {
+		// TODO
+		return "";
+	}
+	
 
 	// ------------------------
 	// INTERFACE: Helpful methods
@@ -202,7 +253,7 @@ public class LUI {
 
 		return isInteger;
 	}
-	
+
 	public static final void loading(String message) {
 		System.out.println(message);
 		System.out.print("Loading ");

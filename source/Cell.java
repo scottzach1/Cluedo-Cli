@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 public class Cell {
 
 	public enum Direction {NORTH, SOUTH, EAST, WEST;}
-	public enum Type {WALL, BLANK, START_PAD;}
+	public enum Type {ROOM, WALL, BLANK, START_PAD;}
 
 	// ------------------------
 	// MEMBER VARIABLES
@@ -26,6 +26,7 @@ public class Cell {
 		col = aCol;
 		row = aRow;
 		type = aType;
+		neighbors = new HashMap<>();
 	}
 
 	// ------------------------
@@ -49,11 +50,13 @@ public class Cell {
 	public static Type getType(char c) {
 		if (c == '#') return Type.WALL;
 		if (Pattern.matches("\\d", c + "")) return Type.START_PAD;
+		if (Pattern.matches("[A-Z]", c + "")) return Type.ROOM;		
 		return Type.BLANK;
 	}	
 
 	public String toString() {
 		if (character != null) return character.toString();
+		if (type == Type.ROOM) return "_";
 		if (type == Type.BLANK) return "_";
 		else if (type == Type.WALL) return "#";
 		else if (type == Type.START_PAD) return "$";		

@@ -20,7 +20,7 @@ public class User {
 	private userNo userNum;
 	private String userName;
 	private Set<Card> hand;
-	private Set<Card> knownCards;
+	private Set<Card> observedCards;
 	private Character character;
 
 	// ------------------------
@@ -57,12 +57,12 @@ public class User {
 		this.hand = hand;
 	}
 
-	public Set<Card> getKnownCards() {
-		return knownCards;
+	public Set<Card> getObservedCards() {
+		return observedCards;
 	}
 
-	public void setKnownCards(Set<Card> knownCards) {
-		this.knownCards = knownCards;
+	public void setObservedCards(Set<Card> knownCards) {
+		this.observedCards = knownCards;
 	}
 
 	public Character getCharacter() {

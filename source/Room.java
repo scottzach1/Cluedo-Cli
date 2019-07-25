@@ -1,3 +1,4 @@
+import java.util.HashSet;
 import java.util.Set;
 
 public class Room extends Card {
@@ -12,21 +13,6 @@ public class Room extends Card {
 		 LOUNGE,
 		 HALL,
 		 STUDY;
-	}
-
-	public static RoomAlias getEnum(char c) {
-		switch (c) {
-			case 'K': return RoomAlias.KITCHEN;
-			case 'B': return RoomAlias.BALLROOM;
-			case 'C': return RoomAlias.CONSERVATORY;
-			case 'A': return RoomAlias.BILLARD_ROOM;
-			case 'D': return RoomAlias.DINING_ROOM;
-			case 'L': return RoomAlias.LIBRARY;
-			case 'E': return RoomAlias.LOUNGE;
-			case 'H': return RoomAlias.HALL;
-			case 'S': return RoomAlias.STUDY;
-			default: throw new IllegalStateException("Unexpected Character For Room: " + c);
-		}
 	}
 
 	// ------------------------
@@ -44,6 +30,8 @@ public class Room extends Card {
 
 	public Room(String aName) {
 		super(aName);
+		cells = new HashSet<>();
+		inThisRoom = new HashSet<>();
 	}
 
 	// ------------------------
@@ -54,8 +42,8 @@ public class Room extends Card {
 		return cells;
 	}
 
-	public void setCells(Set<Cell> cells) {
-		this.cells = cells;
+	public void addCell(Cell cell) {
+		this.cells.add(cell);
 	}
 
 	public Set<User> getInThisRoom() {
@@ -72,5 +60,36 @@ public class Room extends Card {
 
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
+	}
+
+	public static RoomAlias parseAliasFromOrdinalChar(char c) {
+		switch (c) {
+			case 'K': return RoomAlias.KITCHEN;
+			case 'B': return RoomAlias.BALLROOM;
+			case 'C': return RoomAlias.CONSERVATORY;
+			case 'A': return RoomAlias.BILLARD_ROOM;
+			case 'D': return RoomAlias.DINING_ROOM;
+			case 'L': return RoomAlias.LIBRARY;
+			case 'E': return RoomAlias.LOUNGE;
+			case 'H': return RoomAlias.HALL;
+			case 'S': return RoomAlias.STUDY;
+			default: throw new IllegalStateException("Unexpected Character For Room: " + c);
+		}
+	}
+	
+	
+	public static RoomAlias parseAliasFromOrdinalInt(int i) {
+		switch (i) {
+			case 0: return RoomAlias.KITCHEN;
+			case 1: return RoomAlias.BALLROOM;
+			case 2: return RoomAlias.CONSERVATORY;
+			case 3: return RoomAlias.BILLARD_ROOM;
+			case 4: return RoomAlias.DINING_ROOM;
+			case 5: return RoomAlias.LIBRARY;
+			case 6: return RoomAlias.LOUNGE;
+			case 7: return RoomAlias.HALL;
+			case 8: return RoomAlias.STUDY;
+			default: throw new IllegalStateException("Unexpected Character For Room: " + i);
+		}
 	}
 }
