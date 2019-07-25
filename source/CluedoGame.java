@@ -89,27 +89,30 @@ public class CluedoGame {
 		
 		// Get rid of the first two (now useless) bits of information
 		String userInformation [] = Arrays.copyOfRange(components, 2, components.length);
-
 		
 		for (int user = 0; user < playerCount; user++) {
 // ZAC -- Create a users here
 			// This is the users entered number
 			int userNumber = 0;
 			try {
-				userNumber = Integer.parseInt(userInformation[1 + (4*user)]);
+				userNumber = Integer.parseInt(userInformation[1 + (6*user)]);
 			} catch (Exception e) {
 				LUI.loading("ERROR ON LOADING GAME");
 				run();
 				return;
 			}
+			
+			String userName = userInformation[3 + (6*user)];
+			
 			// This is the users character alias and string (use whatever, delete the other)
-			String usersCharacterName = userInformation[3 + (4*user)];
-			Character.CharacterAlias usersCharacterAlias = Character.CharacterAlias.valueOf(usersCharacterName);
+			String userCharacterName = userInformation[5 + (6*user)];
+			Character.CharacterAlias userCharacterAlias = Character.CharacterAlias.valueOf(userCharacterName);
 
 			// FIXME: HARRISON, is this what you meant? I stored all users in an ordered list and their Character within them?
 
 			User userObj = new User();
-			userObj.setCharacter(characters.get(usersCharacterAlias));
+			userObj.setUserName(userName);
+			userObj.setCharacter(characters.get(userCharacterAlias));
 			users.add(userObj);
 		}
 	}
