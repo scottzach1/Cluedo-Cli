@@ -62,6 +62,9 @@ public class Board {
 			sc.next(); // skip '\r'
 			sc.nextLine(); // skip _ _ _ _ _ ...
 
+			// Useful after loop.
+			Set<Cell> weaponCells = new HashSet<>();
+
 			for (int row = 0; row != rows; ++row) {
 				String line = sc.nextLine();
 
@@ -71,13 +74,14 @@ public class Board {
 					char c = line.charAt(lineIndex);
 
 					Cell.Type type = Cell.getType(c);
-					Cell cell = new Cell(row, col, type);
+					Cell cell = new Cell(row, col, type, this);
 					cells[row][col] = cell;
 
 					switch (type) {
 						case ROOM: 		cell.setRoom(rooms.get(Room.getEnum(c)));
 						case WEAPON:	Weapon weapon = weapons.get(weaponAliasList.get(weaponAliasList.size()-1));
 										cell.setWeapon(weapon);
+										weaponCells.add(cell);
 						case START_PAD:	Character character = characters.get(Character.parseAliasFromOrdinal(c));
 										cell.setCharacter(character);
 					}
@@ -87,6 +91,17 @@ public class Board {
 				}
 			}
 
+			for (Cell weaponCell : weaponCells) {
+				Set<Cell> neighbours = weaponCell.getNeighbours();
+				for (Cell neighbour : neighbours) {
+					if (neighbour.getRoom() != null) {
+						Room room = neighbour.getRoom();
+						weaponCell.setRoom(room);
+						weaponCell.getWeapon().setLocation(room);
+						break;
+					}
+				}
+			}
 
 		} catch (Exception e) { System.out.println("File Exception: " + e); }
 	}
@@ -107,6 +122,15 @@ public class Board {
 		// TODO: Implement path finding.
 		return null;
 	}
+
+	public Cell getCell(int row, int col) {
+		if (row < 0 || row >= rows - 1) return null;
+		if (col < 0 || col >= cols - 1) return null;
+
+		return cells[row][col];
+	}
+	public int getRows() { return rows; }
+	public int getCols() { return cols; }
 
 	public static void main(String args[]) {
 		Board b = new Board();

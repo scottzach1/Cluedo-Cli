@@ -1,6 +1,6 @@
 public class Weapon extends Card {
 
-	public static enum WeaponAlais {
+	public enum WeaponAlais {
 		CANDLE_STICK,
 		DAGGER,
 		LEAD_PIPE,
