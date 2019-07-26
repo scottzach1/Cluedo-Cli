@@ -103,6 +103,11 @@ public class Room extends Card {
 		if (weapon == null) return;
 		weapon.setRoom(this);
 	}
+	
+	
+	public RoomAlias getRoomAlias() {
+		return roomAlias;
+	}
 
 	/**
 	 * Given a char, find the matching RoomAlias according to our MapBase.txt file.

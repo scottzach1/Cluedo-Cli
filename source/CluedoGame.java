@@ -177,8 +177,29 @@ public class CluedoGame {
 		Map<Room.RoomAlias, Room> nonSolutionRooms = new HashMap<>(board.getRooms());
 		
 		nonSolutionCharacters.remove(((Character) solution[0]).getCharAlias());
-		nonSolutionWeapons.remove(((Weapon) solution[1]).ge); 
-		nonSolutionRooms.remove(((Room) solution[2]));
+		nonSolutionWeapons.remove(((Weapon) solution[1]).getWeaponAlias()); 
+		nonSolutionRooms.remove(((Room) solution[2]).getRoomAlias());
+		
+		
+		int userNum = 0;
+		
+		for (Character c : nonSolutionCharacters.values()) {
+			User user = users.get(userNum);
+			user.addToHand(c);
+			userNum = (userNum+1) % users.size();
+		}
+		
+		for (Weapon w : nonSolutionWeapons.values()) {
+			User user = users.get(userNum);
+			user.addToHand(w);
+			userNum = (userNum+1) % users.size();
+		}
+		
+		for (Room r : nonSolutionRooms.values()) {
+			User user = users.get(userNum);
+			user.addToHand(r);
+			userNum = (userNum+1) % users.size();
+		}
 		
 		
 	}

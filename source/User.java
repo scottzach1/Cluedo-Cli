@@ -53,8 +53,8 @@ public class User {
 		return hand;
 	}
 
-	public void setHand(Set<Card> hand) {
-		this.hand = hand;
+	public void addToHand(Card card) {
+		this.hand.add(card);
 	}
 
 	public Set<Card> getObservedCards() {
