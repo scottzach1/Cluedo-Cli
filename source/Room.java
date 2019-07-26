@@ -145,15 +145,19 @@ public class Room extends Card {
 	}
 	
 	public String toString() {
-		StringBuilder str = new StringBuilder();
+		StringBuilder peopleStr = new StringBuilder();
+		StringBuilder weaponStr = new StringBuilder();
 		
-		for (User user : inThisRoom) {
-			str.append("\t" + user.getUserName() + "\n");
-		}
+		// Append users in the room 
+		for (User user : inThisRoom) { peopleStr.append(user.getCharacter().getName() + ", ");}
+		if (inThisRoom.isEmpty()) peopleStr.append("no one");
 		
-		if (inThisRoom.isEmpty()) str.append(b)
+		// Append weapons in this room 
+		if (weapon != null) weaponStr.append("the " + weapon.getName());
+		else weaponStr.append("no weapon");
 		
 		
-		return getName() + ": " + str.toString();
+		return getName() + ":\n\t has " + peopleStr.toString() + "in it"
+				+ "\n\t along with " + weaponStr.toString();
 	}
 }
