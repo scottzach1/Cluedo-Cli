@@ -192,7 +192,7 @@ public class LUI {
 			input = readInput("Enter cell position you would like to move to (e.g 1A or B2, row and col order doesnt matter)."
 					+ "\n-[B] Back to Menu\n -[Enter] Enter Cell Position", user.getUserName()).toUpperCase();
 			
-			if (input.equals("B"))
+			if (input.equals("B")) return "MENU";
 			
 			
 			if (input.length() != 2) {

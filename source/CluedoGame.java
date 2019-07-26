@@ -124,6 +124,10 @@ public class CluedoGame {
 			userObj.setCharacter(board.getCharacters().get(userCharacterAlias));
 			users.add(userObj);
 		}
+		
+		// Create users hands
+		if (users.size() > 2)
+			generateHands();
 	}
 
 	private void rounds() {
@@ -134,9 +138,9 @@ public class CluedoGame {
 			board.printBoardState();
 			User user = users.get(userNum);
 			Cell position = user.getCharacter().getPosition();
-			
+
 			if (position.getType() == Cell.Type.ROOM)
-			System.out.println(position.getRoom().toString());
+				System.out.println(position.getRoom().toString());
 
 			status = lui.round(user);
 			// 1: Move, 2: Hand, 3: Observations, 4: Suggest, 5: Accuse (Solve), 8: Next
@@ -165,6 +169,39 @@ public class CluedoGame {
 		solution[1] = weapon;
 		solution[2] = room;
 
+	}
+	
+	public void generateHands() {
+		Map<Character.CharacterAlias, Character> nonSolutionCharacters = new HashMap<>(board.getCharacters());
+		Map<Weapon.WeaponAlias, Weapon> nonSolutionWeapons = new HashMap<>(board.getWeapons());
+		Map<Room.RoomAlias, Room> nonSolutionRooms = new HashMap<>(board.getRooms());
+		
+		nonSolutionCharacters.remove(((Character) solution[0]).getCharAlias());
+		nonSolutionWeapons.remove(((Weapon) solution[1]).getWeaponAlias()); 
+		nonSolutionRooms.remove(((Room) solution[2]).getRoomAlias());
+		
+		
+		int userNum = 0;
+		
+		for (Character c : nonSolutionCharacters.values()) {
+			User user = users.get(userNum);
+			user.addToHand(c);
+			userNum = (userNum+1) % users.size();
+		}
+		
+		for (Weapon w : nonSolutionWeapons.values()) {
+			User user = users.get(userNum);
+			user.addToHand(w);
+			userNum = (userNum+1) % users.size();
+		}
+		
+		for (Room r : nonSolutionRooms.values()) {
+			User user = users.get(userNum);
+			user.addToHand(r);
+			userNum = (userNum+1) % users.size();
+		}
+		
+		
 	}
 
 	public static void main(String[] args) {

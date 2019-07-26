@@ -29,7 +29,7 @@ public class Weapon extends Card {
 	 * Weapon: The Constructor for a new Weapon.
 	 * @param weaponAlias The WeaponAlias of the Weapon to create.
 	 */
-	Weapon(WeaponAlias weaponAlias) {
+	public Weapon(WeaponAlias weaponAlias) {
 		super(weaponAlias.toString());
 		this.weaponAlias = weaponAlias;
 	}
@@ -52,6 +52,10 @@ public class Weapon extends Card {
 		this.room = room;
 		if (room == null) return;
 		room.setWeapon(this);
+	}
+	
+	public WeaponAlias getWeaponAlias() {
+		return weaponAlias;
 	}
 
 	/**

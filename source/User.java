@@ -1,15 +1,15 @@
 import java.util.*;
 
 public class User {
-	
+
 	private static int USERS = 0;
-	
+
 	public static enum userNo {
-		PLAYER_0, 
-		PLAYER_1, 
-		PLAYER_2, 
-		PLAYER_3, 
-		PLAYER_4, 
+		PLAYER_0,
+		PLAYER_1,
+		PLAYER_2,
+		PLAYER_3,
+		PLAYER_4,
 		PLAYER_5;
 	}
 
@@ -53,8 +53,8 @@ public class User {
 		return hand;
 	}
 
-	void setHand(Set<Card> hand) {
-		this.hand = hand;
+	public void addToHand(Card card) {
+		this.hand.add(card);
 	}
 
 	Set<Card> getObservedCards() {
@@ -72,7 +72,7 @@ public class User {
 	void setCharacter(Character character) {
 		this.character = character;
 	}
-	
+
 	public String toString() {
 		return userName + "(" + userNum + ")";
 	}
