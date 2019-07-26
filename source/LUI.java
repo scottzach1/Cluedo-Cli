@@ -43,7 +43,7 @@ public class LUI {
 
 	public String howToPlay() {
 		return readInput(
-				"\nAim:\t\tFigure out the mystery to who murdered the butler, what weapon they used, and in what room."
+				  "\nAim:\t\tFigure out the mystery to who murdered the butler, what weapon they used, and in what room."
 						+ "\nGame:\t\tThe game is turn based. Upon starting, each player is dealt a hand of cards. These cards are secret"
 						+ "\n\t\tand give you evidence as to who, what and where the murder DIDN'T take place."
 						+ "\n\t\tOn your turn, you roll two dice and navigate your around the map. To find out what other players have,"

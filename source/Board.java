@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.*;
 
 public class Board {
@@ -20,9 +21,9 @@ public class Board {
 
 	/**
 	 * Board: The constructor for Board.
-	 *	- Creates a new 2d array and populates with Cells.
-	 * 	- Generates characters and places at corresponding starting positions.
-	 * 	- Generates Weapons and randomly allocates them to Rooms.
+	 * - Creates a new 2d array and populates with Cells.
+	 * - Generates characters and places at corresponding starting positions.
+	 * - Generates Weapons and randomly allocates them to Rooms.
 	 */
 	Board() {
 
@@ -49,11 +50,11 @@ public class Board {
 			Scanner sc = new Scanner(getMapBase());
 			if (!sc.next().equals("MAP"))
 				throw new Exception("Invalid File Type");
-			
+
 			// First two indexes = Row Col of map
 			rows = sc.nextInt();
 			cols = sc.nextInt();
-			
+
 			cells = new Cell[rows][cols];
 
 			sc.next(); // skip '\r'
@@ -80,9 +81,7 @@ public class Board {
 							System.out.println("Not a number cell!");
 							// Continue as normal as if it were blank.
 						}
-					}
-
-					else if (type == Cell.Type.ROOM) {
+					} else if (type == Cell.Type.ROOM) {
 						Room room = rooms.get(Room.parseAliasFromOrdinalChar(c));
 						room.addCell(cell);
 						cell.setRoom(room);
@@ -93,39 +92,39 @@ public class Board {
 		} catch (Exception e) {
 			System.out.println("File Exception: " + e);
 		}
-		
-		
+
+
 		// Set all the cells neighbors
 		for (int row = 0; row < rows; row++) {
-			for(int col = 0; col < cols; col++) {
+			for (int col = 0; col < cols; col++) {
 				Cell cell = cells[row][col];
-				
+
 				// Neighbor can not be a wall, or out of bounds
 				// Walls have no neighbors
-				
+
 				if (cell.getType() == Cell.Type.WALL) continue;
-				
+
 				if (row > 0) {
 					Cell other = cells[row - 1][col];
 					if (other.getType() != Cell.Type.WALL) {
 						cell.setNeighbor(Cell.Direction.NORTH, other);
 					}
-				}	
-				
+				}
+
 				if (row < (rows - 1)) {
 					Cell other = cells[row + 1][col];
 					if (other.getType() != Cell.Type.WALL) {
 						cell.setNeighbor(Cell.Direction.SOUTH, other);
 					}
-				}	
-				
+				}
+
 				if (col > 0) {
 					Cell other = cells[row][col - 1];
 					if (other.getType() != Cell.Type.WALL) {
 						cell.setNeighbor(Cell.Direction.WEST, other);
 					}
-				}	
-				
+				}
+
 				if (col < (cols - 1)) {
 					Cell other = cells[row][col + 1];
 					if (other.getType() != Cell.Type.WALL) {
@@ -143,6 +142,7 @@ public class Board {
 	/**
 	 * getCharacters: Return a map of all the Characters on the Board.
 	 * (Where keys are their corresponding CharacterAlias).
+	 *
 	 * @return map of Characters on the Board.
 	 */
 	Map<Character.CharacterAlias, Character> getCharacters() {
@@ -152,6 +152,7 @@ public class Board {
 	/**
 	 * getRooms: Return a map of all the Rooms on the Board.
 	 * (Where keys are their corresponding RoomAlias).
+	 *
 	 * @return map of Rooms on the Board.
 	 */
 	Map<Room.RoomAlias, Room> getRooms() {
@@ -164,27 +165,38 @@ public class Board {
 
 	/**
 	 * TODO THIS HAS NOT BEEN IMPLEMENTED
+	 *
 	 * @param start
 	 * @param end
 	 * @param numSteps
 	 * @return
 	 */
-	Stack<Cell> getPath(Cell start, Cell end, int numSteps) {
-		Stack<Cell> path = new Stack<>();
-		path.push(start);
-		return getPathHelper(path, end, numSteps);
-	}
+	boolean calcPath(Cell start, Cell end, int numSteps) {
 
-	/**
-	 * TODO THIS HAS NOT BEEN IMPLEMENTED
-	 * @param path
-	 * @param end
-	 * @param numStepsLeft
-	 * @return
-	 */
-	private Stack<Cell> getPathHelper(Stack<Cell> path, Cell end, int numStepsLeft) {
-		// TODO: Implement path finding.
-		return null;
+		Room targRoom = end.getRoom();
+
+		Queue<Cell> depthQueue = new ArrayDeque<>();
+		Map<Cell, Cell> parentMap = new HashMap<>();
+		Set<Cell> visited = new HashSet<>();
+
+		depthQueue.offer(start);
+
+		while (!depthQueue.isEmpty()) {
+
+			Cell cell = depthQueue.poll();
+
+			if (visited.contains(cell)) continue;
+			if (cell.getRoom() == targRoom || cell == end) break;
+
+			if (cell.getRoom() != null) {
+				for (Cell door : cell.getRoom().getDoors()) {
+
+				}
+			} else {
+				for (;;) {}
+			}
+		}
+		return false;
 	}
 
 	/**

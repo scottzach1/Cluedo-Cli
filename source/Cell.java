@@ -3,8 +3,8 @@ import java.util.regex.Pattern;
 
 public class Cell {
 
-	public enum Direction {NORTH, SOUTH, EAST, WEST;}
-	public enum Type {ROOM, WALL, BLANK, START_PAD;}
+	public enum Direction {NORTH, SOUTH, EAST, WEST}
+	public enum Type {ROOM, WALL, BLANK, START_PAD}
 
 	// ------------------------
 	// MEMBER VARIABLES
@@ -22,9 +22,9 @@ public class Cell {
 	// CONSTRUCTOR
 	// ------------------------
 
-	Cell(int aCol, int aRow, Cell.Type aType) {
-		col = aCol;
-		row = aRow;
+	Cell(int col, int row, Cell.Type aType) {
+		col = col;
+		row = row;
 		type = aType;
 		neighbors = new HashMap<>();
 	}

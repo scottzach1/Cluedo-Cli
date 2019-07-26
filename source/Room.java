@@ -25,6 +25,7 @@ public class Room extends Card {
 	// Room Attributes
 	private Set<Cell> cells;
 	private Set<User> inThisRoom;
+	private Set<Cell> doors;
 	private Weapon weapon;
 	private RoomAlias roomAlias;
 
@@ -40,7 +41,34 @@ public class Room extends Card {
 		super(roomAlias.toString());
 		this.roomAlias = roomAlias;
 		cells = new HashSet<>();
+		doors = new HashSet<>();
 		inThisRoom = new HashSet<>();
+	}
+
+	/**
+	 * calculateDoors: Updates the doors of the room.
+	 *
+	 * If any cell in room has a neighbour that is not in this room.
+	 * Then add that neighbour to the doors. (no door should be in the room).
+	 */
+	void calculateDoors() {
+		doors = new HashSet<>();
+
+		for (Cell cell : cells) {
+			for (Cell neigh : cell.getNeighbors().values()) {
+				if (neigh.getRoom() == this) continue;
+				doors.add(cell);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * getDoors: Returns a set of all the doors of the room.
+	 * @return
+	 */
+	Set<Cell> getDoors() {
+		return doors;
 	}
 
 	// ------------------------
@@ -51,9 +79,7 @@ public class Room extends Card {
 	 * getCells: Returns a set of all the cells stored in a Room.
 	 * @return Set containing all cells.
 	 */
-	Set<Cell> getCells() {
-		return cells;
-	}
+	Set<Cell> getCells() { return cells; }
 
 	/**
 	 * addCell: Adds a Cell to a room.
@@ -70,9 +96,7 @@ public class Room extends Card {
 	 * getInThisRoom: Returns a Set of all the Users in the current Room.
 	 * @return Set of users.
 	 */
-	Set<User> getInThisRoom() {
-		return inThisRoom;
-	}
+	Set<User> getInThisRoom() { return inThisRoom; }
 
 	/**
 	 * addToRoom: Add a current user to the room.
@@ -90,9 +114,7 @@ public class Room extends Card {
 	 * getWeapon: Gets the Weapon stored in the Room.
 	 * @return Weapon that is stored in the current Room.
 	 */
-	Weapon getWeapon() {
-		return weapon;
-	}
+	Weapon getWeapon() { return weapon; }
 
 	/**
 	 * setWeapon: Sets the Weapon currently stored in the Room to a new one.
@@ -103,11 +125,13 @@ public class Room extends Card {
 		if (weapon == null) return;
 		weapon.setRoom(this);
 	}
-	
-	
-	public RoomAlias getRoomAlias() {
-		return roomAlias;
-	}
+
+
+	/**
+	 * getRoomAlias: Gets the RoomAlias of the current Room.
+	 * @return RoomAlias of the current Room.
+	 */
+	RoomAlias getRoomAlias() { return roomAlias; }
 
 	/**
 	 * Given a char, find the matching RoomAlias according to our MapBase.txt file.
