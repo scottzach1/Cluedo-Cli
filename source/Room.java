@@ -92,4 +92,17 @@ public class Room extends Card {
 			default: throw new IllegalStateException("Unexpected Character For Room: " + i);
 		}
 	}
+	
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		
+		for (User user : inThisRoom) {
+			str.append("\t" + user.getUserName() + "\n");
+		}
+		
+		if (inThisRoom.isEmpty()) str.append(b)
+		
+		
+		return getName() + ": " + str.toString();
+	}
 }

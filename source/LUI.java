@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.regex.Pattern;
@@ -153,7 +154,7 @@ public class LUI {
 		input = stageOne(user);
 
 		// Deal with the choice made in stage one.
-		input = stageTwo(input);
+		input = stageTwo(input, user);
 
 		return str.toString();
 	}
@@ -165,9 +166,9 @@ public class LUI {
 				user.getUserName());
 	}
 
-	public String stageTwo(String status) {
+	public String stageTwo(String status, User user) {
 		if (status.contentEquals("1"))
-			return movePlayer();
+			return movePlayer(user);
 		if (status.contentEquals("2"))
 			return showHand();
 		if (status.contentEquals("3"))
@@ -184,14 +185,30 @@ public class LUI {
 		return "???";
 	}
 
-	private String movePlayer() {
-		// TODO
+	private String movePlayer(User user) {
+		String input = "";
+		String cellCoordinates = "";
+		while (cellCoordinates.length()==0) {
+			input = readInput("Enter cell position you would like to move to (e.g 1A or B2, row and col order doesnt matter)."
+					+ "\n-[B] Back to Menu\n -[Enter] Enter Cell Position", user.getUserName()).toUpperCase();
+			
+			if (input.equals("B"))
+			
+			
+			if (input.length() != 2) {
+				System.out.println("Co-Ordinates did not match apllicable styles");
+				continue;
+			}
+			
+		}
 		return "";
 	}
 
-	private String showHand() {
-		// TODO
-		return "";
+	private int rollDice() {
+		Random dice = new Random();
+		int num1 = dice.nextInt(6) + 1;
+		int num2 = dice.nextInt(6) + 1;
+		return num1 + num2;
 	}
 	
 	private String showObservations() {
@@ -220,6 +237,7 @@ public class LUI {
 	 * characters) and will convert the input into a string to then return.
 	 * 
 	 * @param message - A String to be printed before user input.
+	 * 		player - A String for the 
 	 * @return The users input.
 	 */
 	public String readInput(String message, String player) {

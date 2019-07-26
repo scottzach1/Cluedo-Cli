@@ -29,7 +29,7 @@ public class CluedoGame {
 		lui = new LUI();
 		board = new Board();
 		this.users = new ArrayList<>();
-		
+
 		// Create solution
 		generateSolution();
 	}
@@ -37,34 +37,23 @@ public class CluedoGame {
 	// ------------------------
 	// INTERFACE
 	// ------------------------
-	
+
 	public void gameController() {
 		// Run the main menu first
 		mainMenu();
 		// If the player has chosen to quit
-		if (status.equals("3")) return;
-		
-		
+		if (status.equals("3"))
+			return;
+
 		// Next set up the game
 		gameSetup();
-		
-		// Run the game by doing rounds, int user is the users turn
-		int user = 0;
-		while (!status.equals("3")) {
-			LUI.clearConsole();
-			board.printBoardState();
-			
-				status = lui.round(users.get(user));	
-				// 1: Move, 2: Hand, 3: Observations, 4: Suggest, 5: Accuse (Solve), 8: Next User, 9: Quit Game
-				
-				// Change the user after prev user has exited their turn
-				if (status.equals("8")) { user = (user+1) % users.size();}
-		}
+
+		// Play the rounds
+		rounds();
 	}
-	
 
 	public void mainMenu() {
-		//GAME MENU (below) --------------------------------------------------
+		// GAME MENU (below) --------------------------------------------------
 		status = "";
 
 		// Start up menu
@@ -80,56 +69,53 @@ public class CluedoGame {
 				return;
 			}
 		}
-		
+
 	}
-	
+
 	public void gameSetup() {
 		LUI.loading("");
-		
-		status = lui.gameSetup();
-		
-		
-		//USER INFORMATION (below) --------------------------------------------------
 
-		String components [] = status.split("\\W");
-		
-/**		Format of components:
-		[0] String : "Players"
-		[1] Integer : Player count
-		[2] String: "Player" 
-		[3] Integer : Player number
-		[4] String: "Character"
-		[5] CharacterAlias : Players Character */
-		
+		status = lui.gameSetup();
+
+		// USER INFORMATION (below) --------------------------------------------------
+
+		String components[] = status.split("\\W");
+
+		/**
+		 * Format of components: [0] String : "Players" [1] Integer : Player count [2]
+		 * String: "Player" [3] Integer : Player number [4] String: "Character" [5]
+		 * CharacterAlias : Players Character
+		 */
+
 		int playerCount = 0;
 		try {
-		playerCount = Integer.parseInt(components[1]);
+			playerCount = Integer.parseInt(components[1]);
 		} catch (Exception e) {
 			LUI.loading("ERROR ON LOADING GAME");
 			gameController();
 			return;
 		}
-		
+
 		// Get rid of the first two (now useless) bits of information
-		String userInformation [] = Arrays.copyOfRange(components, 2, components.length);
-		
+		String userInformation[] = Arrays.copyOfRange(components, 2, components.length);
+
 		for (int user = 0; user < playerCount; user++) {
-			
+
 			// This is the users entered number
 			int userNumber = 0;
 			try {
-				userNumber = Integer.parseInt(userInformation[1 + (6*user)]);
+				userNumber = Integer.parseInt(userInformation[1 + (6 * user)]);
 			} catch (Exception e) {
 				LUI.loading("ERROR ON LOADING GAME");
 				gameController();
 				return;
 			}
-			
+
 			// The users entered name preference
-			String userName = userInformation[3 + (6*user)];
-			
+			String userName = userInformation[3 + (6 * user)];
+
 			// This is the users character alias
-			String userCharacterName = userInformation[5 + (6*user)];
+			String userCharacterName = userInformation[5 + (6 * user)];
 			Character.CharacterAlias userCharacterAlias = Character.CharacterAlias.valueOf(userCharacterName);
 
 			// Create a new user object and store in the games list of users
@@ -139,20 +125,46 @@ public class CluedoGame {
 			users.add(userObj);
 		}
 	}
-	
-	
-	public void generateSolution(){
+
+	public void rounds() {
+		// Run the game by doing rounds, int user is the users turn
+		int userNum = 0;
+		while (!status.equals("3")) {
+			LUI.clearConsole();
+			board.printBoardState();
+			User user = users.get(userNum);
+			Cell position = user.getCharacter().getPosition();
+			
+			if (position.getType() == Cell.Type.ROOM)
+			System.out.println(position.getRoom().toString());
+
+			status = lui.round(user);
+			// 1: Move, 2: Hand, 3: Observations, 4: Suggest, 5: Accuse (Solve), 8: Next
+			// User, 9: Quit Game
+
+			// Change the user after prev user has exited their turn
+			if (status.equals("8")) {
+				userNum = (userNum + 1) % users.size();
+			}
+			// Finish the game by exiting this while loop
+			if (status.equals("9")) {
+				return;
+			}
+		}
+	}
+
+	public void generateSolution() {
 		solution = new Card[3];
 		Random random = new Random();
-		
+
 		Room room = board.getRooms().get(Room.parseAliasFromOrdinalInt(random.nextInt(9)));
-		Character character = board.getCharacters().get(Character.parseAliasFromOrdinalInt(random.nextInt(6)));		
-		Weapon weapon = board.getWeapons().get(Weapon.parseAliasFromOrdinalInt(random.nextInt(6)));		
-		
+		Character character = board.getCharacters().get(Character.parseAliasFromOrdinalInt(random.nextInt(6)));
+		Weapon weapon = board.getWeapons().get(Weapon.parseAliasFromOrdinalInt(random.nextInt(6)));
+
 		solution[0] = character;
 		solution[1] = weapon;
 		solution[2] = room;
-		
+
 	}
 
 	public static void main(String[] args) {
