@@ -4,7 +4,7 @@ public class User {
 
 	private static int USERS = 0;
 
-	public static enum userNo {
+	public enum userNo {
 		PLAYER_0,
 		PLAYER_1,
 		PLAYER_2,
@@ -54,7 +54,7 @@ public class User {
 		return hand;
 	}
 
-	public void addToHand(Card card) {
+	void addToHand(Card card) {
 		this.hand.add(card);
 	}
 
