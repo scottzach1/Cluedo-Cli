@@ -22,7 +22,7 @@ public class Cell {
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Cell(int aCol, int aRow, Cell.Type aType) {
+	Cell(int aCol, int aRow, Cell.Type aType) {
 		col = aCol;
 		row = aRow;
 		type = aType;
@@ -33,21 +33,21 @@ public class Cell {
 	// INTERFACE
 	// ------------------------
 
-	public Type getType() {return type;}
+	Type getType() {return type;}
 
-	public Character getCharacter() {return character;}
-	public void setCharacter(Character character) {this.character = character;}
+	Character getCharacter() {return character;}
+	void setCharacter(Character character) {this.character = character;}
 
-	public Room getRoom() {return room;}
-	public void setRoom(Room room) {this.room = room;}
+	Room getRoom() {return room;}
+	void setRoom(Room room) {this.room = room;}
 
-	public int getCol() {return col;}
-	public int getRow() {return row;}
+	int getCol() {return col;}
+	int getRow() {return row;}
 	
-	public HashMap<Direction, Cell> getNeighbors(){return neighbors;}
-	public void setNeighbor(Direction dir, Cell cell) {neighbors.put(dir, cell);}
+	HashMap<Direction, Cell> getNeighbors(){return neighbors;}
+	void setNeighbor(Direction dir, Cell cell) {neighbors.put(dir, cell);}
 
-	public static Type getType(char c) {
+	static Type getType(char c) {
 		if (c == '#') return Type.WALL;
 		if (Pattern.matches("\\d", c + "")) return Type.START_PAD;
 		if (Pattern.matches("[A-Z]", c + "")) return Type.ROOM;		
