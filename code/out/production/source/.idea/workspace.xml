@@ -2,60 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b25ca44-6460-4a72-97a3-8da892c80de2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/.idea/source.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/Board.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/Card.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/Cell.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/Character.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/CluedoGame.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/LUI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/MapBase.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/Room.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/Weapon.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/.idea/source.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/Board.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/Card.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/Cell$Direction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/Cell$Type.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/Cell.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/Character$characterAlias.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/Character.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/CluedoGame.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/LUI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/MapBase.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/Room$RoomAlias.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/Room.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/User$userNo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../source/out/production/source/Weapon.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/.classpath" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/.project" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/Testing.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/src/testingPackage/CellTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/src/testingPackage/Testing_Code.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../testing_code/src/testingPackage/package-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Character.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Weapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Weapon.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,11 +20,27 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Board.java">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/tests/BoardTests.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="80">
+              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#121#122#0" expanded="true" />
+                <element signature="e#158#159#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -99,7 +66,16 @@
         <option value="$PROJECT_DIR$/Card.java" />
         <option value="$PROJECT_DIR$/Room.java" />
         <option value="$PROJECT_DIR$/Board.java" />
+        <option value="$PROJECT_DIR$/src/Card.java" />
+        <option value="$PROJECT_DIR$/src/CluedoGame.java" />
+        <option value="$PROJECT_DIR$/src/LUI.java" />
+        <option value="$PROJECT_DIR$/tests/BoardTests.java" />
         <option value="$PROJECT_DIR$/src/Board.java" />
+        <option value="$PROJECT_DIR$/src/Cell.java" />
+        <option value="$PROJECT_DIR$/src/Character.java" />
+        <option value="$PROJECT_DIR$/src/Room.java" />
+        <option value="$PROJECT_DIR$/src/User.java" />
+        <option value="$PROJECT_DIR$/src/Weapon.java" />
       </list>
     </option>
   </component>
@@ -117,27 +93,36 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="cludo.code" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cludo.code" type="462c0819:PsiDirectoryNode" />
+              <item name="code" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="cludo.code" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cludo.code" type="462c0819:PsiDirectoryNode" />
+              <item name="code" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="code" type="b2602c69:ProjectViewProjectNode" />
+              <item name="code" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -168,7 +153,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.CluedoGame (1)">
+  <component name="RunManager" selected="JUnit.BoardTests">
     <configuration name="Board (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="src.Board" />
       <module name="source" />
@@ -209,9 +194,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="code" />
+    <configuration name="BoardTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="source" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="tests" />
+      <option name="MAIN_CLASS_NAME" value="tests.BoardTests" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -265,11 +258,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.BoardTests" />
         <item itemvalue="Application.CluedoGame (1)" />
         <item itemvalue="Application.Board (1)" />
         <item itemvalue="Application.Board" />
         <item itemvalue="Application.CluedoGame" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -293,17 +286,18 @@
       <workItem from="1564097771786" duration="3463000" />
       <workItem from="1564129229752" duration="160000" />
       <workItem from="1564129434058" duration="54000" />
+      <workItem from="1564129509331" duration="785000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35107000" />
+    <option name="totallyTimeSpent" value="35892000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-638" y="-1440" width="3656" height="1406" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.05923248" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.099276975" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -383,7 +377,86 @@
     <entry file="file://$PROJECT_DIR$/Board.java" />
     <entry file="file://$PROJECT_DIR$/Room.java" />
     <entry file="file://$PROJECT_DIR$/src/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="145" column="7" lean-forward="true" selection-start-line="145" selection-start-column="7" selection-end-line="145" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Card.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Cell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Character.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1205">
+          <caret line="121" column="1" lean-forward="true" selection-start-line="121" selection-start-column="1" selection-end-line="121" selection-end-column="1" />
+          <folding>
+            <element signature="method#parseAliasFromOrdinalChar#0;class#Character#0" />
+            <element signature="e#1605#1657#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CluedoGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3855">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/LUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5435">
+          <caret line="13" column="6" selection-start-line="13" selection-end-line="13" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MapBase.txt">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Room.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1205">
+          <caret line="193" column="1" lean-forward="true" selection-start-line="193" selection-start-column="1" selection-end-line="193" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Weapon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="51" column="11" selection-start-line="51" selection-start-column="11" selection-end-line="51" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/BoardTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#121#122#0" expanded="true" />
+            <element signature="e#158#159#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">

@@ -199,7 +199,7 @@ public class CluedoGame {
 			throw new NullPointerException("Undefined position (off the board)");
 
 		Cell start = user.getCharacter().getPosition();
-		if (board.calcPath(start, end, diceRoll)) {
+		if (board.calcValidPath(start, end, diceRoll)) {
 			board.moveCharacter(user, start, end);
 			return "8";
 		}

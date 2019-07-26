@@ -39,7 +39,7 @@ public class Room extends Card {
 	 * Room: The constructor for a Room.
 	 * @param roomAlias The RoomAlias of the Room to create.
 	 */
-	Room(RoomAlias roomAlias) {
+	public Room(RoomAlias roomAlias) {
 		super(roomAlias.toString());
 		this.roomAlias = roomAlias;
 		cells = new HashSet<>();
@@ -53,14 +53,13 @@ public class Room extends Card {
 	 * If any cell in room has a neighbour that is not in this room.
 	 * Then add that neighbour to the doors. (no door should be in the room).
 	 */
-	void calculateDoors() {
+	public void calculateDoors() {
 		doors = new HashSet<>();
 
 		for (Cell cell : cells) {
 			for (Cell neigh : cell.getNeighbors().values()) {
 				if (neigh.getRoom() == this) continue;
 				doors.add(neigh);
-				break;
 			}
 		}
 	}
@@ -69,7 +68,7 @@ public class Room extends Card {
 	 * getDoors: Returns a set of all the doors of the room.
 	 * @return
 	 */
-	Set<Cell> getDoors() {
+	public Set<Cell> getDoors() {
 		return doors;
 	}
 
@@ -81,14 +80,14 @@ public class Room extends Card {
 	 * getCells: Returns a set of all the cells stored in a Room.
 	 * @return Set containing all cells.
 	 */
-	Set<Cell> getCells() { return cells; }
+	public Set<Cell> getCells() { return cells; }
 
 	/**
 	 * addCell: Adds a Cell to a room.
 	 * Also sets the cells Room to this.
 	 * @param cell Cell to add to the room.
 	 */
-	void addCell(Cell cell) {
+	public void addCell(Cell cell) {
 		if (cell == null) return;
 		this.cells.add(cell);
 		cell.setRoom(this);
@@ -98,31 +97,31 @@ public class Room extends Card {
 	 * getInThisRoom: Returns a Set of all the Users in the current Room.
 	 * @return Set of users.
 	 */
-	Set<User> getInThisRoom() { return inThisRoom; }
+	public Set<User> getInThisRoom() { return inThisRoom; }
 
 	/**
 	 * addToRoom: Add a current user to the room.
 	 * @param user User to add to the room.
 	 */
-	void addToRoom(User user) { this.inThisRoom.add(user); }
+	public void addToRoom(User user) { this.inThisRoom.add(user); }
 
 	/**
 	 * removeFromRoom: Remove a provided User from the room.
 	 * @param user User to remove from the room.
 	 */
-	void removeFromRoom(User user) { this.inThisRoom.remove(user); }
+	public void removeFromRoom(User user) { this.inThisRoom.remove(user); }
 
 	/**
 	 * getWeapon: Gets the Weapon stored in the Room.
 	 * @return Weapon that is stored in the current Room.
 	 */
-	Weapon getWeapon() { return weapon; }
+	public Weapon getWeapon() { return weapon; }
 
 	/**
 	 * setWeapon: Sets the Weapon currently stored in the Room to a new one.
 	 * @param weapon The new Weapon to replace the old Weapon.
 	 */
-	void setWeapon(Weapon weapon) {
+	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 		if (weapon == null) return;
 		weapon.setRoom(this);
@@ -133,14 +132,14 @@ public class Room extends Card {
 	 * getRoomAlias: Gets the RoomAlias of the current Room.
 	 * @return RoomAlias of the current Room.
 	 */
-	RoomAlias getRoomAlias() { return roomAlias; }
+	public RoomAlias getRoomAlias() { return roomAlias; }
 
 	/**
 	 * Given a char, find the matching RoomAlias according to our MapBase.txt file.
 	 * @param c The char corresponding to a Room on the MapFile.
 	 * @return The corresponding RoomAlias.
 	 */
-	static RoomAlias parseAliasFromOrdinalChar(char c) {
+	public static RoomAlias parseAliasFromOrdinalChar(char c) {
 		switch (c) {
 			case 'K': return RoomAlias.KITCHEN;
 			case 'B': return RoomAlias.BALLROOM;
@@ -160,7 +159,7 @@ public class Room extends Card {
 	 * @param i The int corresponding to a RoomAlias' enum position.
 	 * @return The RoomAlias declared at that enum ordinal.
 	 */
-	static RoomAlias parseAliasFromOrdinalInt(int i) {
+	public static RoomAlias parseAliasFromOrdinalInt(int i) {
 		switch (i) {
 			case 0: return RoomAlias.KITCHEN;
 			case 1: return RoomAlias.BALLROOM;

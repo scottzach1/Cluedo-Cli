@@ -18,7 +18,7 @@ public class Character extends Card {
 	// CONSTRUCTOR
 	// ------------------------
 
-	Character(String aName) {
+	public Character(String aName) {
 		super(aName);
 
 		// Set character alias
@@ -50,31 +50,31 @@ public class Character extends Card {
 	// INTERFACE
 	// ------------------------
 
-	User getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	void setUser(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
-	CharacterAlias getCharAlias() {
+	public CharacterAlias getCharAlias() {
 		return charAlias;
 	}
 
-	void setCharAlias(CharacterAlias charAlias) {
+	public void setCharAlias(CharacterAlias charAlias) {
 		this.charAlias = charAlias;
 	}
 
-	void setPosition(Cell position) {
+	public void setPosition(Cell position) {
 		this.positionCell = position;
 	}
 
-	Cell getPosition() {
+	public Cell getPosition() {
 		return positionCell;
 	}
 
-	static CharacterAlias parseAliasFromOrdinalChar(char c) {
+	public static CharacterAlias parseAliasFromOrdinalChar(char c) {
 		int i = Integer.parseInt(c + "");
 		for (CharacterAlias alias : CharacterAlias.values()) {
 			if (alias.ordinal() == i)
@@ -83,7 +83,7 @@ public class Character extends Card {
 		throw new IllegalStateException("Error parsing " + c + " as an ordinal for CharacterAlias.");
 	}	
 	
-	static CharacterAlias parseAliasFromOrdinalInt(int i) {
+	public static CharacterAlias parseAliasFromOrdinalInt(int i) {
 		int sizeOfCharacterValues = Character.CharacterAlias.values().length;
 		if (i >= 0 && i < sizeOfCharacterValues)
 			return Character.CharacterAlias.values()[i];

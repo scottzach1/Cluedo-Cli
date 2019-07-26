@@ -40,39 +40,39 @@ public class User {
 	// INTERFACE
 	// ------------------------
 
-	userNo getUserNo() {
+	public userNo getUserNo() {
 		return userNum;
 	}
 
-	String getUserName() {
+	public String getUserName() {
 		return userName;
 	}
 
-	void setUserName(String userName) {
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	List<Card> getHand() {
+	public List<Card> getHand() {
 		return hand;
 	}
 
-	void addToHand(Card card) {
+	public void addToHand(Card card) {
 		this.hand.add(card);
 	}
 
-	Set<Card> getObservedCards() {
+	public Set<Card> getObservedCards() {
 		return observedCards;
 	}
 
-	void setObservedCards(Set<Card> knownCards) {
+	public void setObservedCards(Set<Card> knownCards) {
 		this.observedCards = knownCards;
 	}
 
-	Character getCharacter() {
+	public Character getCharacter() {
 		return character;
 	}
 
-	void setCharacter(Character character) {
+	public void setCharacter(Character character) {
 		this.character = character;
 	}
 

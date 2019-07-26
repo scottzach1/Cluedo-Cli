@@ -149,7 +149,7 @@ public class Board {
 	 *
 	 * @return map of Characters on the Board.
 	 */
-	Map<Character.CharacterAlias, Character> getCharacters() {
+	public Map<Character.CharacterAlias, Character> getCharacters() {
 		return characters;
 	}
 
@@ -159,28 +159,50 @@ public class Board {
 	 *
 	 * @return map of Rooms on the Board.
 	 */
-	Map<Room.RoomAlias, Room> getRooms() {
+	public Map<Room.RoomAlias, Room> getRooms() {
 		return rooms;
 	}
 
-	Map<Weapon.WeaponAlias, Weapon> getWeapons() {
+	public Map<Weapon.WeaponAlias, Weapon> getWeapons() {
 		return weapons;
 	}
 
 	/**
-	 * calcPath: Calculates whether a move path can be made based on the start
+	 * calcValidPath: Calculates whether a path from start to end is valid
+	 * given the provided number of steps.
+	 *
+	 * @param start the starting Cell on the map.
+	 * @param end the desired cell on the map.
+	 * @param numSteps The maximum number of steps allowed.
+	 * @return true valid, false otherwise.
+	 */
+	public boolean calcValidPath(Cell start, Cell end, int numSteps) {
+		return calcNumSteps(start, end) <= numSteps;
+	}
+
+	/**
+	 * Calculates whether a path from start to end is valid
+	 * given the provided number of steps.
+	 * Input Strings: "H3" or "G13"
+	 *
+	 * @param start the starting Cell on the map.
+	 * @param end the desired cell on the map.
+	 * @param numSteps The maximum number of steps allowed.
+	 * @return true valid, false otherwise.
+	 */
+	public boolean calcPathFromStrings(String start, String end, int numSteps) {
+		return calcValidPath(getCell(start), getCell(end), numSteps);
+	}
+
+	/**
+	 * calcPath: Calculates the number of turns to move from a cell to another.
 	 * @param start the starting cell on the map.
 	 * @param end the desired cell on the map.
-	 * @param numSteps the max number of steps allowed.
-	 * @return boolean true if path exists within cost. false otherwise.
+	 * @return int number of steps. Integer.MaxNumber if invalid path.
 	 */
-	boolean calcPath(Cell start, Cell end, int numSteps) {
-
-		System.out.println(start.toString() + " -> " + end.toString());
+	public int calcNumSteps(Cell start, Cell end) {
 
 		Room targRoom = end.getRoom();
-
-		System.out.println("Room:" + start.getRoom() + " -> " + targRoom);
 
 		Queue<Cell> depthQueue = new ArrayDeque<>();
 		Map<Cell, Cell> parentMap = new HashMap<>();
@@ -191,12 +213,9 @@ public class Board {
 		Cell cell;
 
 		while (true) {
-			if (depthQueue.isEmpty()) return false;
-
+			if (depthQueue.isEmpty()) return Integer.MAX_VALUE;
 
 			cell = depthQueue.poll();
-
-//			System.out.println("Cell" + ((char) cell.getCol() + 'A') + cell.getRow());
 
 			if (visited.contains(cell)) continue;
 			if ((targRoom != null && cell.getRoom() == targRoom) || cell == end) break;
@@ -212,8 +231,6 @@ public class Board {
 			visited.add(cell);
 		}
 
-		System.out.println("FOUND!");
-
 		Stack<Cell> path = new Stack<>();
 
 		while (parentMap.get(cell) != null) {
@@ -221,13 +238,11 @@ public class Board {
 			cell = parentMap.get(cell);
 		}
 
-		// If needed, you can use path.
-		System.out.println("STEPS: " + path.size());
-		return path.size() <= numSteps;
+		return path.size();
 	}
 	
 	
-	void moveCharacter(User user, Cell from, Cell to) {
+	public void moveCharacter(User user, Cell from, Cell to) {
 		Character character = user.getCharacter();
 		to.setCharacter(character);
 		from.setCharacter(null);		
@@ -263,7 +278,7 @@ public class Board {
 	/**
 	 * printBoardState: Prints the current state of the board to the console.
 	 */
-	void printBoardState() {
+	public void printBoardState() {
 		System.out.println("\t\t   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
 		for (int row = 0; row < rows; row++) {
 			System.out.print("\t\t");
@@ -318,15 +333,11 @@ public class Board {
 				"   A B C D E F G H I J K L M N O P Q R S T U V W X";
 	}
 
-	Cell getCell(String cord) {
+	public Cell getCell(String cord) {
 		int col = cord.charAt(0) - 'A';
 		int row = Integer.parseUnsignedInt(cord.substring(1)) - 1;
 
 		return getCell(row, col);
-	}
-
-	boolean calcPath(String cord1, String cord2, int numSteps) {
-		return calcPath(getCell(cord1), getCell(cord2), numSteps);
 	}
 
 	/**
@@ -336,7 +347,6 @@ public class Board {
 	public static void main(String[] args) {
 		Board b = new Board();
 		b.printBoardState();
-		System.out.print(b.calcPath("B2", "H2", 10));
-		System.out.print(b.calcPath("Q21", "B24", 10));
+
 	}
 }

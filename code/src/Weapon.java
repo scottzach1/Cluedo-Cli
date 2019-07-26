@@ -49,7 +49,7 @@ public class Weapon extends Card {
 	 * setRoom: Replaces the current Room with a new one.
 	 * @param room The new Room this Weapon is stored in.
 	 */
-	void setRoom(Room room) {
+	public void setRoom(Room room) {
 		this.room = room;
 		if (room == null) return;
 		room.setWeapon(this);
@@ -64,7 +64,7 @@ public class Weapon extends Card {
 	 * @param i The int corresponding to a WeaponAlias' enum position.
 	 * @return The Weapon declared at that enum ordinal.
 	 */
-	static WeaponAlias parseAliasFromOrdinalInt(int i) {
+	public static WeaponAlias parseAliasFromOrdinalInt(int i) {
 		int sizeOfCharacterValues = WeaponAlias.values().length;
 		if (i >= 0 && i < sizeOfCharacterValues)
 			return WeaponAlias.values()[i];
