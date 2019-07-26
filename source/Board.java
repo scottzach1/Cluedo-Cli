@@ -17,12 +17,19 @@ public class Board {
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
+
+	/**
+	 * Board: The constructor for Board.
+	 *	- Creates a new 2d array and populates with Cells.
+	 * 	- Generates characters and places at corresponding starting positions.
+	 * 	- Generates Weapons and randomly allocates them to Rooms.
+	 */
 	Board() {
 
 		// Generate room cards
 		rooms = new HashMap<>();
 		for (Room.RoomAlias alias : Room.RoomAlias.values()) {
-			rooms.put(alias, new Room(alias.toString()));
+			rooms.put(alias, new Room(alias));
 		}
 
 		// Generate character cards
@@ -34,7 +41,7 @@ public class Board {
 		// Generate Weapon cards
 		weapons = new HashMap<>();
 		for (Weapon.WeaponAlias alias : Weapon.WeaponAlias.values()) {
-			weapons.put(alias, new Weapon(alias.toString()));
+			weapons.put(alias, new Weapon(alias));
 		}
 
 		// Load Map Based off file layout
@@ -71,6 +78,7 @@ public class Board {
 							cell.setCharacter(currentCharacter);
 						} catch (Exception e) {
 							System.out.println("Not a number cell!");
+							// Continue as normal as if it were blank.
 						}
 					}
 
@@ -132,29 +140,59 @@ public class Board {
 	// INTERFACE
 	// ------------------------
 
-	public Map<Character.CharacterAlias, Character> getCharacters() {
+	/**
+	 * getCharacters: Return a map of all the Characters on the Board.
+	 * (Where keys are their corresponding CharacterAlias).
+	 * @return map of Characters on the Board.
+	 */
+	Map<Character.CharacterAlias, Character> getCharacters() {
 		return characters;
 	}
 
-	public Map<Room.RoomAlias, Room> getRooms() {
+	/**
+	 * getRooms: Return a map of all the Rooms on the Board.
+	 * (Where keys are their corresponding RoomAlias).
+	 * @return map of Rooms on the Board.
+	 */
+	Map<Room.RoomAlias, Room> getRooms() {
 		return rooms;
 	}
 
-	public Map<Weapon.WeaponAlias, Weapon> getWeapons() {
+	Map<Weapon.WeaponAlias, Weapon> getWeapons() {
 		return weapons;
 	}
 
-	public Stack<Cell> getPath(Cell start, Cell end, int numSteps) {
+	/**
+	 * TODO THIS HAS NOT BEEN IMPLEMENTED
+	 * @param start
+	 * @param end
+	 * @param numSteps
+	 * @return
+	 */
+	Stack<Cell> getPath(Cell start, Cell end, int numSteps) {
 		Stack<Cell> path = new Stack<>();
 		path.push(start);
 		return getPathHelper(path, end, numSteps);
 	}
 
+	/**
+	 * TODO THIS HAS NOT BEEN IMPLEMENTED
+	 * @param path
+	 * @param end
+	 * @param numStepsLeft
+	 * @return
+	 */
 	private Stack<Cell> getPathHelper(Stack<Cell> path, Cell end, int numStepsLeft) {
 		// TODO: Implement path finding.
 		return null;
 	}
 
+	/**
+	 * getCell: Return the Cell stored at the given row/col.
+	 * @param row Row of the cell to return.
+	 * @param col Col of the cell to return.
+	 * @return Cell at the provided row/col.
+	 */
 	public Cell getCell(int row, int col) {
 		if (row < 0 || row >= rows - 1)
 			return null;
@@ -164,15 +202,22 @@ public class Board {
 		return cells[row][col];
 	}
 
-	public int getRows() {
-		return rows;
-	}
+	/**
+	 * getRows: Return the number of rows on the map.
+	 * @return int Number of rows on the map.
+	 */
+	public int getRows() { return rows; }
 
-	public int getCols() {
-		return cols;
-	}
+	/**
+	 * getCols: Return the number of cols on the map.
+	 * @return int Number of cols on the map.
+	 */
+	public int getCols() { return cols; }
 
-	public void printBoardState() {
+	/**
+	 * printBoardState: Prints the current state of the board to the console.
+	 */
+	void printBoardState() {
 		System.out.println("\t\t   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
 		for (int row = 0; row < rows; row++) {
 			System.out.print("\t\t");
@@ -192,9 +237,12 @@ public class Board {
 			System.out.print("\n");
 		}
 	}
-	
-	
-	public String getMapBase() {
+
+	/**
+	 * getMapBase: Returns a String copy of the map to load.
+	 * @return String copy of map to load.
+	 */
+	private String getMapBase() {
 		return "MAP 25 24\r\n" + 
 				"   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\r\n" + 
 				"01|#|#|#|#|#|#|#|0|#|#|#|#|#|#|#|#|1|#|#|#|#|#|#|#|\r\n" + 
@@ -224,11 +272,13 @@ public class Board {
 				"25|#|#|#|#|#|#|4|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|\r\n" + 
 				"   A B C D E F G H I J K L M N O P Q R S T U V W X";
 	}
-	
+
+	/**
+	 * main: Launch point for testing rendering of the map.
+	 * @param args invocation arguments. (ignored).
+	 */
 	public static void main(String[] args) {
 		Board b = new Board();
 		b.printBoardState();
 	}
-	
-	
 }
