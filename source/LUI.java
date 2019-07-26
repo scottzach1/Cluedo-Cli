@@ -170,7 +170,7 @@ public class LUI {
 		if (status.contentEquals("1"))
 			return movePlayer(user);
 		if (status.contentEquals("2"))
-			return showHand();
+			return showHand(user);
 		if (status.contentEquals("3"))
 			return showObservations();
 		if (status.contentEquals("4"))
@@ -194,10 +194,9 @@ public class LUI {
 			
 			if (input.equals("B")) return "MENU";
 			
-			
-			if (input.length() != 2) {
-				System.out.println("Co-Ordinates did not match apllicable styles");
-				continue;
+			String [] position = input.split("\\d");
+			for (String s : position) {
+				System.out.println(s);
 			}
 			
 		}
@@ -209,6 +208,10 @@ public class LUI {
 		int num1 = dice.nextInt(6) + 1;
 		int num2 = dice.nextInt(6) + 1;
 		return num1 + num2;
+	}
+	
+	private String showHand(User user) {
+		return "";
 	}
 	
 	private String showObservations() {
