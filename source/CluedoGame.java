@@ -124,7 +124,7 @@ public class CluedoGame {
 			userObj.setCharacter(board.getCharacters().get(userCharacterAlias));
 			users.add(userObj);
 		}
-		
+
 		// Create users hands
 		if (users.size() > 2)
 			generateHands();
@@ -132,8 +132,9 @@ public class CluedoGame {
 
 	private void rounds() {
 		// Run the game by doing rounds, int user is the users turn
+		String error = "";
 		int userNum = 0;
-		while (!status.equals("3")) {
+		while (!status.equals("9")) {
 			LUI.clearConsole();
 			board.printBoardState();
 			User user = users.get(userNum);
@@ -142,19 +143,48 @@ public class CluedoGame {
 			if (position.getType() == Cell.Type.ROOM)
 				System.out.println(position.getRoom().toString());
 
-			status = lui.round(user);
+			status = lui.round(user, error);
+			error = "";
 			// 1: Move, 2: Hand, 3: Observations, 4: Suggest, 5: Accuse (Solve), 8: Next
 			// User, 9: Quit Game
 
-			// Change the user after prev user has exited their turn
+			if (status.length() == 0)
+				continue;
+
+			if (status.charAt(0) == '1') {
+				String[] components = status.split("-");
+				try {
+					int row = Integer.parseInt(components[1]);
+					int col = Integer.parseInt(components[2]);
+					Cell cell = board.getCell(row, col);
+					int diceRoll = Integer.parseInt(components[3]);
+					status = makeMove(cell, diceRoll, user);
+				} catch (RuntimeException rt) {
+					error = "[" + components[1] + "][" + components[2] + "]" + " can not be reached";
+				} catch (Exception e) {
+					error = "[" + components[1] + "][" + components[2] + "]" + " is not a valid cell";
+				}
+			}
+
+			// [8] Change the user after prev user has exited their turn
 			if (status.equals("8")) {
 				userNum = (userNum + 1) % users.size();
 			}
-			// Finish the game by exiting this while loop
+			// [9] Finish the game by exiting this while loop
 			if (status.equals("9")) {
-				return;
+				System.out.println("Thanks for playing");
 			}
 		}
+	}
+
+	private String makeMove(Cell end, int diceRoll, User user) throws Exception {
+		Cell start = user.getCharacter().getPosition();
+		if (board.calcPath(start, end, diceRoll)) {
+			board.moveCharacter(user, start, end);
+			return "8";
+		}
+		throw new RuntimeException("Invalid Move - Not enough steps");
+
 	}
 
 	private void generateSolution() {
@@ -170,38 +200,36 @@ public class CluedoGame {
 		solution[2] = room;
 
 	}
-	
+
 	private void generateHands() {
 		Map<Character.CharacterAlias, Character> nonSolutionCharacters = new HashMap<>(board.getCharacters());
 		Map<Weapon.WeaponAlias, Weapon> nonSolutionWeapons = new HashMap<>(board.getWeapons());
 		Map<Room.RoomAlias, Room> nonSolutionRooms = new HashMap<>(board.getRooms());
-		
+
 		nonSolutionCharacters.remove(((Character) solution[0]).getCharAlias());
-		nonSolutionWeapons.remove(((Weapon) solution[1]).getWeaponAlias()); 
+		nonSolutionWeapons.remove(((Weapon) solution[1]).getWeaponAlias());
 		nonSolutionRooms.remove(((Room) solution[2]).getRoomAlias());
-		
-		
+
 		int userNum = 0;
-		
+
 		for (Character c : nonSolutionCharacters.values()) {
 			User user = users.get(userNum);
 			user.addToHand(c);
-			userNum = (userNum+1) % users.size();
+			userNum = (userNum + 1) % users.size();
 		}
-		
+
 		for (Weapon w : nonSolutionWeapons.values()) {
 			User user = users.get(userNum);
 			user.addToHand(w);
-			userNum = (userNum+1) % users.size();
+			userNum = (userNum + 1) % users.size();
 		}
-		
+
 		for (Room r : nonSolutionRooms.values()) {
 			User user = users.get(userNum);
 			user.addToHand(r);
-			userNum = (userNum+1) % users.size();
+			userNum = (userNum + 1) % users.size();
 		}
-		
-		
+
 	}
 
 	public static void main(String[] args) {

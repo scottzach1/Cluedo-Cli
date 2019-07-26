@@ -19,7 +19,7 @@ public class User {
 
 	private userNo userNum;
 	private String userName;
-	private Set<Card> hand;
+	private List<Card> hand;
 	private Set<Card> observedCards;
 	private Character character;
 
@@ -31,7 +31,7 @@ public class User {
 	public User() {
 		User.USERS++;
 		userNum = userNo.values()[User.USERS];
-		hand = new HashSet<>();
+		hand = new ArrayList<>();
 	}
 
 	// ------------------------
@@ -50,7 +50,7 @@ public class User {
 		this.userName = userName;
 	}
 
-	Set<Card> getHand() {
+	List<Card> getHand() {
 		return hand;
 	}
 

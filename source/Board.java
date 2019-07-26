@@ -210,6 +210,13 @@ public class Board {
 		
 		return path.size() <= numSteps;
 	}
+	
+	
+	void moveCharacter(User user, Cell from, Cell to) {
+		Character character = user.getCharacter();
+		to.setCharacter(character);
+		from.setCharacter(null);		
+	}
 
 	/**
 	 * getCell: Return the Cell stored at the given row/col.

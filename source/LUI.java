@@ -43,7 +43,7 @@ public class LUI {
 
 	public String howToPlay() {
 		return readInput(
-				  "\nAim:\t\tFigure out the mystery to who murdered the butler, what weapon they used, and in what room."
+				"\nAim:\t\tFigure out the mystery to who murdered the butler, what weapon they used, and in what room."
 						+ "\nGame:\t\tThe game is turn based. Upon starting, each player is dealt a hand of cards. These cards are secret"
 						+ "\n\t\tand give you evidence as to who, what and where the murder DIDN'T take place."
 						+ "\n\t\tOn your turn, you roll two dice and navigate your around the map. To find out what other players have,"
@@ -146,12 +146,12 @@ public class LUI {
 
 	}
 
-	public String round(User user) {
+	public String round(User user, String error) {
 		String input = "";
 
 		// Stage one, choose whether to Move, Accuse, Suggest, look at hand, look at
 		// cheat sheet.
-		input = stageOne(user);
+		input = stageOne(user, error);
 
 		// Deal with the choice made in stage one.
 		input = stageTwo(input, user);
@@ -159,7 +159,10 @@ public class LUI {
 		return input;
 	}
 
-	private String stageOne(User user) {
+	private String stageOne(User user, String error) {
+		if (error.length() > 0)
+			System.out.println("\n\n ERROR: " + error + "\n \n");
+		
 		return readInput(user.getUserName() + " it's your turn:" + "\n-[1] Move " + "\n -[2] Hand"
 				+ "\n  -[3] Observations" + "\n   -[4] Suggest" + "\n    -[5] Accuse (Solve)" + "\n     -[8] Skip turn"
 				+ "\n      -[9] Quit Game", user.getUserName());
@@ -167,15 +170,15 @@ public class LUI {
 
 	public String stageTwo(String status, User user) {
 		if (status.contentEquals("1"))
-			return "1-"+movePlayer(user);
+			return "1-" + movePlayer(user);
 		if (status.contentEquals("2"))
-			return "2-"+showHand(user);
+			return "2-" + showHand(user);
 		if (status.contentEquals("3"))
-			return "3-"+showObservations();
+			return "3-" + showObservations(user);
 		if (status.contentEquals("4"))
-			return "4-"+suggestion();
+			return "4-" + suggestion(user);
 		if (status.contentEquals("5"))
-			return "5-"+accusation();
+			return "5-" + accusation(user);
 		if (status.contentEquals("8"))
 			return "8";
 		if (status.contentEquals("9"))
@@ -185,12 +188,13 @@ public class LUI {
 	}
 
 	private String movePlayer(User user) {
+		int diceRoll = rollDice();
 		String input = "";
 		String cellCoordinates = "";
 		while (cellCoordinates.length() == 0) {
 			input = readInput(
 					"Enter cell position you would like to move to (e.g '1,A' or 'B,2', row and col order doesnt matter)."
-							+ "\n-[B] Back to Menu\n -[Enter] Enter Cell Position",
+							+ "\n Dice Roll = " + diceRoll + "\n-[B] Back to Menu\n -[Enter] Enter Cell Position",
 					user.getUserName()).toUpperCase();
 
 			if (input.equals("B"))
@@ -199,14 +203,16 @@ public class LUI {
 			String[] position = input.split(",");
 
 			if (position.length == 2) {
-				int row;
+				int row, col;
 				try {
 					row = Integer.parseInt(position[0]);
-					cellCoordinates = row + "," + position[1];
+					col = position[1].charAt(0) - 'A';
+					cellCoordinates = row + "-" + col;
 				} catch (Exception e) {
 					try {
 						row = Integer.parseInt(position[1]);
-						cellCoordinates = row + "," + position[0];
+						col = position[0].charAt(0) - 'A';
+						cellCoordinates = row + "-" + col;
 					} catch (Exception e2) {
 						System.out.println("Unable to read coordinates");
 					}
@@ -216,27 +222,42 @@ public class LUI {
 			}
 
 		}
-		return cellCoordinates;
+		return cellCoordinates + "-" + diceRoll;
 	}
 
 	private String showHand(User user) {
-		for (Card c : user.getHand()) {
-			System.out.println(c.getClass().getName() + ":" + c.getName());
+		List<Card> usersHand = user.getHand();
+		int handIndex = 0, handSize = usersHand.size();
+		System.out.println("Characters:");
+		while (handIndex < handSize && usersHand.get(handIndex) instanceof Character) {
+			System.out.println("  " + usersHand.get(handIndex).getName());
+			handIndex++;
 		}
-		return readInput("[ANY] Go back to menu", user.getUserName());
+		System.out.println("Weapons:");
+		while (handIndex < handSize && usersHand.get(handIndex) instanceof Weapon) {
+			System.out.println("  " + usersHand.get(handIndex).getName());
+			handIndex++;
+		}
+		System.out.println("Rooms:");
+		while (handIndex < handSize && usersHand.get(handIndex) instanceof Room) {
+			System.out.println("  " + usersHand.get(handIndex).getName());
+			handIndex++;
+		}
+
+		return readInput("\n-[ANY] Go back to menu", user.getUserName());
 	}
 
-	private String showObservations() {
+	private String showObservations(User user) {
+
+		return "";
+	}
+
+	private String suggestion(User user) {
 		// TODO
 		return "";
 	}
 
-	private String suggestion() {
-		// TODO
-		return "";
-	}
-
-	private String accusation() {
+	private String accusation(User user) {
 		// TODO
 		return "";
 	}
@@ -268,7 +289,7 @@ public class LUI {
 
 		// Print message and read input
 		try {
-			System.out.print(message + "\n\n" + player + ":\t");
+			System.out.print(message + "\n\n" + player + ":  ");
 			input = reader.readLine();
 			System.out.println();
 		} catch (Exception e) {
