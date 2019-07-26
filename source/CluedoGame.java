@@ -82,9 +82,11 @@ public class CluedoGame {
 		String[] components = status.split("\\W");
 
 		/**
-		 * Format of components: [0] String : "Players" [1] Integer : Player count [2]
-		 * String: "Player" [3] Integer : Player number [4] String: "Character" [5]
-		 * CharacterAlias : Players Character
+		 * Format of components: [0] String : "Players", [1] Integer : playerCount, [2 *
+		 * playerCount + 2] String: "Player", [3 * playerCount + 2] Integer :
+		 * userNumber, [4 * playerCount + 2] String : "UserName", [5 * playerCount + 2]
+		 * String : userName, [6 * playerCount + 2] String : "Character" [7 *
+		 * playerCount + 2] CharacterAlias : Players Character
 		 */
 
 		int playerCount = 0;
@@ -135,6 +137,7 @@ public class CluedoGame {
 		String error = "";
 		int userNum = 0;
 		while (!status.equals("9")) {
+			// Refresh after option selection --------
 			LUI.clearConsole();
 			board.printBoardState();
 			User user = users.get(userNum);
@@ -151,13 +154,18 @@ public class CluedoGame {
 			if (status.length() == 0)
 				continue;
 
+			// [1] Move the player
 			if (status.charAt(0) == '1') {
 				String[] components = status.split("-");
 				try {
+					// Already confirmed row and col, but already doing the try catch, so might as
+					// well put here
 					int row = Integer.parseInt(components[1]);
 					int col = Integer.parseInt(components[2]);
-					Cell cell = board.getCell(row, col);
 					int diceRoll = Integer.parseInt(components[3]);
+					// Get the cell, if null then....
+					Cell cell = board.getCell(row, col);
+					// Make move will break the try
 					status = makeMove(cell, diceRoll, user);
 				} catch (RuntimeException rt) {
 					error = "[" + components[1] + "][" + components[2] + "]" + " can not be reached";
@@ -178,13 +186,17 @@ public class CluedoGame {
 	}
 
 	private String makeMove(Cell end, int diceRoll, User user) throws Exception {
+
+		// Throw an exception is the cell is null
+		if (end == null)
+			throw new NullPointerException("Undefined position (off the board)");
+
 		Cell start = user.getCharacter().getPosition();
 		if (board.calcPath(start, end, diceRoll)) {
 			board.moveCharacter(user, start, end);
 			return "8";
 		}
 		throw new RuntimeException("Invalid Move - Not enough steps");
-
 	}
 
 	private void generateSolution() {

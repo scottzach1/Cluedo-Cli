@@ -255,7 +255,7 @@ public class Board {
 			for (int col = 0; col < cols; col++) {
 				// Print the row number at the start of each line
 				if (col == 0) {
-					String factoredRowNum = row + "";
+					String factoredRowNum = (row+1) + "";
 					while (factoredRowNum.length() < 2)
 						factoredRowNum = "0" + factoredRowNum;
 					System.out.print(factoredRowNum + "|");
@@ -267,7 +267,7 @@ public class Board {
 			// New line for every row
 			System.out.print("\n");
 		}
-		System.out.println("\t\t   A B C D E F G H I J K L M N O P Q R S T U V W X");
+		System.out.println("\t\t   A B C D E F G H I J K L M N O P Q R S T U V W X\n");
 	}
 
 	/**

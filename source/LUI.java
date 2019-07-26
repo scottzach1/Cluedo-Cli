@@ -1,12 +1,8 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.regex.Pattern;
 
 /**
  * @author Harri
@@ -162,13 +158,15 @@ public class LUI {
 	private String stageOne(User user, String error) {
 		if (error.length() > 0)
 			System.out.println("\n\n ERROR: " + error + "\n \n");
-		
-		return readInput(user.getUserName() + " it's your turn:" + "\n-[1] Move " + "\n -[2] Hand"
-				+ "\n  -[3] Observations" + "\n   -[4] Suggest" + "\n    -[5] Accuse (Solve)" + "\n     -[8] Skip turn"
+
+		return readInput(user.getUserName() + " it's your turn:" + "\nCharacter = " + user.getCharacter().getName()
+				+ " = " + user.getCharacter().toString() + "\n-[1] Move " + "\n -[2] Hand" + "\n  -[3] Observations"
+				+ "\n   -[4] Suggest" + "\n    -[5] Accuse (Solve)" + "\n     -[8] Skip turn"
 				+ "\n      -[9] Quit Game", user.getUserName());
 	}
 
 	public String stageTwo(String status, User user) {
+		// Do something based on stage 1's output
 		if (status.contentEquals("1"))
 			return "1-" + movePlayer(user);
 		if (status.contentEquals("2"))
@@ -188,14 +186,14 @@ public class LUI {
 	}
 
 	private String movePlayer(User user) {
+		//
 		int diceRoll = rollDice();
 		String input = "";
 		String cellCoordinates = "";
 		while (cellCoordinates.length() == 0) {
-			input = readInput(
-					"Enter cell position you would like to move to (e.g '1,A' or 'B,2', row and col order doesnt matter)."
-							+ "\n Dice Roll = " + diceRoll + "\n-[B] Back to Menu\n -[Enter] Enter Cell Position",
-					user.getUserName()).toUpperCase();
+			input = readInput("Enter cell position you would like to move to (e.g 'H,18')." + "\n Dice Roll = "
+					+ diceRoll + "\n-[B] Back to Menu\n -[Enter] Enter Cell Position", user.getUserName())
+							.toUpperCase();
 
 			if (input.equals("B"))
 				return "MENU";
@@ -205,17 +203,12 @@ public class LUI {
 			if (position.length == 2) {
 				int row, col;
 				try {
-					row = Integer.parseInt(position[0]);
-					col = position[1].charAt(0) - 'A';
+					row = Integer.parseInt(position[1]) - 1;
+					col = position[0].charAt(0) - 'A';
 					cellCoordinates = row + "-" + col;
 				} catch (Exception e) {
-					try {
-						row = Integer.parseInt(position[1]);
-						col = position[0].charAt(0) - 'A';
-						cellCoordinates = row + "-" + col;
-					} catch (Exception e2) {
-						System.out.println("Unable to read coordinates");
-					}
+					System.out.println("invalid co-ordinates");
+					cellCoordinates = "";
 				}
 			} else {
 				System.out.println("Unable to read coordinates");
