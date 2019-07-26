@@ -171,7 +171,7 @@ public class CluedoGame {
 
 	}
 	
-	public void generateHands() {
+	private void generateHands() {
 		Map<Character.CharacterAlias, Character> nonSolutionCharacters = new HashMap<>(board.getCharacters());
 		Map<Weapon.WeaponAlias, Weapon> nonSolutionWeapons = new HashMap<>(board.getWeapons());
 		Map<Room.RoomAlias, Room> nonSolutionRooms = new HashMap<>(board.getRooms());
