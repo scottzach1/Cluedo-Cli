@@ -6,8 +6,6 @@ public abstract class Card {
 
 	// Card Attributes
 	private String name;
-	
-
 
 	// ------------------------
 	// CONSTRUCTOR

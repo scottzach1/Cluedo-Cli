@@ -164,12 +164,11 @@ public class Board {
 	}
 
 	/**
-	 * TODO THIS HAS NOT BEEN IMPLEMENTED
-	 *
-	 * @param start
-	 * @param end
-	 * @param numSteps
-	 * @return
+	 * calcPath: Calculates whether a move path can be made based on the start
+	 * @param start the starting cell on the map.
+	 * @param end the desired cell on the map.
+	 * @param numSteps the max number of steps allowed.
+	 * @return boolean true if path exists within cost. false otherwise.
 	 */
 	boolean calcPath(Cell start, Cell end, int numSteps) {
 
@@ -188,15 +187,28 @@ public class Board {
 			if (visited.contains(cell)) continue;
 			if (cell.getRoom() == targRoom || cell == end) break;
 
-			if (cell.getRoom() != null) {
-				for (Cell door : cell.getRoom().getDoors()) {
+			Set<Cell> neighbours = (cell.getRoom() != null) ? cell.getRoom().getDoors() : new HashSet<>(cell.getNeighbors().values());
 
-				}
-			} else {
-				for (;;) {}
+			for (Cell neighbour : neighbours) {
+				if (visited.contains(neighbour)) continue;
+				parentMap.put(neighbour, cell);
+				depthQueue.offer(neighbour);
 			}
+
+			visited.add(cell);
 		}
-		return false;
+
+		Stack<Cell> path = new Stack<>();
+
+		Cell lastCell = end;
+		while (parentMap.get(lastCell) != start) {
+			path.push(lastCell);
+			lastCell = parentMap.get(lastCell);
+		}
+
+		// If needed, you can use path.
+		
+		return path.size() <= numSteps;
 	}
 
 	/**
