@@ -158,23 +158,23 @@ public class CluedoGame {
 			if (status.length() == 0)
 				continue;
 
-			// [1] Move the player
+//ZAC, HERE	// [1] Move the player
 			if (status.charAt(0) == '1') {
-				String[] components = status.split("-");
+				String[] components = status.split(":");
 				try {
 					// Already confirmed row and col, but already doing the try catch, so might as
 					// well put here
-					int row = Integer.parseInt(components[1]);
-					int col = Integer.parseInt(components[2]);
-					int diceRoll = Integer.parseInt(components[3]);
+					int row = Integer.parseInt(components[0]);
+					int col = Integer.parseInt(components[1]);
+					int diceRoll = Integer.parseInt(components[2]);
 					// Get the cell, if null then....
 					Cell cell = board.getCell(row, col);
 					// Make move will break the try
 					status = makeMove(cell, diceRoll, user);
 				} catch (RuntimeException rt) {
-					error = "[" + components[1] + "][" + components[2] + "]" + " can not be reached";
+					error = "[" + components[0] + "][" + components[1] + "]" + " can not be reached";
 				} catch (Exception e) {
-					error = "[" + components[1] + "][" + components[2] + "]" + " is not a valid cell";
+					error = "[" + components[0] + "][" + components[1] + "]" + " is not a valid cell";
 				}
 			}
 
@@ -189,6 +189,7 @@ public class CluedoGame {
 		}
 	}
 
+//ZAC HERE 2
 	private String makeMove(Cell end, int diceRoll, User user) throws Exception {
 
 		// Throw an exception is the cell is null

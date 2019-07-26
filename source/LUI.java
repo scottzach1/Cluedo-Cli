@@ -204,7 +204,7 @@ public class LUI {
 		String cellCoordinates = "";
 		while (cellCoordinates.length() == 0) {
 			input = readInput("Enter cell position you would like to move to (e.g 'H,18')." + "\n Dice Roll = "
-					+ diceRoll + "\n-[B] Back to Menu\n -[Enter] Enter Cell Position", user.getUserName())
+					+ diceRoll + "\n\n-[B] Back to Menu\n -[Enter] Enter Cell Position", user.getUserName())
 							.toUpperCase();
 
 			if (input.equals("B"))
@@ -217,7 +217,7 @@ public class LUI {
 				try {
 					row = Integer.parseInt(position[1]) - 1;
 					col = position[0].charAt(0) - 'A';
-					cellCoordinates = row + "-" + col;
+					cellCoordinates = row + ":" + col;
 				} catch (Exception e) {
 					System.out.println("invalid co-ordinates");
 					cellCoordinates = "";
@@ -227,7 +227,7 @@ public class LUI {
 			}
 
 		}
-		return cellCoordinates + "-" + diceRoll;
+		return cellCoordinates + ":" + diceRoll;
 	}
 
 	private String showHand(User user) {
