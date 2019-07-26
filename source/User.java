@@ -2,7 +2,7 @@ import java.util.*;
 
 public class User {
 	
-	public static int USERS = 0;
+	private static int USERS = 0;
 	
 	public static enum userNo {
 		PLAYER_0, 
@@ -37,39 +37,39 @@ public class User {
 	// INTERFACE
 	// ------------------------
 
-	public userNo getUserNo() {
+	userNo getUserNo() {
 		return userNum;
 	}
 
-	public String getUserName() {
+	String getUserName() {
 		return userName;
 	}
 
-	public void setUserName(String userName) {
+	void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	public Set<Card> getHand() {
+	Set<Card> getHand() {
 		return hand;
 	}
 
-	public void setHand(Set<Card> hand) {
+	void setHand(Set<Card> hand) {
 		this.hand = hand;
 	}
 
-	public Set<Card> getObservedCards() {
+	Set<Card> getObservedCards() {
 		return observedCards;
 	}
 
-	public void setObservedCards(Set<Card> knownCards) {
+	void setObservedCards(Set<Card> knownCards) {
 		this.observedCards = knownCards;
 	}
 
-	public Character getCharacter() {
+	Character getCharacter() {
 		return character;
 	}
 
-	public void setCharacter(Character character) {
+	void setCharacter(Character character) {
 		this.character = character;
 	}
 	

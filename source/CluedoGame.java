@@ -15,16 +15,16 @@ public class CluedoGame {
 	// Game Attributes
 	private Board board;
 	private List<User> users;
-	private Card solution[];
+	private Card[] solution;
 	private LUI lui;
-	private Card observations[];
+	private Card[] observations;
 	private String status;
 
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
 
-	public CluedoGame() {
+	private CluedoGame() {
 		status = "";
 		lui = new LUI();
 		board = new Board();
@@ -38,7 +38,7 @@ public class CluedoGame {
 	// INTERFACE
 	// ------------------------
 
-	public void gameController() {
+	private void gameController() {
 		// Run the main menu first
 		mainMenu();
 		// If the player has chosen to quit
@@ -52,7 +52,7 @@ public class CluedoGame {
 		rounds();
 	}
 
-	public void mainMenu() {
+	private void mainMenu() {
 		// GAME MENU (below) --------------------------------------------------
 		status = "";
 
@@ -72,14 +72,14 @@ public class CluedoGame {
 
 	}
 
-	public void gameSetup() {
+	private void gameSetup() {
 		LUI.loading("");
 
 		status = lui.gameSetup();
 
 		// USER INFORMATION (below) --------------------------------------------------
 
-		String components[] = status.split("\\W");
+		String[] components = status.split("\\W");
 
 		/**
 		 * Format of components: [0] String : "Players" [1] Integer : Player count [2]
@@ -97,7 +97,7 @@ public class CluedoGame {
 		}
 
 		// Get rid of the first two (now useless) bits of information
-		String userInformation[] = Arrays.copyOfRange(components, 2, components.length);
+		String[] userInformation = Arrays.copyOfRange(components, 2, components.length);
 
 		for (int user = 0; user < playerCount; user++) {
 
@@ -126,7 +126,7 @@ public class CluedoGame {
 		}
 	}
 
-	public void rounds() {
+	private void rounds() {
 		// Run the game by doing rounds, int user is the users turn
 		int userNum = 0;
 		while (!status.equals("3")) {
@@ -153,7 +153,7 @@ public class CluedoGame {
 		}
 	}
 
-	public void generateSolution() {
+	private void generateSolution() {
 		solution = new Card[3];
 		Random random = new Random();
 

@@ -48,7 +48,7 @@ public class Weapon extends Card {
 	 * setRoom: Replaces the current Room with a new one.
 	 * @param room The new Room this Weapon is stored in.
 	 */
-	public void setRoom(Room room) {
+	void setRoom(Room room) {
 		this.room = room;
 		if (room == null) return;
 		room.setWeapon(this);

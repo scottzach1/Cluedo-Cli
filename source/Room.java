@@ -51,7 +51,7 @@ public class Room extends Card {
 	 * getCells: Returns a set of all the cells stored in a Room.
 	 * @return Set containing all cells.
 	 */
-	public Set<Cell> getCells() {
+	Set<Cell> getCells() {
 		return cells;
 	}
 
@@ -70,7 +70,7 @@ public class Room extends Card {
 	 * getInThisRoom: Returns a Set of all the Users in the current Room.
 	 * @return Set of users.
 	 */
-	public Set<User> getInThisRoom() {
+	Set<User> getInThisRoom() {
 		return inThisRoom;
 	}
 
@@ -78,19 +78,19 @@ public class Room extends Card {
 	 * addToRoom: Add a current user to the room.
 	 * @param user User to add to the room.
 	 */
-	public void addToRoom(User user) { this.inThisRoom.add(user); }
+	void addToRoom(User user) { this.inThisRoom.add(user); }
 
 	/**
 	 * removeFromRoom: Remove a provided User from the room.
 	 * @param user User to remove from the room.
 	 */
-	public void removeFromRoom(User user) { this.inThisRoom.remove(user); }
+	void removeFromRoom(User user) { this.inThisRoom.remove(user); }
 
 	/**
 	 * getWeapon: Gets the Weapon stored in the Room.
 	 * @return Weapon that is stored in the current Room.
 	 */
-	public Weapon getWeapon() {
+	Weapon getWeapon() {
 		return weapon;
 	}
 
@@ -98,7 +98,7 @@ public class Room extends Card {
 	 * setWeapon: Sets the Weapon currently stored in the Room to a new one.
 	 * @param weapon The new Weapon to replace the old Weapon.
 	 */
-	public void setWeapon(Weapon weapon) {
+	void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 		if (weapon == null) return;
 		weapon.setRoom(this);
