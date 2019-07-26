@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.*;
 
 public class Board {
@@ -10,7 +9,7 @@ public class Board {
 	// Board Attributes
 	private Map<Room.RoomAlias, Room> rooms;
 	private Map<Character.CharacterAlias, Character> characters;
-	private Map<Weapon.WeaponAlais, Weapon> weapons;
+	private Map<Weapon.WeaponAlias, Weapon> weapons;
 
 	private Cell[][] cells;
 	private int rows, cols;
@@ -34,7 +33,7 @@ public class Board {
 
 		// Generate Weapon cards
 		weapons = new HashMap<>();
-		for (Weapon.WeaponAlais alias : Weapon.WeaponAlais.values()) {
+		for (Weapon.WeaponAlias alias : Weapon.WeaponAlias.values()) {
 			weapons.put(alias, new Weapon(alias.toString()));
 		}
 
@@ -141,7 +140,7 @@ public class Board {
 		return rooms;
 	}
 
-	public Map<Weapon.WeaponAlais, Weapon> getWeapons() {
+	public Map<Weapon.WeaponAlias, Weapon> getWeapons() {
 		return weapons;
 	}
 

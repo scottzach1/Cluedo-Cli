@@ -1,13 +1,16 @@
 
 public class Weapon extends Card {
 
-	public enum WeaponAlais {
+	/**
+	 * An Enum defining the different Weapons in the Game.
+	 */
+	public enum WeaponAlias {
 		CANDLE_STICK,
 		DAGGER,
 		LEAD_PIPE,
 		REVOLVER,
 		ROPE,
-		SPANNER;
+		SPANNER
 	}
 
 	// ------------------------
@@ -15,37 +18,58 @@ public class Weapon extends Card {
 	// ------------------------
 
 	// Weapon Attributes
-	private Room location;
+	private Room room;
+	private WeaponAlias weaponAlias;
 
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Weapon(String aName) {
-		super(aName);
+	/**
+	 * Weapon: The Constructor for a new Weapon.
+	 * @param weaponAlias The WeaponAlias of the Weapon to create.
+	 */
+	Weapon(WeaponAlias weaponAlias) {
+		super(weaponAlias.toString());
+		this.weaponAlias = weaponAlias;
 	}
 
 	// ------------------------
 	// INTERFACE
 	// ------------------------
 
-	public Room getLocation() {
-		return location;
+	/**
+	 * getRoom: Returns the Room containing this Weapon.
+	 * @return Return parent Room.
+	 */
+	public Room getRoom() { return room; }
+
+	/**
+	 * setRoom: Replaces the current Room with a new one.
+	 * @param room The new Room this Weapon is stored in.
+	 */
+	public void setRoom(Room room) {
+		this.room = room;
+		if (room == null) return;
+		room.setWeapon(this);
 	}
 
-	public void setLocation(Room location) {
-		this.location = location;
-	}	
-	
-	public static WeaponAlais parseAliasFromOrdinalInt(int i) {
-		int sizeOfCharacterValues = Weapon.WeaponAlais.values().length;
+	/**
+	 * Given an int, find the matching WeaponAlias according to its ordinal position in the Enum.
+	 * @param i The int corresponding to a WeaponAlias' enum position.
+	 * @return The Weapon declared at that enum ordinal.
+	 */
+	static WeaponAlias parseAliasFromOrdinalInt(int i) {
+		int sizeOfCharacterValues = WeaponAlias.values().length;
 		if (i >= 0 && i < sizeOfCharacterValues)
-			return Weapon.WeaponAlais.values()[i];
-		throw new IllegalStateException("Error parsing " + i + " as an ordinal for WeaponAlais.");
+			return WeaponAlias.values()[i];
+		throw new IllegalStateException("Error parsing " + i + " as an ordinal for WeaponAlias.");
 	}
-	
 
+	/**
+	 * @return
+	 */
 	public String toString() {
-		return "";
+		return weaponAlias.toString();
 	}
 }
