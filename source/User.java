@@ -31,6 +31,7 @@ public class User {
 	public User() {
 		User.USERS++;
 		userNum = userNo.values()[User.USERS];
+		hand = new HashSet<>();
 	}
 
 	// ------------------------

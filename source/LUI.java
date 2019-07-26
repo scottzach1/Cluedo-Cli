@@ -91,6 +91,7 @@ public class LUI {
 	public String userNameCreation(String name) {
 		String input = "";
 		input = readInput(name + ", What is your name?", name);
+		input.replaceAll("\\W", "_");
 		return input;
 	}
 
@@ -133,7 +134,7 @@ public class LUI {
 						System.out.println("Character " + input + " is no longer available");
 					}
 				} else {
-					System.out.println("You input '" + input + "' is not a valid entry");
+					System.out.println("Your input '" + input + "' is not a valid entry");
 				}
 			}
 
@@ -146,7 +147,6 @@ public class LUI {
 	}
 
 	public String round(User user) {
-		StringBuilder str = new StringBuilder();
 		String input = "";
 
 		// Stage one, choose whether to Move, Accuse, Suggest, look at hand, look at
@@ -156,27 +156,26 @@ public class LUI {
 		// Deal with the choice made in stage one.
 		input = stageTwo(input, user);
 
-		return str.toString();
+		return input;
 	}
 
 	private String stageOne(User user) {
-		return readInput(
-				user.getUserName() + " it's your turn:" + "\n-[1] Move " + "\n -[2] Hand" + "\n  -[3] Observations"
-						+ "\n   -[4] Suggest" + "\n    -[5] Accuse (Solve)" + "\n     -[8] Skip turn" + "\n      -[9] Quit Game",
-				user.getUserName());
+		return readInput(user.getUserName() + " it's your turn:" + "\n-[1] Move " + "\n -[2] Hand"
+				+ "\n  -[3] Observations" + "\n   -[4] Suggest" + "\n    -[5] Accuse (Solve)" + "\n     -[8] Skip turn"
+				+ "\n      -[9] Quit Game", user.getUserName());
 	}
 
 	public String stageTwo(String status, User user) {
 		if (status.contentEquals("1"))
-			return movePlayer(user);
+			return "1-"+movePlayer(user);
 		if (status.contentEquals("2"))
-			return showHand(user);
+			return "2-"+showHand(user);
 		if (status.contentEquals("3"))
-			return showObservations();
+			return "3-"+showObservations();
 		if (status.contentEquals("4"))
-			return suggestion();
+			return "4-"+suggestion();
 		if (status.contentEquals("5"))
-			return accusation();
+			return "5-"+accusation();
 		if (status.contentEquals("8"))
 			return "8";
 		if (status.contentEquals("9"))
@@ -188,18 +187,57 @@ public class LUI {
 	private String movePlayer(User user) {
 		String input = "";
 		String cellCoordinates = "";
-		while (cellCoordinates.length()==0) {
-			input = readInput("Enter cell position you would like to move to (e.g 1A or B2, row and col order doesnt matter)."
-					+ "\n-[B] Back to Menu\n -[Enter] Enter Cell Position", user.getUserName()).toUpperCase();
-			
-			if (input.equals("B")) return "MENU";
-			
-			String [] position = input.split("\\d");
-			for (String s : position) {
-				System.out.println(s);
+		while (cellCoordinates.length() == 0) {
+			input = readInput(
+					"Enter cell position you would like to move to (e.g '1,A' or 'B,2', row and col order doesnt matter)."
+							+ "\n-[B] Back to Menu\n -[Enter] Enter Cell Position",
+					user.getUserName()).toUpperCase();
+
+			if (input.equals("B"))
+				return "MENU";
+
+			String[] position = input.split(",");
+
+			if (position.length == 2) {
+				int row;
+				try {
+					row = Integer.parseInt(position[0]);
+					cellCoordinates = row + "," + position[1];
+				} catch (Exception e) {
+					try {
+						row = Integer.parseInt(position[1]);
+						cellCoordinates = row + "," + position[0];
+					} catch (Exception e2) {
+						System.out.println("Unable to read coordinates");
+					}
+				}
+			} else {
+				System.out.println("Unable to read coordinates");
 			}
-			
+
 		}
+		return cellCoordinates;
+	}
+
+	private String showHand(User user) {
+		for (Card c : user.getHand()) {
+			System.out.println(c.getClass().getName() + ":" + c.getName());
+		}
+		return readInput("[ANY] Go back to menu", user.getUserName());
+	}
+
+	private String showObservations() {
+		// TODO
+		return "";
+	}
+
+	private String suggestion() {
+		// TODO
+		return "";
+	}
+
+	private String accusation() {
+		// TODO
 		return "";
 	}
 
@@ -209,26 +247,6 @@ public class LUI {
 		int num2 = dice.nextInt(6) + 1;
 		return num1 + num2;
 	}
-	
-	private String showHand(User user) {
-		return "";
-	}
-	
-	private String showObservations() {
-		// TODO
-		return "";
-	}
-	
-	private String suggestion() {
-		// TODO
-		return "";
-	}
-	
-	private String accusation() {
-		// TODO
-		return "";
-	}
-	
 
 	// ------------------------
 	// INTERFACE: Helpful methods
@@ -239,8 +257,8 @@ public class LUI {
 	 * System.in.read(byte[]). Can read up to 50 bytes of information (about 50
 	 * characters) and will convert the input into a string to then return.
 	 * 
-	 * @param message - A String to be printed before user input.
-	 * 		player - A String for the 
+	 * @param message - A String to be printed before user input. player - A String
+	 *                for the
 	 * @return The users input.
 	 */
 	public String readInput(String message, String player) {
