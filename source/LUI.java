@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
  * @author Harri
@@ -60,7 +61,7 @@ public class LUI {
 
 		// Get amount of players
 		int players = playerCount();
-		str.append("Players-" + players + "\n");
+		str.append("Players:" + players + ":");
 
 		// Get player characters
 		// -----------------------
@@ -74,11 +75,11 @@ public class LUI {
 		String input = "";
 		int players = 0;
 		while (players == 0) {
-			input = readInput("How many player do we have today? (3-6 needed)", "USER");
+			input = readInput("How many players do we have today? (3-6 needed)", "USER");
 			players = stringToInt(input);
 			if (players < 3 || players > 6) {
 				players = 0;
-				System.out.println("Can only have 3 to 6 players.");
+				System.out.println("Problem: Need to have 3 to 6 players.\n");
 			}
 		}
 		return players;
@@ -86,8 +87,13 @@ public class LUI {
 
 	public String userNameCreation(String name) {
 		String input = "";
-		input = readInput(name + ", What is your name?", name);
-		input.replaceAll("\\W", "_");
+		int wordsInName = 2;
+		while (wordsInName != 1) {
+			input = readInput(name + ", What is your name?", name);
+			wordsInName = input.split(":").length;
+			if (wordsInName > 2)
+				System.out.println("':' Can not be used in user name");
+		}
 		return input;
 	}
 
@@ -135,9 +141,10 @@ public class LUI {
 			}
 
 			clearConsole();
-			str.append("Player-" + p + ":" + "UserName-" + userName + ":" + "Character-" + characterChoice + "\n");
+			str.append("Player:" + p + ":" + "UserName:" + userName + ":" + "Character:" + characterChoice + ":");
 		}
 
+		System.out.println(str.toString());
 		return str.toString();
 
 	}
@@ -157,12 +164,17 @@ public class LUI {
 
 	private String stageOne(User user, String error) {
 		if (error.length() > 0)
-			System.out.println("\n\n ERROR: " + error + "\n \n");
+			System.out.println("\n\n-------------------------------------------" + "\n ERROR: " + error
+					+ "\n-------------------------------------------\n \n");
 
-		return readInput(user.getUserName() + " it's your turn:" + "\nCharacter = " + user.getCharacter().getName()
-				+ " = " + user.getCharacter().toString() + "\n-[1] Move " + "\n -[2] Hand" + "\n  -[3] Observations"
-				+ "\n   -[4] Suggest" + "\n    -[5] Accuse (Solve)" + "\n     -[8] Skip turn"
-				+ "\n      -[9] Quit Game", user.getUserName());
+		return readInput(
+				user.getUserName() + " it's your turn:" + "\n  " + user.getCharacter().getName() + ": '"
+						+ user.getCharacter().toString() + "' -> ["
+						+ ((char) (user.getCharacter().getPosition().getCol() + 'A'))
+						+ String.format("%02d", (user.getCharacter().getPosition().getRow() + 1)) + "]\n"
+						+ "\n-[1] Move " + "\n -[2] Hand" + "\n  -[3] Observations" + "\n   -[4] Suggest"
+						+ "\n    -[5] Accuse (Solve)" + "\n     -[8] Skip turn" + "\n      -[9] Main Menu",
+				user.getUserName());
 	}
 
 	public String stageTwo(String status, User user) {
@@ -300,8 +312,7 @@ public class LUI {
 		try {
 			isInteger = Integer.parseInt(input);
 		} catch (Exception e) {
-			System.out.println("Yeetus");
-			// TODO
+			System.out.println("String not and Integer");
 		}
 
 		return isInteger;

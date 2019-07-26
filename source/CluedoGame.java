@@ -27,11 +27,6 @@ public class CluedoGame {
 	private CluedoGame() {
 		status = "";
 		lui = new LUI();
-		board = new Board();
-		this.users = new ArrayList<>();
-
-		// Create solution
-		generateSolution();
 	}
 
 	// ------------------------
@@ -39,17 +34,26 @@ public class CluedoGame {
 	// ------------------------
 
 	private void gameController() {
-		// Run the main menu first
-		mainMenu();
-		// If the player has chosen to quit
-		if (status.equals("3"))
-			return;
 
-		// Next set up the game
-		gameSetup();
+		while (!status.equals("3")) {
+			board = new Board();
+			this.users = new ArrayList<>();
 
-		// Play the rounds
-		rounds();
+			// Create solution
+			generateSolution();
+			
+			// Run the main menu first
+			mainMenu();
+			// If the player has chosen to quit
+			if (status.equals("3"))
+				return;
+
+			// Next set up the game
+			gameSetup();
+
+			// Play the rounds
+			rounds();
+		}
 	}
 
 	private void mainMenu() {
@@ -79,8 +83,8 @@ public class CluedoGame {
 
 		// USER INFORMATION (below) --------------------------------------------------
 
-		String[] components = status.split("\\W");
-
+		String[] components = status.split(":");
+		
 		/**
 		 * Format of components: [0] String : "Players", [1] Integer : playerCount, [2 *
 		 * playerCount + 2] String: "Player", [3 * playerCount + 2] Integer :
@@ -93,7 +97,7 @@ public class CluedoGame {
 		try {
 			playerCount = Integer.parseInt(components[1]);
 		} catch (Exception e) {
-			LUI.loading("ERROR ON LOADING GAME");
+			LUI.loading("ERROR ON LOADING GAME: Invalid playerCount" + components[1]);
 			gameController();
 			return;
 		}
@@ -108,7 +112,7 @@ public class CluedoGame {
 			try {
 				userNumber = Integer.parseInt(userInformation[1 + (6 * user)]);
 			} catch (Exception e) {
-				LUI.loading("ERROR ON LOADING GAME");
+				LUI.loading("ERROR ON LOADING GAME: Invalid UserNumber" + userInformation[1 + (6 * user)]);
 				gameController();
 				return;
 			}

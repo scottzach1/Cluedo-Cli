@@ -255,9 +255,7 @@ public class Board {
 			for (int col = 0; col < cols; col++) {
 				// Print the row number at the start of each line
 				if (col == 0) {
-					String factoredRowNum = (row+1) + "";
-					while (factoredRowNum.length() < 2)
-						factoredRowNum = "0" + factoredRowNum;
+					String factoredRowNum = String.format("%02d", (row+1));
 					System.out.print(factoredRowNum + "|");
 				}
 

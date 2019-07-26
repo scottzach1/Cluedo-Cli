@@ -22,9 +22,9 @@ public class Cell {
 	// CONSTRUCTOR
 	// ------------------------
 
-	Cell(int col, int row, Cell.Type aType) {
-		col = col;
-		row = row;
+	Cell(int row, int col, Cell.Type aType) {
+		this.row = row;
+		this.col = col;
 		type = aType;
 		neighbors = new HashMap<>();
 	}
