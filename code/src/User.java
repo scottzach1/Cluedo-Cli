@@ -23,7 +23,7 @@ public class User {
 	private String userName;
 	private List<Card> hand;
 	private Set<Card> observedCards;
-	private Character character;
+	private Sprite sprite;
 
 	// ------------------------
 	// CONSTRUCTOR
@@ -68,12 +68,12 @@ public class User {
 		this.observedCards = knownCards;
 	}
 
-	public Character getCharacter() {
-		return character;
+	public Sprite getSprite() {
+		return sprite;
 	}
 
-	public void setCharacter(Character character) {
-		this.character = character;
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
 	}
 
 	public String toString() {

@@ -10,7 +10,7 @@ public class Board {
 
 	// Board Attributes
 	private Map<Room.RoomAlias, Room> rooms;
-	private Map<Character.CharacterAlias, Character> characters;
+	private Map<Sprite.SpriteAlias, Sprite> characters;
 	private Map<Weapon.WeaponAlias, Weapon> weapons;
 
 	private Cell[][] cells;
@@ -36,8 +36,8 @@ public class Board {
 
 		// Generate character cards
 		characters = new HashMap<>();
-		for (Character.CharacterAlias alias : Character.CharacterAlias.values()) {
-			characters.put(alias, new Character(alias.toString()));
+		for (Sprite.SpriteAlias alias : Sprite.SpriteAlias.values()) {
+			characters.put(alias, new Sprite(alias.toString()));
 		}
 
 		// Generate Weapon cards
@@ -75,9 +75,9 @@ public class Board {
 
 					if (type == Cell.Type.START_PAD) {
 						try {
-							Character currentCharacter = characters.get(Character.parseAliasFromOrdinalChar(c));
-							currentCharacter.setPosition(cell);
-							cell.setCharacter(currentCharacter);
+							Sprite currentSprite = characters.get(Sprite.parseAliasFromOrdinalChar(c));
+							currentSprite.setPosition(cell);
+							cell.setSprite(currentSprite);
 						} catch (Exception e) {
 							System.out.println("Not a number cell!");
 							// Continue as normal as if it were blank.
@@ -145,11 +145,11 @@ public class Board {
 
 	/**
 	 * getCharacters: Return a map of all the Characters on the Board.
-	 * (Where keys are their corresponding CharacterAlias).
+	 * (Where keys are their corresponding SpriteAlias).
 	 *
 	 * @return map of Characters on the Board.
 	 */
-	public Map<Character.CharacterAlias, Character> getCharacters() {
+	public Map<Sprite.SpriteAlias, Sprite> getCharacters() {
 		return characters;
 	}
 
@@ -243,9 +243,9 @@ public class Board {
 	
 	
 	public void moveCharacter(User user, Cell from, Cell to) {
-		Character character = user.getCharacter();
-		to.setCharacter(character);
-		from.setCharacter(null);		
+		Sprite sprite = user.getSprite();
+		to.setSprite(sprite);
+		from.setSprite(null);
 	}
 
 	/**

@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.regex.Pattern;
 
 /**
  * @author Harri
@@ -104,10 +103,10 @@ public class LUI {
 		StringBuilder str = new StringBuilder();
 		// Setup for character names
 		List<String> characters = new ArrayList<>();
-		Character.CharacterAlias[] ca = Character.CharacterAlias.values();
+		Sprite.SpriteAlias[] ca = Sprite.SpriteAlias.values();
 		// Put character names in list/set
-		for (int i = 0; i < Character.CharacterAlias.values().length; i++) {
-			Character.CharacterAlias c = ca[i];
+		for (int i = 0; i < Sprite.SpriteAlias.values().length; i++) {
+			Sprite.SpriteAlias c = ca[i];
 			characters.add(c.name());
 		}
 		// Ask each player what they want from all players available.
@@ -135,7 +134,7 @@ public class LUI {
 						characterChoice = characters.get(characterNumber);
 						characters.remove(characterNumber);
 					} catch (Exception e) {
-						System.out.println("Character " + input + " is no longer available");
+						System.out.println("Sprite " + input + " is no longer available");
 					}
 				} else {
 					System.out.println("Your input '" + input + "' is not a valid entry");
@@ -143,7 +142,7 @@ public class LUI {
 			}
 
 			clearConsole();
-			str.append("Player:" + p + ":" + "UserName:" + userName + ":" + "Character:" + characterChoice + ":");
+			str.append("Player:" + p + ":" + "UserName:" + userName + ":" + "Sprite:" + characterChoice + ":");
 		}
 
 		System.out.println(str.toString());
@@ -170,10 +169,10 @@ public class LUI {
 					+ "\n-------------------------------------------\n \n");
 
 		return readInput(
-				user.getUserName() + " it's your turn:" + "\n  " + user.getCharacter().getName() + ": '"
-						+ user.getCharacter().toString() + "' -> ["
-						+ ((char) (user.getCharacter().getPosition().getCol() + 'A'))
-						+ String.format("%02d", (user.getCharacter().getPosition().getRow() + 1)) + "]\n"
+				user.getUserName() + " it's your turn:" + "\n  " + user.getSprite().getName() + ": '"
+						+ user.getSprite().toString() + "' -> ["
+						+ ((char) (user.getSprite().getPosition().getCol() + 'A'))
+						+ String.format("%02d", (user.getSprite().getPosition().getRow() + 1)) + "]\n"
 						+ "\n-[1] Move " + "\n -[2] Hand" + "\n  -[3] Observations" + "\n   -[4] Suggest"
 						+ "\n    -[5] Accuse (Solve)" + "\n     -[8] Skip turn" + "\n      -[9] Main Menu",
 				user.getUserName());
@@ -236,7 +235,7 @@ public class LUI {
 		List<Card> usersHand = user.getHand();
 		int handIndex = 0, handSize = usersHand.size();
 		System.out.println("Characters:");
-		while (handIndex < handSize && usersHand.get(handIndex) instanceof Character) {
+		while (handIndex < handSize && usersHand.get(handIndex) instanceof Sprite) {
 			System.out.println("  " + usersHand.get(handIndex).getName());
 			handIndex++;
 		}

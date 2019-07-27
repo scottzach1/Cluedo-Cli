@@ -29,6 +29,5 @@ public class BoardTests {
         testDistance(b, "H1", "G6", 6);
         testDistance(b, "B2","H2", 9);
         testDistance(b, "Q21","B24", 12);
-
     }
 }

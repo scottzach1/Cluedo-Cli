@@ -1,8 +1,8 @@
 package src;
 
-public class Character extends Card {
+public class Sprite extends Card {
 
-	public enum CharacterAlias {
+	public enum SpriteAlias {
 		MRS_WHITE, MR_GREEN, MRS_PEACOCK, PROFESSOR_PLUM, MISS_SCARLETT, COLONEL_MUSTARD;
 	}
 
@@ -11,38 +11,38 @@ public class Character extends Card {
 	// ------------------------
 
 	private User user;
-	private CharacterAlias charAlias;
+	private SpriteAlias charAlias;
 	private Cell positionCell;
 
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Character(String aName) {
+	public Sprite(String aName) {
 		super(aName);
 
 		// Set character alias
 		switch (aName) {
 		case "MRS_WHITE":
-			charAlias = CharacterAlias.MRS_WHITE;
+			charAlias = SpriteAlias.MRS_WHITE;
 			break;
 		case "MR_GREEN":
-			charAlias = CharacterAlias.MR_GREEN;
+			charAlias = SpriteAlias.MR_GREEN;
 			break;
 		case "MRS_PEACOCK":
-			charAlias = CharacterAlias.MRS_PEACOCK;
+			charAlias = SpriteAlias.MRS_PEACOCK;
 			break;
 		case "PROFESSOR_PLUM":
-			charAlias = CharacterAlias.PROFESSOR_PLUM;
+			charAlias = SpriteAlias.PROFESSOR_PLUM;
 			break;
 		case "MISS_SCARLETT":
-			charAlias = CharacterAlias.MISS_SCARLETT;
+			charAlias = SpriteAlias.MISS_SCARLETT;
 			break;
 		case "COLONEL_MUSTARD":
-			charAlias = CharacterAlias.COLONEL_MUSTARD;
+			charAlias = SpriteAlias.COLONEL_MUSTARD;
 			break;
 		default:
-			throw new RuntimeException("Character alias not found.");
+			throw new RuntimeException("Sprite alias not found.");
 		}
 	}
 
@@ -58,11 +58,11 @@ public class Character extends Card {
 		this.user = user;
 	}
 
-	public CharacterAlias getCharAlias() {
+	public SpriteAlias getCharAlias() {
 		return charAlias;
 	}
 
-	public void setCharAlias(CharacterAlias charAlias) {
+	public void setCharAlias(SpriteAlias charAlias) {
 		this.charAlias = charAlias;
 	}
 
@@ -74,20 +74,20 @@ public class Character extends Card {
 		return positionCell;
 	}
 
-	public static CharacterAlias parseAliasFromOrdinalChar(char c) {
+	public static SpriteAlias parseAliasFromOrdinalChar(char c) {
 		int i = Integer.parseInt(c + "");
-		for (CharacterAlias alias : CharacterAlias.values()) {
+		for (SpriteAlias alias : SpriteAlias.values()) {
 			if (alias.ordinal() == i)
 				return alias;
 		}
-		throw new IllegalStateException("Error parsing " + c + " as an ordinal for CharacterAlias.");
+		throw new IllegalStateException("Error parsing " + c + " as an ordinal for SpriteAlias.");
 	}	
 	
-	public static CharacterAlias parseAliasFromOrdinalInt(int i) {
-		int sizeOfCharacterValues = Character.CharacterAlias.values().length;
+	public static SpriteAlias parseAliasFromOrdinalInt(int i) {
+		int sizeOfCharacterValues = SpriteAlias.values().length;
 		if (i >= 0 && i < sizeOfCharacterValues)
-			return Character.CharacterAlias.values()[i];
-		throw new IllegalStateException("Error parsing " + i + " as an ordinal for CharacterAlias.");
+			return SpriteAlias.values()[i];
+		throw new IllegalStateException("Error parsing " + i + " as an ordinal for SpriteAlias.");
 	}
 	
 	public String toString() {
@@ -112,7 +112,7 @@ public class Character extends Card {
 			str = "M";
 			break;
 		default:
-			throw new RuntimeException("Character alias not found.");
+			throw new RuntimeException("Sprite alias not found.");
 		}
 		
 		

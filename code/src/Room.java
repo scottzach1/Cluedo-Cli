@@ -150,7 +150,7 @@ public class Room extends Card {
 			case 'E': return RoomAlias.LOUNGE;
 			case 'H': return RoomAlias.HALL;
 			case 'S': return RoomAlias.STUDY;
-			default: throw new IllegalStateException("Unexpected Character For Room: " + c);
+			default: throw new IllegalStateException("Unexpected Sprite For Room: " + c);
 		}
 	}
 
@@ -170,7 +170,7 @@ public class Room extends Card {
 			case 6: return RoomAlias.LOUNGE;
 			case 7: return RoomAlias.HALL;
 			case 8: return RoomAlias.STUDY;
-			default: throw new IllegalStateException("Unexpected Character For Room: " + i);
+			default: throw new IllegalStateException("Unexpected Sprite For Room: " + i);
 		}
 	}
 	
@@ -179,7 +179,7 @@ public class Room extends Card {
 		StringBuilder weaponStr = new StringBuilder();
 		
 		// Append users in the room 
-		for (User user : inThisRoom) { peopleStr.append(user.getCharacter().getName() + ", ");}
+		for (User user : inThisRoom) { peopleStr.append(user.getSprite().getName() + ", ");}
 		if (inThisRoom.isEmpty()) peopleStr.append("no one");
 		
 		// Append weapons in this room 

@@ -13,7 +13,7 @@ public class Cell {
 	// ------------------------
 
 	// Cell Attributes
-	private Character character;
+	private Sprite sprite;
 	private Room room;
 	private int col;
 	private int row;
@@ -37,8 +37,8 @@ public class Cell {
 
 	public Type getType() {return type;}
 
-	public Character getCharacter() {return character;}
-	void setCharacter(Character character) {this.character = character;}
+	public Sprite getSprite() {return sprite;}
+	void setSprite(Sprite sprite) {this.sprite = sprite;}
 
 	public Room getRoom() {return room;}
 	void setRoom(Room room) {this.room = room;}
@@ -59,7 +59,7 @@ public class Cell {
 	public String printCordinates() { return " " + ((char) (col + 'A')) + row + 1; }
 
 	public String toString() {
-		if (character != null) return character.toString();
+		if (sprite != null) return sprite.toString();
 		if (type == Type.ROOM) return "_";
 		if (type == Type.BLANK) return "_";
 		else if (type == Type.WALL) return "#";

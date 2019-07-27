@@ -91,8 +91,8 @@ public class CluedoGame {
 		 * Format of components: [0] String : "Players", [1] Integer : playerCount, [2 *
 		 * playerCount + 2] String: "Player", [3 * playerCount + 2] Integer :
 		 * userNumber, [4 * playerCount + 2] String : "UserName", [5 * playerCount + 2]
-		 * String : userName, [6 * playerCount + 2] String : "Character" [7 *
-		 * playerCount + 2] CharacterAlias : Players Character
+		 * String : userName, [6 * playerCount + 2] String : "Sprite" [7 *
+		 * playerCount + 2] SpriteAlias : Players Sprite
 		 */
 
 		int playerCount = 0;
@@ -124,12 +124,12 @@ public class CluedoGame {
 
 			// This is the users character alias
 			String userCharacterName = userInformation[5 + (6 * user)];
-			Character.CharacterAlias userCharacterAlias = Character.CharacterAlias.valueOf(userCharacterName);
+			Sprite.SpriteAlias userSpriteAlias = Sprite.SpriteAlias.valueOf(userCharacterName);
 
 			// Create a new user object and store in the games list of users
 			User userObj = new User();
 			userObj.setUserName(userName);
-			userObj.setCharacter(board.getCharacters().get(userCharacterAlias));
+			userObj.setSprite(board.getCharacters().get(userSpriteAlias));
 			users.add(userObj);
 		}
 
@@ -147,7 +147,7 @@ public class CluedoGame {
 			LUI.clearConsole();
 			board.printBoardState();
 			User user = users.get(userNum);
-			Cell position = user.getCharacter().getPosition();
+			Cell position = user.getSprite().getPosition();
 
 			if (position.getType() == Cell.Type.ROOM)
 				System.out.println(position.getRoom().toString());
@@ -203,7 +203,7 @@ public class CluedoGame {
 		if (end == null)
 			throw new NullPointerException("Undefined position (off the board)");
 
-		Cell start = user.getCharacter().getPosition();
+		Cell start = user.getSprite().getPosition();
 		if (board.calcValidPath(start, end, diceRoll)) {
 			board.moveCharacter(user, start, end);
 			return "8";
@@ -216,27 +216,27 @@ public class CluedoGame {
 		Random random = new Random();
 
 		Room room = board.getRooms().get(Room.parseAliasFromOrdinalInt(random.nextInt(9)));
-		Character character = board.getCharacters().get(Character.parseAliasFromOrdinalInt(random.nextInt(6)));
+		Sprite sprite = board.getCharacters().get(Sprite.parseAliasFromOrdinalInt(random.nextInt(6)));
 		Weapon weapon = board.getWeapons().get(Weapon.parseAliasFromOrdinalInt(random.nextInt(6)));
 
-		solution[0] = character;
+		solution[0] = sprite;
 		solution[1] = weapon;
 		solution[2] = room;
 
 	}
 
 	private void generateHands() {
-		Map<Character.CharacterAlias, Character> nonSolutionCharacters = new HashMap<>(board.getCharacters());
+		Map<Sprite.SpriteAlias, Sprite> nonSolutionCharacters = new HashMap<>(board.getCharacters());
 		Map<Weapon.WeaponAlias, Weapon> nonSolutionWeapons = new HashMap<>(board.getWeapons());
 		Map<Room.RoomAlias, Room> nonSolutionRooms = new HashMap<>(board.getRooms());
 
-		nonSolutionCharacters.remove(((Character) solution[0]).getCharAlias());
+		nonSolutionCharacters.remove(((Sprite) solution[0]).getCharAlias());
 		nonSolutionWeapons.remove(((Weapon) solution[1]).getWeaponAlias());
 		nonSolutionRooms.remove(((Room) solution[2]).getRoomAlias());
 
 		int userNum = 0;
 
-		for (Character c : nonSolutionCharacters.values()) {
+		for (Sprite c : nonSolutionCharacters.values()) {
 			User user = users.get(userNum);
 			user.addToHand(c);
 			userNum = (userNum + 1) % users.size();
