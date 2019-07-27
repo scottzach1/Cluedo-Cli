@@ -179,6 +179,10 @@ public class CluedoGame {
 					error = "[" + components[0] + "][" + components[1] + "]" + " is not a valid cell";
 				}
 			}
+			
+			// [2] refresh (do nothing)
+			
+			//
 
 			// [8] Change the user after prev user has exited their turn
 			if (status.equals("8")) {
