@@ -196,7 +196,7 @@ public class LUI {
 		if (status.contentEquals("9"))
 			return "9";
 
-		return "???";
+		return status;
 	}
 
 	private String movePlayer(User user) {

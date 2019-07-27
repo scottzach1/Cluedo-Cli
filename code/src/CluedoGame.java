@@ -156,12 +156,11 @@ public class CluedoGame {
 			error = "";
 			// 1: Move, 2: Hand, 3: Observations, 4: Suggest, 5: Accuse (Solve), 8: Next
 			// User, 9: Quit Game
-
-			if (status.length() == 0)
-				continue;
+			
+			int playerChoice = status.charAt(0);
 
 			// [1] Move the player
-			if (status.charAt(0) == '1') {
+			if (playerChoice == '1') {
 				String[] components = status.split(":");
 				try {
 					// Already confirmed row and col, but already doing the try catch, so might as
@@ -185,13 +184,15 @@ public class CluedoGame {
 			//
 
 			// [8] Change the user after prev user has exited their turn
-			if (status.equals("8")) {
+			if (playerChoice == '8') {
 				userNum = (userNum + 1) % users.size();
 			}
 			// [9] Finish the game by exiting this while loop
-			if (status.equals("9")) {
+			if (playerChoice == '9') {
 				System.out.println("Thanks for playing");
 			}
+			
+			if (!java.lang.Character.isDigit(playerChoice));
 		}
 	}
 
