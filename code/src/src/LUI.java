@@ -182,15 +182,15 @@ public class LUI {
 	public String stageTwo(String status, User user) {
 		// Do something based on stage 1's output
 		if (status.contentEquals("1"))
-			return "1-" + movePlayer(user);
+			return "1:" + movePlayer(user);
 		if (status.contentEquals("2"))
-			return "2-" + showHand(user);
+			return "2" + showHand(user);
 		if (status.contentEquals("3"))
-			return "3-" + showObservations(user);
+			return "3:" + showObservations(user);
 		if (status.contentEquals("4"))
-			return "4-" + suggestion(user);
+			return "4:" + suggestion(user);
 		if (status.contentEquals("5"))
-			return "5-" + accusation(user);
+			return "5:" + accusation(user);
 		if (status.contentEquals("8"))
 			return "8";
 		if (status.contentEquals("9"))

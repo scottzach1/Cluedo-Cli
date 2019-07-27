@@ -160,15 +160,15 @@ public class CluedoGame {
 			if (status.length() == 0)
 				continue;
 
-//ZAC, HERE	// [1] Move the player
+			// [1] Move the player
 			if (status.charAt(0) == '1') {
 				String[] components = status.split(":");
 				try {
 					// Already confirmed row and col, but already doing the try catch, so might as
 					// well put here
-					int row = Integer.parseInt(components[0]);
-					int col = Integer.parseInt(components[1]);
-					int diceRoll = Integer.parseInt(components[2]);
+					int row = Integer.parseInt(components[1]);
+					int col = Integer.parseInt(components[2]);
+					int diceRoll = Integer.parseInt(components[3]);
 					// Get the cell, if null then....
 					Cell cell = board.getCell(row, col);
 					// Make move will break the try
@@ -191,7 +191,7 @@ public class CluedoGame {
 		}
 	}
 
-//ZAC HERE 2
+
 	private String makeMove(Cell end, int diceRoll, User user) throws Exception {
 
 		// Throw an exception is the cell is null

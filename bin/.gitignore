@@ -1,17 +1,2 @@
-/Board.class
-/Card.class
-/Cell$Direction.class
-/Cell$Type.class
-/Cell.class
-/Character$CharacterAlias.class
-/Character.class
-/CluedoGame.class
-/LUI.class
 /MapBase.txt
-/Room$RoomAlias.class
-/Room.class
-/User$userNo.class
-/User.class
-/Weapon$WeaponAlias.class
-/Weapon.class
 /src/
