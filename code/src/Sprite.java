@@ -58,12 +58,8 @@ public class Sprite extends Card {
 		this.user = user;
 	}
 
-	public SpriteAlias getCharAlias() {
+	public SpriteAlias getSpriteAlias() {
 		return charAlias;
-	}
-
-	public void setCharAlias(SpriteAlias charAlias) {
-		this.charAlias = charAlias;
 	}
 
 	public void setPosition(Cell position) {

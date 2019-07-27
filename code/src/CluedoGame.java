@@ -230,7 +230,7 @@ public class CluedoGame {
 		Map<Weapon.WeaponAlias, Weapon> nonSolutionWeapons = new HashMap<>(board.getWeapons());
 		Map<Room.RoomAlias, Room> nonSolutionRooms = new HashMap<>(board.getRooms());
 
-		nonSolutionCharacters.remove(((Sprite) solution[0]).getCharAlias());
+		nonSolutionCharacters.remove(((Sprite) solution[0]).getSpriteAlias());
 		nonSolutionWeapons.remove(((Weapon) solution[1]).getWeaponAlias());
 		nonSolutionRooms.remove(((Room) solution[2]).getRoomAlias());
 
