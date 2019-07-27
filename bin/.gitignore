@@ -1,6 +1,3 @@
-/.classpath
-/.idea/
-/.project
 /Board.class
 /Card.class
 /Cell$Direction.class
@@ -15,10 +12,6 @@
 /Room.class
 /User$userNo.class
 /User.class
-/Weapon$WeaponAlais.class
-/Weapon.class
-/out/
-/testingPackage/
-/LUI$Option.class
 /Weapon$WeaponAlias.class
-/InvalidMoveException.class
+/Weapon.class
+/src/
