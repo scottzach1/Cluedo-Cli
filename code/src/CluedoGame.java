@@ -18,6 +18,7 @@ public class CluedoGame {
 	private Board board;
 	private PathFinder pathFinder;
 	private List<User> users;
+	private List<User> losers;
 	private Card[] solution;
 	private LUI lui;
 	private String status;
@@ -41,6 +42,7 @@ public class CluedoGame {
 			board = new Board();
 			pathFinder = new PathFinder(board);
 			this.users = new ArrayList<>();
+			this.losers = new ArrayList<>();
 
 			// Create solution
 			generateSolution();
@@ -70,7 +72,8 @@ public class CluedoGame {
 
 			// Switch cases of status, 1: Play, 2: How to Play, 3: Quit
 			if (status.contentEquals("2")) {
-				status = lui.howToPlay() + "MENU";
+				status = lui.howToPlay() + "NOT 1";
+
 			} else if (status.contentEquals("3")) {
 				System.out.println("Thanks for playing");
 				return;
@@ -148,6 +151,10 @@ public class CluedoGame {
 			User user = users.get(userNum);
 			Cell position = user.getSprite().getPosition();
 
+			if (losers.contains(user)) {
+				continue;
+			}
+
 			// If they are in a room, display the rooms information too
 			if (position.getType() == Cell.Type.ROOM)
 				System.out.println(position.getRoom().toString());
@@ -163,6 +170,9 @@ public class CluedoGame {
 
 			// [1] Move the player
 			if (playerChoice == '1') {
+				LUI.clearConsole();
+				board.printBoardState();
+				lui.movePlayer(user);
 				String[] components = status.split(":");
 				try {
 					// Get the cell, if null then....
@@ -170,27 +180,97 @@ public class CluedoGame {
 					// Make move will break the try
 					status = tryMove(cell, LUI.getDiceRoll(), user);
 				} catch (NullPointerException np) {
-					error = "Board cannot find position" + components[1];
+					error = "Board cannot find position " + components[1];
 				} catch (RuntimeException rt) {
-					error = "Location can't be reached. \n\tYou can only move " + LUI.getDiceRoll() + "steps";
+					error = "Location can't be reached. \n\t  You can only move " + LUI.getDiceRoll() + " steps";
 				} catch (Exception e) {
 					error = "Unknown Error";
 				}
 			}
 
 			// [2] refresh to menu (do nothing)
+			if (playerChoice == '2')
+				status = lui.showHand(user);
+
 			// [3] refresh to menu (do nothing)
+			if (playerChoice == '3')
+				status = lui.showObservations(user);
 
 			// [4] check if the next players have a possible card
 			if (playerChoice == '4') {
+				if (user.getSprite().getPosition().getType() != Cell.Type.ROOM) {
+					lui.readInput("You are not in a room, thus you can't make a suggestion \n-[Any] Okay", user.getUserName());
+				} else {
+					status = lui.selectThreeCards(user, "8");
+					String[] components = status.split(":");
+					boolean cardFound = false;
+					if (components.length == 4) {
+						Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[1]));
+						Weapon w = board.getWeapons().get(Weapon.WeaponAlias.valueOf(components[2]));
+						Room r = board.getRooms().get(Room.RoomAlias.valueOf(components[3]));
+
+						for (int u = 0; u < users.size() - 1; u++) {
+							ArrayList<Card> options = new ArrayList<>();
+							// Get user next in the line
+							int otherUserNum = (userNum + 1) % users.size();
+							User other = users.get(otherUserNum);
+							// If the other user has one of the suggested cards add it to the list of
+							// options
+							if (other.getHand().contains(s)) {
+								options.add(s);
+							}
+							if (other.getHand().contains(w)) {
+								options.add(w);
+							}
+							if (other.getHand().contains(r)) {
+								options.add(r);
+							}
+
+							// Can only get one card from the closest user to you
+							if (options.size() > 0) {
+								Card choosenCard = lui.chooseCardToGiveAway(other, options);
+
+								System.out.println(
+										other.getUserName() + " has shown " + user.getUserName() + " the card " + "\n\t"
+												+ choosenCard.getClass().getName() + ": " + choosenCard.getName());
+								lui.readInput("-[ANY] Sweet as", user.getUserName());
+
+								cardFound = true;
+								break;
+							}
+
+						}
+
+						if (!cardFound) {
+							lui.readInput("No card found for your suggestion: \n" + s.getName() + " - " + w.getName()
+									+ " - " + r.getName(), user.getUserName());
+						}
+
+						status = "8";
+
+					}
+				}
+			}
+
+			if (playerChoice == '5') {
+				lui.selectThreeCards(user, "9");
 				String[] components = status.split(":");
 				if (components.length == 4) {
 					Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[1]));
 					Weapon w = board.getWeapons().get(Weapon.WeaponAlias.valueOf(components[2]));
 					Room r = board.getRooms().get(Room.RoomAlias.valueOf(components[3]));
-					System.out.println(s + " : " + w + " : " + r);
+
+					if (s.equals(solution[0]) && w.equals(solution[1]) && r.equals(solution[2])) {
+						System.out.println("\n------------------------------------------------");
+						System.out.println("The Best Detective and WINNER of this game is: " + user.getUserName());
+						System.out.println("------------------------------------------------\n");
+					} else {
+						lui.readInput(user.getUserName()
+								+ "Your accusation is incorrect, you can no longer win the game \n\n-[Any] Awwhh man",
+								user.getUserName());
+					}
+					status = "8";
 				}
-				System.out.println("EXITED");
 			}
 
 			// [8] Change the user after prev user has exited their turn
@@ -198,15 +278,17 @@ public class CluedoGame {
 				userNum = (userNum + 1) % users.size();
 				LUI.rollDice();
 			}
+
 			// [9] Finish the game by exiting this while loop
 			if (playerChoice == '9') {
 				System.out.println("Thanks for playing");
 			}
 
 			if (!java.lang.Character.isDigit(playerChoice)) {
-				error = status;
+				error = "unknown input";
 			}
 		}
+
 	}
 
 	private String tryMove(Cell end, int diceRoll, User user) throws Exception {
