@@ -8,22 +8,26 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BoardTests {
 
     private void testDistance(Board b, String startSting, String endString, int realDist) {
-
-        assertTrue(b.calcPathFromStrings(startSting, endString, realDist));
-        assertTrue(b.calcPathFromStrings(startSting, endString, realDist + 1));
-        assertFalse(b.calcPathFromStrings(startSting, endString, realDist - 1));
-
         Cell start = b.getCell(startSting);
         Cell end = b.getCell(endString);
 
-        assertEquals(realDist, b.calcNumSteps(start, end));
-        assertEquals(realDist, b.calcNumSteps(end, start));
+        assertTrue(PathFinder.checkValidPath(start, end, realDist));
+        assertTrue(PathFinder.checkValidPath(end, start, realDist));
 
-        assertTrue(b.calcValidPath(start, end, realDist));
-        assertTrue(b.calcValidPath(end, start, realDist));
+        assertTrue(PathFinder.checkValidPath(start, end, realDist + 1));
+        assertTrue(PathFinder.checkValidPath(end, start, realDist + 1));
 
-        assertFalse(b.calcValidPath(start, end, realDist - 1));
-        assertTrue(b.calcValidPath(end, start, realDist + 1));
+        assertFalse(PathFinder.checkValidPath(start, end, realDist - 1));
+        assertFalse(PathFinder.checkValidPath(end, start, realDist - 1));
+
+        assertTrue(PathFinder.checkValidPathFromString(startSting, endString, realDist));
+        assertTrue(PathFinder.checkValidPathFromString(endString, startSting, realDist));
+
+        assertTrue(PathFinder.checkValidPathFromString(startSting, endString, realDist + 1));
+        assertTrue(PathFinder.checkValidPathFromString(endString, startSting, realDist + 1));
+
+        assertFalse(PathFinder.checkValidPathFromString(startSting, endString, realDist - 1));
+        assertFalse(PathFinder.checkValidPathFromString(endString, startSting, realDist - 1));
     }
 
     @Test void test_pathFinding() {
@@ -55,8 +59,6 @@ public class BoardTests {
 
         user.setSprite(b.getSprites().get(Sprite.SpriteAlias.MRS_WHITE));
         assertEquals(b.getSprites().get(Sprite.SpriteAlias.MRS_WHITE),user.getSprite());
-
-//        b.moveCharacter(user.getSprite(), );
     }
 
 

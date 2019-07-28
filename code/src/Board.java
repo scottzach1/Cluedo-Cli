@@ -29,6 +29,8 @@ public class Board {
 	 */
 	public Board() {
 
+		PathFinder.setBoard(this);
+
 		// Generate room cards
 		rooms = new HashMap<>();
 		for (Room.RoomAlias alias : Room.RoomAlias.values()) {
@@ -168,84 +170,6 @@ public class Board {
 		return weapons;
 	}
 
-	/**
-	 * calcValidPath: Calculates whether a path from start to end is valid
-	 * given the provided number of steps.
-	 *
-	 * @param start the starting Cell on the map.
-	 * @param end the desired cell on the map.
-	 * @param numSteps The maximum number of steps allowed.
-	 * @return true valid, false otherwise.
-	 */
-	public boolean calcValidPath(Cell start, Cell end, int numSteps) {
-		return calcNumSteps(start, end) <= numSteps;
-	}
-
-	/**
-	 * Calculates whether a path from start to end is valid
-	 * given the provided number of steps.
-	 * Input Strings: "H3" or "G13"
-	 *
-	 * @param start the starting Cell on the map.
-	 * @param end the desired cell on the map.
-	 * @param numSteps The maximum number of steps allowed.
-	 * @return true valid, false otherwise.
-	 */
-	public boolean calcPathFromStrings(String start, String end, int numSteps) {
-		return calcValidPath(getCell(start), getCell(end), numSteps);
-	}
-
-	/**
-	 * calcPath: Calculates the number of turns to move from a cell to another.
-	 * @param start the starting cell on the map.
-	 * @param end the desired cell on the map.
-	 * @return int number of steps. Integer.MaxNumber if invalid path.
-	 */
-	public int calcNumSteps(Cell start, Cell end) {
-
-		Room targRoom = end.getRoom();
-
-		Queue<Cell> depthQueue = new ArrayDeque<>();
-		Map<Cell, Cell> parentMap = new HashMap<>();
-		Set<Cell> visited = new HashSet<>();
-
-		depthQueue.offer(start);
-
-		Cell cell;
-
-		while (true) {
-			if (depthQueue.isEmpty()) return Integer.MAX_VALUE;
-
-			cell = depthQueue.poll();
-
-			if (visited.contains(cell)) continue;
-			if ((targRoom != null && cell.getRoom() == targRoom) || cell == end) break;
-
-			Set<Cell> neighbours = new HashSet<>((cell.getRoom() != null) ? cell.getRoom().getDoors() : cell.getNeighbors().values());
-
-			for (Cell neighbour : neighbours) {
-				if (visited.contains(neighbour)) continue;
-				parentMap.put(neighbour, cell);
-				depthQueue.offer(neighbour);
-			}
-
-			visited.add(cell);
-		}
-
-		Stack<Cell> path = new Stack<>();
-
-		System.out.println("NNNNN");
-		while (parentMap.get(cell) != null) {
-			path.push(cell);
-			cell = parentMap.get(cell);
-		}
-
-		path.forEach(c -> System.out.println(c.printCoordinates()));
-
-		return path.size();
-	}
-	
-	
 	public void moveCharacter(User user, Cell from, Cell to) {
 		if (from == null || to == null || user == null)
 			throw new InvalidParameterException("Cannot pass a null parameter!");
