@@ -19,7 +19,6 @@ public class CluedoGame {
 	private List<User> users;
 	private Card[] solution;
 	private LUI lui;
-	private Card[] observations;
 	private String status;
 
 	// ------------------------
@@ -40,7 +39,7 @@ public class CluedoGame {
 		while (!status.equals("3")) {
 			board = new Board();
 			this.users = new ArrayList<>();
-
+			
 			// Create solution
 			generateSolution();
 			
@@ -168,13 +167,21 @@ public class CluedoGame {
 					Cell cell = board.getCell(components[1]);
 					// Make move will break the try
 					status = tryMove(cell, LUI.getDiceRoll(), user);
-				}catch (Exception e) {
+				}catch (NullPointerException np) {
+					error = "Board cannot find position" + components[1];
+				} catch (RuntimeException rt) {
+					error = "Location can't be reached. \n\tYou can only move " + LUI.getDiceRoll() + "steps";  
+				} catch (Exception e) {
+					error = "Unknown Error";
 				}
 			}
 			
-			// [2] refresh (do nothing)
+			// [2] refresh to menu (do nothing)
 			
-			//
+			
+			// [3] refresh to menu (do nothing)
+			if (playerChoice == '3') {
+			}
 
 			// [8] Change the user after prev user has exited their turn
 			if (playerChoice == '8') {
@@ -186,7 +193,9 @@ public class CluedoGame {
 				System.out.println("Thanks for playing");
 			}
 			
-			if (!java.lang.Character.isDigit(playerChoice));
+			if (!java.lang.Character.isDigit(playerChoice)) {
+				error = status;
+			}
 		}
 	}
 
@@ -195,14 +204,14 @@ public class CluedoGame {
 
 		// Throw an exception is the cell is null
 		if (end == null)
-			throw new NullPointerException("Undefined position (off the board)");
+			throw new NullPointerException();
 
 		Cell start = user.getSprite().getPosition();
 		if (board.calcValidPath(start, end, diceRoll)) {
 			board.moveCharacter(user, start, end);
 			return "8";
 		}
-		throw new RuntimeException("Invalid Move - Not enough steps");
+		throw new RuntimeException();
 	}
 
 	private void generateSolution() {
@@ -220,31 +229,34 @@ public class CluedoGame {
 	}
 
 	private void generateHands() {
-		Map<Sprite.SpriteAlias, Sprite> nonSolutionCharacters = new HashMap<>(board.getSprites());
+		Map<Sprite.SpriteAlias, Sprite> nonSolutionSprites = new HashMap<>(board.getSprites());
 		Map<Weapon.WeaponAlias, Weapon> nonSolutionWeapons = new HashMap<>(board.getWeapons());
 		Map<Room.RoomAlias, Room> nonSolutionRooms = new HashMap<>(board.getRooms());
 
-		nonSolutionCharacters.remove(((Sprite) solution[0]).getSpriteAlias());
+		nonSolutionSprites.remove(((Sprite) solution[0]).getSpriteAlias());
 		nonSolutionWeapons.remove(((Weapon) solution[1]).getWeaponAlias());
 		nonSolutionRooms.remove(((Room) solution[2]).getRoomAlias());
 
 		int userNum = 0;
 
-		for (Sprite c : nonSolutionCharacters.values()) {
+		for (Sprite s : nonSolutionSprites.values()) {
 			User user = users.get(userNum);
-			user.addToHand(c);
+			user.addToHand(s);
+			user.addToObservedCards(s);
 			userNum = (userNum + 1) % users.size();
 		}
 
 		for (Weapon w : nonSolutionWeapons.values()) {
 			User user = users.get(userNum);
 			user.addToHand(w);
+			user.addToObservedCards(w);
 			userNum = (userNum + 1) % users.size();
 		}
 
 		for (Room r : nonSolutionRooms.values()) {
 			User user = users.get(userNum);
 			user.addToHand(r);
+			user.addToObservedCards(r);
 			userNum = (userNum + 1) % users.size();
 		}
 
