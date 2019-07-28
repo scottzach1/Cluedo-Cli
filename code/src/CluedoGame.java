@@ -129,7 +129,7 @@ public class CluedoGame {
 			// Create a new user object and store in the games list of users
 			User userObj = new User();
 			userObj.setUserName(userName);
-			userObj.setSprite(board.getCharacters().get(userSpriteAlias));
+			userObj.setSprite(board.getSprites().get(userSpriteAlias));
 			users.add(userObj);
 		}
 
@@ -216,7 +216,7 @@ public class CluedoGame {
 		Random random = new Random();
 
 		Room room = board.getRooms().get(Room.parseAliasFromOrdinalInt(random.nextInt(9)));
-		Sprite sprite = board.getCharacters().get(Sprite.parseAliasFromOrdinalInt(random.nextInt(6)));
+		Sprite sprite = board.getSprites().get(Sprite.parseAliasFromOrdinalInt(random.nextInt(6)));
 		Weapon weapon = board.getWeapons().get(Weapon.parseAliasFromOrdinalInt(random.nextInt(6)));
 
 		solution[0] = sprite;
@@ -226,7 +226,7 @@ public class CluedoGame {
 	}
 
 	private void generateHands() {
-		Map<Sprite.SpriteAlias, Sprite> nonSolutionCharacters = new HashMap<>(board.getCharacters());
+		Map<Sprite.SpriteAlias, Sprite> nonSolutionCharacters = new HashMap<>(board.getSprites());
 		Map<Weapon.WeaponAlias, Weapon> nonSolutionWeapons = new HashMap<>(board.getWeapons());
 		Map<Room.RoomAlias, Room> nonSolutionRooms = new HashMap<>(board.getRooms());
 

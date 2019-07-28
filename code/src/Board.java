@@ -10,7 +10,7 @@ public class Board {
 
 	// Board Attributes
 	private Map<Room.RoomAlias, Room> rooms;
-	private Map<Sprite.SpriteAlias, Sprite> characters;
+	private Map<Sprite.SpriteAlias, Sprite> sprites;
 	private Map<Weapon.WeaponAlias, Weapon> weapons;
 
 	private Cell[][] cells;
@@ -23,7 +23,7 @@ public class Board {
 	/**
 	 * Board: The constructor for Board.
 	 * - Creates a new 2d array and populates with Cells.
-	 * - Generates characters and places at corresponding starting positions.
+	 * - Generates sprites and places at corresponding starting positions.
 	 * - Generates Weapons and randomly allocates them to Rooms.
 	 */
 	public Board() {
@@ -35,9 +35,9 @@ public class Board {
 		}
 
 		// Generate character cards
-		characters = new HashMap<>();
+		sprites = new HashMap<>();
 		for (Sprite.SpriteAlias alias : Sprite.SpriteAlias.values()) {
-			characters.put(alias, new Sprite(alias.toString()));
+			sprites.put(alias, new Sprite(alias.toString()));
 		}
 
 		// Generate Weapon cards
@@ -75,7 +75,7 @@ public class Board {
 
 					if (type == Cell.Type.START_PAD) {
 						try {
-							Sprite currentSprite = characters.get(Sprite.parseAliasFromOrdinalChar(c));
+							Sprite currentSprite = sprites.get(Sprite.parseAliasFromOrdinalChar(c));
 							currentSprite.setPosition(cell);
 							cell.setSprite(currentSprite);
 						} catch (Exception e) {
@@ -144,13 +144,13 @@ public class Board {
 	// ------------------------
 
 	/**
-	 * getCharacters: Return a map of all the Characters on the Board.
+	 * getSprites: Return a map of all the Characters on the Board.
 	 * (Where keys are their corresponding SpriteAlias).
 	 *
 	 * @return map of Characters on the Board.
 	 */
-	public Map<Sprite.SpriteAlias, Sprite> getCharacters() {
-		return characters;
+	public Map<Sprite.SpriteAlias, Sprite> getSprites() {
+		return sprites;
 	}
 
 	/**
@@ -263,6 +263,13 @@ public class Board {
 		return cells[row][col];
 	}
 
+	public Cell getCell(String cord) {
+		int col = Character.toUpperCase(cord.charAt(0)) - 'A';
+		int row = Integer.parseUnsignedInt(cord.substring(1)) - 1;
+
+		return getCell(row, col);
+	}
+
 	/**
 	 * getRows: Return the number of rows on the map.
 	 * @return int Number of rows on the map.
@@ -333,12 +340,7 @@ public class Board {
 				"   A B C D E F G H I J K L M N O P Q R S T U V W X";
 	}
 
-	public Cell getCell(String cord) {
-		int col = cord.charAt(0) - 'A';
-		int row = Integer.parseUnsignedInt(cord.substring(1)) - 1;
 
-		return getCell(row, col);
-	}
 
 	/**
 	 * main: Launch point for testing rendering of the map.

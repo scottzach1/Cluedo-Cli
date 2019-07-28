@@ -1,14 +1,21 @@
 package tests;
 
+import com.sun.source.tree.AssertTree;
+import org.graalvm.compiler.lir.sparc.SPARCPrefetchOp;
 import org.junit.jupiter.api.Test;
-import src.Board;
-import src.Cell;
+import src.*;
+import sun.jvm.hotspot.utilities.Assert;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTests {
 
-    public void testDistance(Board b, String startSting, String endString, int realDist) {
+    private void testDistance(Board b, String startSting, String endString, int realDist) {
+
+        assertTrue(b.calcPathFromStrings(startSting, endString, realDist));
+        assertTrue(b.calcPathFromStrings(startSting, endString, realDist + 1));
+        assertFalse(b.calcPathFromStrings(startSting, endString, realDist - 1));
+
         Cell start = b.getCell(startSting);
         Cell end = b.getCell(endString);
 
@@ -28,6 +35,32 @@ public class BoardTests {
         testDistance(b, "H1", "H3", 2);
         testDistance(b, "H1", "G6", 6);
         testDistance(b, "B2","H2", 9);
-        testDistance(b, "Q21","B24", 12);
+        testDistance(b, "Q21","B24", 11);
     }
+
+    @Test void test_board() {
+        Board b = new Board();
+
+        for (Room.RoomAlias roomAlias : Room.RoomAlias.values()) {
+            assertEquals(roomAlias, b.getRooms().get(roomAlias).getRoomAlias());
+        }
+
+        for (Sprite.SpriteAlias spriteAlias : Sprite.SpriteAlias.values()) {
+            assertEquals(spriteAlias, b.getSprites().get(spriteAlias).getSpriteAlias());
+        }
+
+        for (Weapon.WeaponAlias weaponAlias : Weapon.WeaponAlias.values()) {
+            assertEquals(weaponAlias, b.getWeapons().get(weaponAlias).getWeaponAlias());
+        }
+
+        User user = new User();
+        assertNull(user.getSprite());
+
+        user.setSprite(b.getSprites().get(Sprite.SpriteAlias.MRS_WHITE));
+        assertEquals(b.getSprites().get(Sprite.SpriteAlias.MRS_WHITE),user.getSprite());
+
+//        b.moveCharacter(user.getSprite(), );
+    }
+
+
 }
