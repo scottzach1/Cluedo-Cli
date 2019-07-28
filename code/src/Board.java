@@ -30,7 +30,6 @@ public class Board {
 	 */
 	public Board() {
 
-		PathFinder.setBoard(this);
 
 		// Generate room cards
 		rooms = new HashMap<>();

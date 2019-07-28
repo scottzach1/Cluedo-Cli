@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b25ca44-6460-4a72-97a3-8da892c80de2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../brief.gdoc" beforeDir="false" afterPath="$PROJECT_DIR$/../brief.gdoc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/source/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/source/src/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source/src/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/source/src/Room$RoomAlias.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source/src/Room$RoomAlias.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/source/src/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source/src/Room.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/source/src/CluedoGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source/src/CluedoGame.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CluedoGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CluedoGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PathFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PathFinder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/BoardTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/BoardTests.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,8 +38,8 @@
                   <file pinned="false" current-in-tab="false">
                     <entry file="file://$PROJECT_DIR$/src/User.java">
                       <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="215">
-                          <caret line="28" column="18" lean-forward="true" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+                        <state relative-caret-position="560">
+                          <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
                           <folding>
                             <element signature="e#1170#1171#0" expanded="true" />
                             <element signature="e#1190#1191#0" expanded="true" />
@@ -47,29 +48,11 @@
                       </provider>
                     </entry>
                   </file>
-                  <file pinned="false" current-in-tab="false">
+                  <file pinned="false" current-in-tab="true">
                     <entry file="file://$PROJECT_DIR$/src/Cell.java">
                       <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="360">
-                          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
-                        </state>
-                      </provider>
-                    </entry>
-                  </file>
-                  <file pinned="false" current-in-tab="false">
-                    <entry file="file://$PROJECT_DIR$/src/Sprite.java">
-                      <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="276">
-                          <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
-                        </state>
-                      </provider>
-                    </entry>
-                  </file>
-                  <file pinned="false" current-in-tab="true">
-                    <entry file="file://$PROJECT_DIR$/src/Board.java">
-                      <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="660">
-                          <caret line="198" column="57" lean-forward="true" selection-start-line="198" selection-start-column="57" selection-end-line="198" selection-end-column="57" />
+                        <state relative-caret-position="60">
+                          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
                         </state>
                       </provider>
                     </entry>
@@ -78,11 +61,33 @@
               </split-first>
               <split-second>
                 <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-                  <file pinned="false" current-in-tab="true">
-                    <entry file="file://$PROJECT_DIR$/src/Room.java">
+                  <file pinned="false" current-in-tab="false">
+                    <entry file="file://$PROJECT_DIR$/src/PathFinder.java">
                       <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="735">
-                          <caret line="163" column="89" lean-forward="true" selection-start-line="163" selection-start-column="89" selection-end-line="163" selection-end-column="89" />
+                        <state relative-caret-position="1315">
+                          <caret line="78" column="54" lean-forward="true" selection-start-line="78" selection-start-column="54" selection-end-line="78" selection-end-column="54" />
+                          <folding>
+                            <element signature="e#115#116#0" expanded="true" />
+                            <element signature="e#148#149#0" expanded="true" />
+                          </folding>
+                        </state>
+                      </provider>
+                    </entry>
+                  </file>
+                  <file pinned="false" current-in-tab="false">
+                    <entry file="file://$PROJECT_DIR$/src/Board.java">
+                      <provider selected="true" editor-type-id="text-editor">
+                        <state relative-caret-position="600">
+                          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+                        </state>
+                      </provider>
+                    </entry>
+                  </file>
+                  <file pinned="false" current-in-tab="true">
+                    <entry file="file://$PROJECT_DIR$/src/CluedoGame.java">
+                      <provider selected="true" editor-type-id="text-editor">
+                        <state relative-caret-position="820">
+                          <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
                         </state>
                       </provider>
                     </entry>
@@ -96,8 +101,8 @@
               <file pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/tests/BoardTests.java">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="581">
-                      <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+                    <state relative-caret-position="276">
+                      <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
                       <folding>
                         <element signature="imports" expanded="true" />
                       </folding>
@@ -114,8 +119,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/MapBase.txt">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="400">
-                  <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+                <state relative-caret-position="40">
+                  <caret line="2" column="18" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="18" />
                 </state>
               </provider>
             </entry>
@@ -136,6 +141,7 @@
       <find>move</find>
       <find>P21</find>
       <find>O21</find>
+      <find>start_</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -163,13 +169,13 @@
         <option value="$PROJECT_DIR$/src/Character.java" />
         <option value="$PROJECT_DIR$/src/Cell.java" />
         <option value="$PROJECT_DIR$/src/MapBase.txt" />
-        <option value="$PROJECT_DIR$/src/CluedoGame.java" />
-        <option value="$PROJECT_DIR$/src/PathFinder.java" />
-        <option value="$PROJECT_DIR$/src/Board.java" />
         <option value="$PROJECT_DIR$/src/User.java" />
         <option value="$PROJECT_DIR$/src/Sprite.java" />
         <option value="$PROJECT_DIR$/tests/BoardTests.java" />
+        <option value="$PROJECT_DIR$/src/Board.java" />
+        <option value="$PROJECT_DIR$/src/PathFinder.java" />
         <option value="$PROJECT_DIR$/src/Room.java" />
+        <option value="$PROJECT_DIR$/src/CluedoGame.java" />
       </list>
     </option>
   </component>
@@ -187,8 +193,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -247,7 +253,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.BoardTests">
+  <component name="RunManager" selected="Application.CluedoGame">
+    <configuration name="CluedoGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="src.CluedoGame" />
+      <module name="source" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="src.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="All in source" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="source" />
       <option name="PACKAGE_NAME" value="" />
@@ -267,22 +286,6 @@
       <option name="PACKAGE_NAME" value="tests" />
       <option name="MAIN_CLASS_NAME" value="tests.BoardTests" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BoardTests.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="source" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="tests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="tests" />
-      <option name="MAIN_CLASS_NAME" value="tests.BoardTests" />
-      <option name="METHOD_NAME" value="test" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -368,11 +371,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.CluedoGame" />
         <item itemvalue="JUnit.BoardTests" />
         <item itemvalue="JUnit.All in source" />
         <item itemvalue="JUnit.BoardTests.testSpriteAndUser" />
         <item itemvalue="JUnit.BoardTests.test_cell" />
-        <item itemvalue="JUnit.BoardTests.test" />
       </list>
     </recent_temporary>
   </component>
@@ -400,49 +403,50 @@
       <workItem from="1564271095005" duration="3011000" />
       <workItem from="1564277405524" duration="12876000" />
       <workItem from="1564290483630" duration="2451000" />
+      <workItem from="1564293948551" duration="3000000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="BoardTests - 2019.07.28 at 17h 33m 45s.xml">
+    <history-entry file="BoardTests - 2019.07.28 at 18h 40m 16s.xml">
       <configuration name="BoardTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BoardTests - 2019.07.28 at 17h 34m 25s.xml">
+    <history-entry file="BoardTests - 2019.07.28 at 18h 41m 15s.xml">
       <configuration name="BoardTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BoardTests - 2019.07.28 at 17h 35m 48s.xml">
+    <history-entry file="BoardTests - 2019.07.28 at 18h 41m 39s.xml">
       <configuration name="BoardTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BoardTests - 2019.07.28 at 17h 36m 05s.xml">
+    <history-entry file="BoardTests - 2019.07.28 at 18h 42m 24s.xml">
       <configuration name="BoardTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BoardTests - 2019.07.28 at 17h 38m 27s.xml">
+    <history-entry file="BoardTests - 2019.07.28 at 18h 43m 29s.xml">
       <configuration name="BoardTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BoardTests - 2019.07.28 at 17h 41m 04s.xml">
+    <history-entry file="BoardTests - 2019.07.28 at 18h 45m 19s.xml">
       <configuration name="BoardTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BoardTests - 2019.07.28 at 17h 41m 22s.xml">
+    <history-entry file="BoardTests - 2019.07.28 at 18h 49m 15s.xml">
       <configuration name="BoardTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BoardTests - 2019.07.28 at 17h 42m 24s.xml">
+    <history-entry file="BoardTests - 2019.07.28 at 18h 49m 37s.xml">
       <configuration name="BoardTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BoardTests - 2019.07.28 at 17h 44m 39s.xml">
+    <history-entry file="BoardTests - 2019.07.28 at 18h 49m 53s.xml">
       <configuration name="BoardTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="BoardTests - 2019.07.28 at 17h 45m 14s.xml">
+    <history-entry file="BoardTests - 2019.07.28 at 18h 54m 03s.xml">
       <configuration name="BoardTests" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57862000" />
+    <option name="totallyTimeSpent" value="60862000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-640" y="-1448" width="5136" height="1416" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.0855004" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.0856974" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -471,7 +475,7 @@
       <window_info anchor="right" id="Maven" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="8" />
       <window_info anchor="right" id="Palette&#9;" order="9" />
-      <window_info anchor="right" id="Run" order="10" sideWeight="0.4965197" visible="true" weight="0.14696611" />
+      <window_info active="true" anchor="right" id="Run" order="10" sideWeight="0.4965197" visible="true" weight="0.14696611" />
       <window_info anchor="right" id="Debug" order="11" sideWeight="0.49769586" weight="0.1465721" />
     </layout>
     <layout-to-restore>
@@ -539,13 +543,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Weapon.java" />
-    <entry file="file://$PROJECT_DIR$/src/CluedoGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3281">
-          <caret line="214" column="37" lean-forward="true" selection-start-line="214" selection-start-column="37" selection-end-line="214" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/LUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3720">
@@ -557,38 +554,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Cell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MapBase.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PathFinder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="74" column="17" lean-forward="true" selection-start-line="74" selection-start-column="17" selection-end-line="74" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Sprite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="28" column="18" lean-forward="true" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+        <state relative-caret-position="560">
+          <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
           <folding>
             <element signature="e#1170#1171#0" expanded="true" />
             <element signature="e#1190#1191#0" expanded="true" />
@@ -596,27 +565,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Board.java">
+    <entry file="file://$PROJECT_DIR$/src/Sprite.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="198" column="57" lean-forward="true" selection-start-line="198" selection-start-column="57" selection-end-line="198" selection-end-column="57" />
+        <state relative-caret-position="295">
+          <caret line="66" column="16" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MapBase.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/BoardTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="581">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="276">
+          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Room.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="163" column="89" lean-forward="true" selection-start-line="163" selection-start-column="89" selection-end-line="163" selection-end-column="89" />
+        <state relative-caret-position="600">
+          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PathFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1315">
+          <caret line="78" column="54" lean-forward="true" selection-start-line="78" selection-start-column="54" selection-end-line="78" selection-end-column="54" />
+          <folding>
+            <element signature="e#115#116#0" expanded="true" />
+            <element signature="e#148#149#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Cell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CluedoGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="820">
+          <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
         </state>
       </provider>
     </entry>

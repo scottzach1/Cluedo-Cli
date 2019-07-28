@@ -4,15 +4,10 @@ import java.util.*;
 
 public class PathFinder {
 
-    private static Board board = null;
+    public Board board;
 
-    /**
-     * setBoard: Sets a local static copy of board.
-     * Useful for getting Cells from Strings.
-     * @param newBoard Board to replace.
-     */
-    static void setBoard(Board newBoard) {
-        if (board == null) board = newBoard;
+    public PathFinder(Board board) {
+        this.board = board;
     }
 
     /**
@@ -25,7 +20,7 @@ public class PathFinder {
      * @param numSteps The maximum number of steps allowed.
      * @return true valid, false otherwise.
      */
-    public static boolean checkValidPathFromString(String start, String end, int numSteps) {
+    public boolean checkValidPathFromString(String start, String end, int numSteps) {
         if (board == null) throw new RuntimeException("PathFinder does not have a Board!");
         return checkValidPath(board.getCell(start), board.getCell(end), numSteps);
     }
@@ -39,7 +34,12 @@ public class PathFinder {
      * @param diceRoll The maximum number of steps allowed.
      * @return true valid, false otherwise.
      */
-    public static boolean checkValidPath(Cell start, Cell end, int diceRoll) {
+    public boolean checkValidPath(Cell start, Cell end, int diceRoll) {
+
+        System.out.println("End Sprite: " + end.getSprite() + " at" + end.printCoordinates());
+
+        if (end.getSprite() != null || end.getType().equals(Cell.Type.WALL)) return false;
+
         PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>();
         HashMap<Cell, AStarNode> previousNodes = new HashMap<>();
 
@@ -86,7 +86,7 @@ public class PathFinder {
         }
 
         // Path Can Be Used here if needed.
-
+        System.out.println("steps taken: " + (path.size() - 1));
         return path.size() - 1 <= diceRoll;
     }
 
@@ -96,14 +96,14 @@ public class PathFinder {
      * @param target second cell to compare.
      * @return boolean true if same, false otherwise.
      */
-    private static boolean sameCell(Cell cell, Cell target) {
+    private boolean sameCell(Cell cell, Cell target) {
         return ((cell.getRoom() != null) && cell.getRoom() == target.getRoom()) || cell == target;
     }
 
     /**
      * Private Class to assist with AStarSearch.
      */
-    private static class AStarNode implements Comparable<AStarNode> {
+    private class AStarNode implements Comparable<AStarNode> {
         Cell previous, current;
         double distanceTravelled, heuristic;
 

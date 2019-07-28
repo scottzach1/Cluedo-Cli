@@ -16,6 +16,7 @@ public class CluedoGame {
 
 	// Game Attributes
 	private Board board;
+	private PathFinder pathFinder;
 	private List<User> users;
 	private Card[] solution;
 	private LUI lui;
@@ -38,6 +39,7 @@ public class CluedoGame {
 
 		while (!status.equals("3")) {
 			board = new Board();
+			pathFinder = new PathFinder(board);
 			this.users = new ArrayList<>();
 
 			// Create solution
@@ -215,7 +217,7 @@ public class CluedoGame {
 
 		Cell start = user.getSprite().getPosition();
 
-		if (PathFinder.checkValidPath(start, end, diceRoll)) {
+		if (pathFinder.checkValidPath(start, end, diceRoll)) {
 			board.moveUser(user, start, end);
 			return "8";
 		}

@@ -13,32 +13,47 @@ public class BoardTests {
         Cell start = b.getCell(startSting);
         Cell end = b.getCell(endString);
 
-        assertTrue(PathFinder.checkValidPath(start, end, realDist));
-        assertTrue(PathFinder.checkValidPath(end, start, realDist));
+        PathFinder pathFinder = new PathFinder(b);
 
-        assertTrue(PathFinder.checkValidPath(start, end, realDist + 1));
-        assertTrue(PathFinder.checkValidPath(end, start, realDist + 1));
+        assertTrue(pathFinder.checkValidPath(start, end, realDist));
+        assertTrue(pathFinder.checkValidPath(end, start, realDist));
 
-        assertFalse(PathFinder.checkValidPath(start, end, realDist - 1));
-        assertFalse(PathFinder.checkValidPath(end, start, realDist - 1));
+        assertTrue(pathFinder.checkValidPath(start, end, realDist + 1));
+        assertTrue(pathFinder.checkValidPath(end, start, realDist + 1));
 
-        assertTrue(PathFinder.checkValidPathFromString(startSting, endString, realDist));
-        assertTrue(PathFinder.checkValidPathFromString(endString, startSting, realDist));
+        assertFalse(pathFinder.checkValidPath(start, end, realDist - 1));
+        assertFalse(pathFinder.checkValidPath(end, start, realDist - 1));
 
-        assertTrue(PathFinder.checkValidPathFromString(startSting, endString, realDist + 1));
-        assertTrue(PathFinder.checkValidPathFromString(endString, startSting, realDist + 1));
+        assertTrue(pathFinder.checkValidPathFromString(startSting, endString, realDist));
+        assertTrue(pathFinder.checkValidPathFromString(endString, startSting, realDist));
 
-        assertFalse(PathFinder.checkValidPathFromString(startSting, endString, realDist - 1));
-        assertFalse(PathFinder.checkValidPathFromString(endString, startSting, realDist - 1));
+        assertTrue(pathFinder.checkValidPathFromString(startSting, endString, realDist + 1));
+        assertTrue(pathFinder.checkValidPathFromString(endString, startSting, realDist + 1));
+
+        assertFalse(pathFinder.checkValidPathFromString(startSting, endString, realDist - 1));
+        assertFalse(pathFinder.checkValidPathFromString(endString, startSting, realDist - 1));
     }
 
     @Test void testPathFinding() {
         Board b = new Board();
+        PathFinder pathFinder = new PathFinder(b);
 
-        testDistance(b, "H1", "H3", 2);
-        testDistance(b, "H1", "G6", 6);
+        testDistance(b, "H2", "H4", 2);
+        testDistance(b, "H2", "G7", 6);
         testDistance(b, "B2","H2", 9);
         testDistance(b, "Q21","B24", 11);
+        testDistance(b, "H2", "H7", 5);
+
+
+        // End is a wall
+        assertFalse(pathFinder.checkValidPathFromString("H1", "F2", 10));
+
+        assertNotNull(b.getCell("H1").getSprite());
+        assertNull(b.getCell("H5").getSprite());
+
+        // End holds a character
+        assertFalse(pathFinder.checkValidPath(b.getCell("H5"), b.getCell("H1"), 10));
+        assertFalse(pathFinder.checkValidPathFromString("H5", "H1", 10));
     }
 
     @Test void testBoard() {
@@ -79,7 +94,6 @@ public class BoardTests {
             b.moveUser(null, b.getCell("H1"), b.getCell("H3"));
             fail("Invalid Move didn't throw Exception");
         } catch (Exception e) {}
-
 
     }
 
