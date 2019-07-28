@@ -271,13 +271,13 @@ public class LUI {
 			handIndex++;
 		}
 		// Print out all the users weapons
-		System.out.println("Weapons:");
+		System.out.println("\nWeapons:");
 		while (handIndex < handSize && usersHand.get(handIndex) instanceof Weapon) {
 			System.out.println("  " + usersHand.get(handIndex).getName());
 			handIndex++;
 		}
 		// Print out all the users rooms
-		System.out.println("Rooms:");
+		System.out.println("\nRooms:");
 		while (handIndex < handSize && usersHand.get(handIndex) instanceof Room) {
 			System.out.println("  " + usersHand.get(handIndex).getName());
 			handIndex++;
@@ -314,7 +314,7 @@ public class LUI {
 			// If the user knows about this card, then indicate they know it isn't the
 			// solution
 			if (user.observedContainsAlias(w.name()))
-				System.out.print(" - SEEN");
+				System.out.print(" --------------- SEEN");
 			System.out.println();
 		}
 
@@ -325,7 +325,7 @@ public class LUI {
 			// If the user knows about this card, then indicate they know it isn't the
 			// solution
 			if (user.observedContainsAlias(r.name()))
-				System.out.print(" - SEEN");
+				System.out.print(" --------------- SEEN");
 			System.out.println();
 		}
 
@@ -534,6 +534,7 @@ public class LUI {
 			}
 		}
 
+		clearConsole();
 		return choosenCard;
 	}
 

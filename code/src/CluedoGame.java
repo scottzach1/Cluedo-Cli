@@ -1,6 +1,5 @@
 package src;
 
-
 import java.util.*;
 
 /* Created by Harrison Cook and Zac Scott - 2019 */
@@ -161,6 +160,9 @@ public class CluedoGame {
 	 * rounds: Acts like a forever loop, controlling what the LUI prints and acts
 	 * upon user inputs
 	 */
+	/**
+	 * 
+	 */
 	private void rounds() {
 		// Run the game by doing rounds, int user is the users turn
 		String error = "";
@@ -195,21 +197,39 @@ public class CluedoGame {
 
 			// [1] Move the player
 			if (status.equals("1")) {
-				LUI.clearConsole();
-				board.printBoardState();
-				status = lui.movePlayer(user);
-				try {
-					// Get the cell, if null then....
-					Cell cell = board.getCell(status);
-					// Make move will break the try
-					status = tryMove(cell, LUI.getDiceRoll(), user);
-				} catch (NullPointerException np) {
-					error = "Board cannot find position " + status;
-				} catch (RuntimeException rt) {
-					error = "Location can't be reached. \n\t  You can only move " + LUI.getDiceRoll() + " steps";
-				} catch (Exception e) {
-					error = "Unknown Error";
+				while (status.equals("1")) {
+					// Clear screen
+					LUI.clearConsole();
+					board.printBoardState();
+
+					// Print user error
+					if (error.length() > 0) {
+						if (error.charAt(0) == '1')
+							LUI.printError("", "Not a valid cell on the board");
+						if (error.charAt(0) == '2')
+							LUI.printError("", "Out of reach, check dice roll");
+						if (error.charAt(0) == '3')
+							LUI.printError("", "Please use the form 'H18'");
+					}
+
+					status = lui.movePlayer(user);
+					try {
+						// Get the cell, if null then....
+						Cell cell = board.getCell(status);
+						// Make move will break the try
+						status = tryMove(cell, LUI.getDiceRoll(), user);
+					} catch (NullPointerException np) {
+						error = "1-NULLPOINTER ERROR";
+						status = "1";
+					} catch (RuntimeException rt) {
+						error = "2-RUNTIME ERROR";
+						status = "1";
+					} catch (Exception e) {
+						error = "3-UNKNOWN ERROR";
+						status = "1";
+					}
 				}
+				error = "";
 			}
 
 			// [2] Show the users hand refresh to menu (do nothing)
@@ -239,14 +259,29 @@ public class CluedoGame {
 
 					// If three cards are returned then
 					if (components.length == 3) {
-						Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[1]));
-						Weapon w = board.getWeapons().get(Weapon.WeaponAlias.valueOf(components[2]));
-						Room r = board.getRooms().get(Room.RoomAlias.valueOf(components[3]));
+						// Get the three characters
+						Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[0]));
+						Weapon w = board.getWeapons().get(Weapon.WeaponAlias.valueOf(components[1]));
+						Room r = board.getRooms().get(Room.RoomAlias.valueOf(components[2]));
 
-						for (int u = 0; u < users.size() - 1; u++) {
+						// Move the sprite to this room (random spot)
+						for (Cell c : r.getCells()) {
+							if (c.getSprite() == null) {
+								s.setPosition(c);
+								break;
+							}
+						}
+						// Swap the places of the weapon in the room and the selected weapon
+						if (r.getWeapon() != null)
+							r.getWeapon().setRoom(w.getRoom());
+						w.setRoom(r);
+
+						// For each user, get a list of cards that match this suggestion
+						// If a user has at least one card that matches, break
+						for (int u = 1; u < users.size() - 1; u++) {
 							ArrayList<Card> options = new ArrayList<>();
 							// Get user next in the line
-							int otherUserNum = (userNum + 1) % users.size();
+							int otherUserNum = (userNum + u) % users.size();
 							User other = users.get(otherUserNum);
 							// If the other user has one of the suggested cards add it to the list of
 							// options
@@ -269,6 +304,8 @@ public class CluedoGame {
 												+ choosenCard.getClass().getName() + ": " + choosenCard.getName());
 								lui.readInput("-[ANY] Sweet as", user.getUserName());
 
+								user.addToObservedCards(choosenCard);
+
 								cardFound = true;
 								break;
 							}
@@ -285,19 +322,32 @@ public class CluedoGame {
 				}
 			}
 
+			// [5] AN ACCUSATION! if the player has the solution right, then end the game,
+			// and congratulate them
+			// If a player has the accusation wrong, add them to the losers list removing
+			// their turn from
+			// circulation.
 			if (status.equals("5")) {
+				// Get three cards allowing them to select a room
 				lui.selectThreeCards(user, "ROOM");
 				String[] components = status.split(":");
-				if (components.length == 4) {
+
+				// If the user has entered three cards
+				if (components.length == 3) {
+					// Get the three cards
 					Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[1]));
 					Weapon w = board.getWeapons().get(Weapon.WeaponAlias.valueOf(components[2]));
 					Room r = board.getRooms().get(Room.RoomAlias.valueOf(components[3]));
 
+					// Check if the user has the answer, end the game if so ...
 					if (s.equals(solution[0]) && w.equals(solution[1]) && r.equals(solution[2])) {
 						System.out.println("\n------------------------------------------------");
 						System.out.println("The Best Detective and WINNER of this game is: " + user.getUserName());
 						System.out.println("------------------------------------------------\n");
-					} else {
+						return;
+					}
+					// ... else put them on the losers list, no longer allowed to play
+					else {
 						lui.readInput(user.getUserName()
 								+ "Your accusation is incorrect, you can no longer win the game \n\n-[Any] Awwhh man",
 								user.getUserName());
@@ -391,7 +441,7 @@ public class CluedoGame {
 		nonSolutionSprites.remove(((Sprite) solution[0]).getSpriteAlias());
 		nonSolutionWeapons.remove(((Weapon) solution[1]).getWeaponAlias());
 		nonSolutionRooms.remove(((Room) solution[2]).getRoomAlias());
-		
+
 		// Create arraylists of random order for the three maps
 		ArrayList<Sprite> randomSprites = new ArrayList<>(nonSolutionSprites.values());
 		Collections.shuffle(randomSprites);
@@ -400,7 +450,6 @@ public class CluedoGame {
 		ArrayList<Room> randomRooms = new ArrayList<>(nonSolutionRooms.values());
 		Collections.shuffle(randomRooms);
 
-		
 		// Deal the cards out, change user every deal
 		int userNum = 0;
 

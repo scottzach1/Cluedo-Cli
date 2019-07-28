@@ -172,14 +172,14 @@ public class Room extends Card {
 		Set<User> inThisRoom = getInThisRoom();
 		// Append users in the room
 		for (User user : inThisRoom) { peopleStr.append(user.getSprite().getName() + ", ");}
-		if (inThisRoom.isEmpty()) peopleStr.append("no one");
+		if (inThisRoom.isEmpty()) peopleStr.append("NO_ONE");
 		
 		// Append weapons in this room 
-		if (weapon != null) weaponStr.append("the " + weapon.getName());
+		if (weapon != null) weaponStr.append("THE_" + weapon.getName());
 		else weaponStr.append("no weapon");
 		
 		
-		return getName() + ": \n  -PEOPLE:" + peopleStr.toString()
+		return getName() + ": \n  -PEOPLE: " + peopleStr.toString()
 				+ "\n  -WEAPONS: " + weaponStr.toString();
 	}
 }
