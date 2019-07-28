@@ -66,6 +66,8 @@ public class Sprite extends Card {
 
 	public void setPosition(Cell position) {
 		this.positionCell = position;
+		if (positionCell.getSprite() == this) return;
+		position.setSprite(this);
 	}
 
 	public Cell getPosition() {
