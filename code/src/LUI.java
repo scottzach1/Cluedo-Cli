@@ -184,10 +184,13 @@ public class LUI {
 			return "2" + showHand(user);
 		if (status.contentEquals("3"))
 			return "3:" + showObservations(user);
-		if (status.contentEquals("4"))
-			return "4:" + selectThreeCards(user);
+		if (status.contentEquals("4")) {
+			if (user.getSprite().getPosition().getType() == Cell.Type.ROOM)
+				return "4:" + selectThreeCards(user, "8");
+			return "You are not in a room, thus you can't make a suggestion";
+		}
 		if (status.contentEquals("5"))
-			return "5:" + selectThreeCards(user);
+			return "5:" + selectThreeCards(user, "9");
 		if (status.contentEquals("8"))
 			return "8";
 		if (status.contentEquals("9"))
@@ -210,12 +213,14 @@ public class LUI {
 			if (input.equals("B"))
 				return "";
 
-			try {
-				int col = Character.toUpperCase(input.charAt(0)) - 'A';
-				int row = Integer.parseUnsignedInt(input.substring(1)) - 1;
-				cellCoordinates = col + "" + row;
-			} catch (Exception e) {
-				printError(input, "does not match the suggested layout");
+			if (Character.isAlphabetic(input.charAt(0))) {
+				try {
+					char col = input.charAt(0);
+					int row = Integer.parseUnsignedInt(input.substring(1)) - 1;
+					cellCoordinates = col + "" + row;
+				} catch (Exception e) {
+					printError(input, "does not match the suggested layout");
+				}
 			}
 		}
 		return cellCoordinates;
@@ -280,7 +285,7 @@ public class LUI {
 		return readInput("-[ANY] Back to menu", user.getUserName());
 	}
 
-	private String selectThreeCards(User user) {
+	private String selectThreeCards(User user, String code) {
 		StringBuilder str = new StringBuilder();
 		int currentTalkingPoint = -1;
 		String accusation = "";
@@ -304,7 +309,7 @@ public class LUI {
 				System.out.println(indent(back - 1) + "-[" + (back) + "] " + "Back to menu");
 
 				input = readInput("Choose who you wish to blame!", user.getUserName());
-				
+
 				currentTalkingPoint = stringToInt(input);
 				// Check it is a valid integer
 				if (currentTalkingPoint == -1) {
@@ -316,7 +321,7 @@ public class LUI {
 				// Check if returning to menu
 				if (currentTalkingPoint == back)
 					return "";
-				
+
 				// Check if number is valid for a sprite selection
 				if (currentTalkingPoint < 1 || currentTalkingPoint > Sprite.SpriteAlias.values().length) {
 					printError(input, "is not a valid choice");
@@ -342,7 +347,7 @@ public class LUI {
 				System.out.println(indent(back - 1) + "-[" + (back) + "] " + "Back to menu");
 
 				input = readInput(spriteSuspect + "???\n... what did they use then?", user.getUserName());
-				
+
 				currentTalkingPoint = stringToInt(input);
 				// Check it is a valid integer
 				if (currentTalkingPoint == -1) {
@@ -366,7 +371,7 @@ public class LUI {
 			// ROOM SELECTION
 			// -----------------------------------------------------------------------
 
-			while (!spriteSuspect.isEmpty() && !weaponSuspect.isEmpty() && roomSuspect.isEmpty()) {
+			while (!spriteSuspect.isEmpty() && !weaponSuspect.isEmpty() && roomSuspect.isEmpty() && code.equals("9")) {
 				for (int r = 0; r < Room.RoomAlias.values().length; r++) {
 					System.out.println(indent(r) + "-[" + (r + 1) + "] " + Room.RoomAlias.values()[r].name());
 				}
@@ -377,7 +382,9 @@ public class LUI {
 				System.out.println(indent(restart - 1) + "-[" + (restart) + "] " + "Reset Selection");
 				System.out.println(indent(back - 1) + "-[" + (back) + "] " + "Back to menu");
 
-				input = readInput(spriteSuspect + " used the " + weaponSuspect + "???\n... so where did this take place?", user.getUserName());
+				input = readInput(
+						spriteSuspect + " used the " + weaponSuspect + "???\n... so where did this take place?",
+						user.getUserName());
 
 				currentTalkingPoint = stringToInt(input);
 				// Check it is a valid integer
@@ -400,17 +407,39 @@ public class LUI {
 				str.append(roomSuspect);
 			}
 
+			if (code.equals("8")) {
+				roomSuspect = user.getSprite().getPosition().getRoom().getName();
+				str.append(roomSuspect);
+			}
+
 			if (!roomSuspect.isEmpty()) {
 				input = readInput(spriteSuspect + " used the " + weaponSuspect + " in the " + roomSuspect + "?"
-						+ "\n-[1] Yes / Confirm"
-						+ "\n -[2] No / Try Again", user.getUserName());
-				
-				
+						+ "\n-[1] Yes / Confirm" + "\n -[2] No / Try Again", user.getUserName());
+
 				accusation = str.toString();
 			}
 		}
 
 		return str.toString();
+	}
+
+	public Card chooseCardToGiveAway(User other, ArrayList<Card> cards) {
+		Card choosenCard = null;
+		while (choosenCard == null) {
+			clearConsole();
+			for (int i = 0; i < cards.size(); i++) {
+				System.out.println(indent(i) + "-[" + (i + 1) + "]" + cards.get(i).getName());
+			}
+			String input = readInput(other.getUserName() + ", please select a card that you are required to show.",
+					other.getUserName());
+
+			int playerChoice = stringToInt(input);
+			if (playerChoice >= 1 && playerChoice < cards.size()) {
+				choosenCard = cards.get(playerChoice - 1);
+			}
+		}
+
+		return choosenCard;
 	}
 
 	public static void rollDice() {
