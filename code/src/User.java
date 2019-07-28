@@ -34,6 +34,7 @@ public class User {
 		User.USERS++;
 		userNum = userNo.values()[User.USERS];
 		hand = new ArrayList<>();
+		observedCards = new HashSet<>();
 	}
 
 	// ------------------------
@@ -64,8 +65,8 @@ public class User {
 		return observedCards;
 	}
 
-	public void setObservedCards(Set<Card> knownCards) {
-		this.observedCards = knownCards;
+	public void addToObservedCards(Card knownCard) {
+		this.observedCards.add(knownCard);
 	}
 
 	public Sprite getSprite() {
@@ -74,6 +75,14 @@ public class User {
 
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
+	}
+	
+	public boolean observedContainsAlias(String s) {
+		for (Card c : observedCards) {
+			if (c.getName().equals(s))
+				return true;
+		}
+		return false;
 	}
 
 	public String toString() {

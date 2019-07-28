@@ -224,7 +224,7 @@ public class LUI {
 	private String showHand(User user) {
 		List<Card> usersHand = user.getHand();
 		int handIndex = 0, handSize = usersHand.size();
-		System.out.println("Characters:");
+		System.out.println("Sprites:");
 		while (handIndex < handSize && usersHand.get(handIndex) instanceof Sprite) {
 			System.out.println("  " + usersHand.get(handIndex).getName());
 			handIndex++;
@@ -243,9 +243,41 @@ public class LUI {
 		return readInput("\n-[ANY] Go back to menu", user.getUserName());
 	}
 
+	/**
+	 * showObservations: used in the CluedoGame class, public as CluedoGame needs to parse
+	 * 					 a list of all the possible cards. Which are displayed to indicate
+	 * 					 what cards the player has seen. 
+	 * @param user - who's observations are being displayed
+	 * 		  allCards - all the possible cards in the game
+	 * @return String - indication of the players choice on what to do
+	 */
 	private String showObservations(User user) {
+		System.out.println("\nSprites:");
+		for (Sprite.SpriteAlias s : Sprite.SpriteAlias.values()){
+			System.out.print("   " + s.name());
+			if (user.observedContainsAlias(s.name()))
+				System.out.print(" - SEEN");
+			System.out.println();
+		}
+		
 
-		return "";
+		System.out.println("\nWeapons:");
+		for (Weapon.WeaponAlias w : Weapon.WeaponAlias.values()){
+			System.out.print("   " + w.name());
+			if (user.observedContainsAlias(w.name()))
+				System.out.print(" - SEEN");
+			System.out.println();
+		}
+
+		System.out.println("\nRooms:");
+		for (Room.RoomAlias r : Room.RoomAlias.values()){
+			System.out.print("   " + r.name());
+			if (user.observedContainsAlias(r.name()))
+				System.out.print(" - SEEN");
+			System.out.println();
+		}		
+
+		return readInput("\n-[ANY] Back to menu", user.getUserName());
 	}
 
 	private String suggestion(User user) {
