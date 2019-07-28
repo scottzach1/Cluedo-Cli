@@ -1,5 +1,6 @@
 package src;
 
+import java.security.InvalidParameterException;
 import java.util.*;
 
 public class Board {
@@ -233,17 +234,24 @@ public class Board {
 
 		Stack<Cell> path = new Stack<>();
 
+		System.out.println("NNNNN");
 		while (parentMap.get(cell) != null) {
 			path.push(cell);
 			cell = parentMap.get(cell);
 		}
+
+		path.forEach(c -> System.out.println(c.printCoordinates()));
 
 		return path.size();
 	}
 	
 	
 	public void moveCharacter(User user, Cell from, Cell to) {
+		if (from == null || to == null || user == null)
+			throw new InvalidParameterException("Cannot pass a null parameter!");
+
 		Sprite sprite = user.getSprite();
+
 		to.setSprite(sprite);
 		from.setSprite(null);
 	}
@@ -255,17 +263,18 @@ public class Board {
 	 * @return Cell at the provided row/col.
 	 */
 	public Cell getCell(int row, int col) {
-		if (row < 0 || row >= rows - 1)
-			return null;
-		if (col < 0 || col >= cols - 1)
+		if ((row < 0 || row >= rows - 1) || (col < 0 || col >= cols - 1))
 			return null;
 
 		return cells[row][col];
 	}
 
 	public Cell getCell(String cord) {
-		int col = Character.toUpperCase(cord.charAt(0)) - 'A';
-		int row = Integer.parseUnsignedInt(cord.substring(1)) - 1;
+		int col, row;
+		try {
+			col = Character.toUpperCase(cord.charAt(0)) - 'A';
+			row = Integer.parseUnsignedInt(cord.substring(1)) - 1;
+		} catch (Exception e) { throw new InvalidParameterException(); }
 
 		return getCell(row, col);
 	}
@@ -339,8 +348,6 @@ public class Board {
 				"25|#|#|#|#|#|#|4|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|\r\n" + 
 				"   A B C D E F G H I J K L M N O P Q R S T U V W X";
 	}
-
-
 
 	/**
 	 * main: Launch point for testing rendering of the map.

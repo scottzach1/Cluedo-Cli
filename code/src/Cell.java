@@ -56,7 +56,7 @@ public class Cell {
 		return Type.BLANK;
 	}
 
-	public String printCordinates() { return " " + ((char) (col + 'A')) + row + 1; }
+	public String printCoordinates() { return "" + ((char) (col + 'A')) + (row + 1); }
 
 	public String toString() {
 		if (sprite != null) return sprite.toString();
