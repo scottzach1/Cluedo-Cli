@@ -54,15 +54,20 @@ public class Weapon extends Card {
 		if (room == null || room.getWeapon() == this) return;
 		room.setWeapon(this);
 	}
-	
+
+	/**
+	 * getWeaponAlias: Gets the WeaponAlias of the Weapon.
+	 * @return WeaponAlias of the Weapon.
+	 */
 	public WeaponAlias getWeaponAlias() {
 		return weaponAlias;
 	}
 
 	/**
-	 * Given an int, find the matching WeaponAlias according to its ordinal position in the Enum.
-	 * @param i The int corresponding to a WeaponAlias' enum position.
-	 * @return The Weapon declared at that enum ordinal.
+	 * parseAliasFromOrdinalInt: Given an int, find the matching
+	 * WeaponAlias according to its ordinal position in the Enum.
+	 * @param i int corresponding to a WeaponAlias' enum position.
+	 * @return WeaponAlias declared at that enum ordinal.
 	 */
 	public static WeaponAlias parseAliasFromOrdinalInt(int i) {
 		int sizeOfCharacterValues = WeaponAlias.values().length;
@@ -71,9 +76,6 @@ public class Weapon extends Card {
 		throw new IllegalStateException("Error parsing " + i + " as an ordinal for WeaponAlias.");
 	}
 
-	/**
-	 * @return
-	 */
 	public String toString() {
 		return weaponAlias.toString();
 	}

@@ -9,6 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTests {
 
+    /**
+     * Tests edge case distance for path finding.
+     * @param b board
+     * @param startSting string cord of start cell
+     * @param endString string cord of end cell
+     * @param realDist the true distance expected on map.
+     */
     private void testDistance(Board b, String startSting, String endString, int realDist) {
         Cell start = b.getCell(startSting);
         Cell end = b.getCell(endString);
@@ -35,6 +42,7 @@ public class BoardTests {
     }
 
     @Test void testPathFinding() {
+        // Test generic paths.
         Board b = new Board();
         PathFinder pathFinder = new PathFinder(b);
 
@@ -57,6 +65,7 @@ public class BoardTests {
     }
 
     @Test void testBoard() {
+        // Check maps are populated.
         Board b = new Board();
 
         for (Room.RoomAlias roomAlias : Room.RoomAlias.values()) {
@@ -71,6 +80,7 @@ public class BoardTests {
             assertEquals(weaponAlias, b.getWeapons().get(weaponAlias).getWeaponAlias());
         }
 
+        // Checking getCell and moveUser
         User user = new User();
         assertNull(user.getSprite());
 
@@ -80,18 +90,18 @@ public class BoardTests {
         assertNull(b.getCell("H3").getSprite());
         assertEquals(user.getSprite(), b.getCell("H1").getSprite());
 
-        b.moveUser(user, b.getCell("H1"), b.getCell("H3"));
+        b.moveUser(user, b.getCell("H3"));
 
         assertNull(b.getCell("H1").getSprite());
         assertEquals(user.getSprite(), b.getCell("H3").getSprite());
 
         try {
-            b.moveUser(user, b.getCell("H-1"), b.getCell("H3"));
+            b.moveUser(user, b.getCell("H3"));
             fail("Invalid Move didn't throw Exception");
         } catch (Exception e) {}
 
         try {
-            b.moveUser(null, b.getCell("H1"), b.getCell("H3"));
+            b.moveUser(null, b.getCell("H3"));
             fail("Invalid Move didn't throw Exception");
         } catch (Exception e) {}
 
@@ -99,7 +109,7 @@ public class BoardTests {
 
     @Test void testCellToString() {
         Cell cell = new Cell(5, 5, Cell.Type.WALL);
-        assertEquals(cell.printCoordinates(), "F6");
+        assertEquals(cell.getStringCoordinates(), "F6");
 
         cell = new Cell(5, 5, Cell.Type.WALL);
         assertEquals("#", cell.toString());
@@ -115,6 +125,7 @@ public class BoardTests {
     }
 
     @Test void testRoom() {
+        // Checking doors generated.
         Board b = new Board();
 
         assertEquals(1, b.getRooms().get(Room.RoomAlias.KITCHEN).getDoors().size());
@@ -126,6 +137,7 @@ public class BoardTests {
         assertEquals(1, b.getRooms().get(Room.RoomAlias.LOUNGE).getDoors().size());
         assertEquals(2, b.getRooms().get(Room.RoomAlias.DINING_ROOM).getDoors().size());
 
+        // Checking parsingEnum strings.
         Queue<String> roomAliasStrings = new ArrayDeque<>(Arrays.asList("KITCHEN", "BALLROOM", "CONSERVATORY", "BILLARD_ROOM", "DINING_ROOM", "LIBRARY", "LOUNGE", "HALL", "STUDY"));
         Queue<Character> roomCharList = new ArrayDeque<>(Arrays.asList('K', 'B', 'C', 'A', 'D', 'L', 'E', 'H', 'S'));
         for (int i = 0; i < Room.RoomAlias.values().length; i++) {
@@ -138,8 +150,9 @@ public class BoardTests {
         user1.setSprite(b.getSprites().get(Sprite.SpriteAlias.MRS_WHITE));
         user2.setSprite(b.getSprites().get(Sprite.SpriteAlias.COLONEL_MUSTARD));
 
-        b.moveUser(user1, user1.getSprite().getPosition(), b.getCell("B24"));
-        b.moveUser(user2, user2.getSprite().getPosition(), b.getCell("E20"));
+        // Testing Moving User.
+        b.moveUser(user1, b.getCell("B24"));
+        b.moveUser(user2, b.getCell("E20"));
 
         Set<User> expectedUsers = new HashSet<>(Arrays.asList(user1, user2));
         Set<User> recordedUsers = b.getRooms().get(Room.RoomAlias.LOUNGE).getInThisRoom();
@@ -147,6 +160,7 @@ public class BoardTests {
         assertEquals(expectedUsers.size(), recordedUsers.size());
         assertTrue(recordedUsers.containsAll(expectedUsers));
 
+        // Checking Room sizes.
         assertEquals(17, b.getRooms().get(Room.RoomAlias.KITCHEN).getCells().size());
         assertEquals(30, b.getRooms().get(Room.RoomAlias.BALLROOM).getCells().size());
         assertEquals(15, b.getRooms().get(Room.RoomAlias.CONSERVATORY).getCells().size());
@@ -160,6 +174,7 @@ public class BoardTests {
     }
 
     @Test void testSpriteAndUser() {
+        // Check  2 way setter getters
         User.resetUserNoCounter();
         Board b = new Board();
         User user = new User();
@@ -176,6 +191,7 @@ public class BoardTests {
             assertEquals(user, sprite.getUser());
         }
 
+        // Check toStrings
         for (Sprite.SpriteAlias spriteAlias : Sprite.SpriteAlias.values()) {
             Sprite sprite = b.getSprites().get(spriteAlias);
             switch (sprite.getSpriteAlias()) {
@@ -200,6 +216,8 @@ public class BoardTests {
             }
         }
 
+
+        // Checking parsing.
         Queue<String> spriteAliasStrings = new ArrayDeque<>(Arrays.asList("MRS_WHITE", "MR_GREEN", "MRS_PEACOCK", "PROFESSOR_PLUM", "MISS_SCARLETT", "COLONEL_MUSTARD"));
 
         for (int i = 0; i < Sprite.SpriteAlias.values().length; i++) {
@@ -209,6 +227,8 @@ public class BoardTests {
     }
 
     @Test void testWeapon() {
+        // Check setters and getters.
+
         Board b = new Board();
         Weapon w1 = b.getWeapons().get(Weapon.WeaponAlias.CANDLE_STICK);
         Room r = w1.getRoom();
@@ -225,9 +245,17 @@ public class BoardTests {
         assertEquals(r, w2.getRoom());
 
         assertNotEquals(w1, w2);
+
+        // Checking parsing.
+        Queue<String> weaponAliasStrings = new ArrayDeque<>(Arrays.asList("CANDLE_STICK", "DAGGER", "LEAD_PIPE", "REVOLVER", "ROPE", "SPANNER"));
+
+        for (int i = 0; i < Weapon.WeaponAlias.values().length; i++) {
+            assertEquals(weaponAliasStrings.poll(), Weapon.parseAliasFromOrdinalInt(i).toString());
+        }
     }
 
     @Test void testUser() {
+        // Checking userNo enum.
         User.resetUserNoCounter();
 
         User user = null;
@@ -239,15 +267,14 @@ public class BoardTests {
             assertEquals("Meep" + i, user.getUserName());
         }
 
+        // Checking hand.
         Card card = new Room(Room.RoomAlias.KITCHEN);
         assertNotNull(user);
         assertEquals(0, user.getHand().size());
-        user.addToHand(card);
         user.addToHand(new Weapon(Weapon.WeaponAlias.DAGGER));
+        user.addToHand(card);
         assertEquals(2, user.getHand().size());
         assertTrue(user.getHand().contains(card));
-
-        Card obC = new Sprite(Sprite.SpriteAlias.MR_GREEN);
     }
 
 }

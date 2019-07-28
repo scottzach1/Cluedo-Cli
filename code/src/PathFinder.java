@@ -4,6 +4,7 @@ import java.util.*;
 
 public class PathFinder {
 
+    // Needed for checkValidFromString
     private Board board;
 
     public PathFinder(Board board) {
@@ -35,56 +36,61 @@ public class PathFinder {
      * @return true valid, false otherwise.
      */
     public boolean checkValidPath(Cell start, Cell end, int diceRoll) {
+        // NOTE: Commenting will be nearly identical to my 261 asg.  - (Zac Scott 300447976)
 
         if (end.getSprite() != null || end.getType().equals(Cell.Type.WALL)) return false;
 
         PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>();
         HashMap<Cell, AStarNode> previousNodes = new HashMap<>();
 
-        AStarNode node = new AStarNode(null, start, 0, start.getDistance(end));
-
+        // Setup the first Node.
+        AStarNode node = new AStarNode(null, start, 0, getDistance(start, end));
         priorityQueue.add(node);
         previousNodes.put(node.current, node);
 
-        while (!priorityQueue.isEmpty()) {
-
+        while (!priorityQueue.isEmpty()) { // Keeps searching until map is exhausted.
+            // Grab the Node.
             node = priorityQueue.poll();
             Cell cell = node.current;
 
-            if (sameCell(node.current, end)) break;
+            if (sameCell(node.current, end)) break; // Breaks when path is found.
 
+            // If in a room, iterate over its doors, else its neighbours.
             for (Cell neigh : ((cell.getRoom() != null) ? cell.getRoom().getDoors() : cell.getNeighbors().values())) {
                 double distanceTravelled = node.distanceTravelled + 1;
-                double heuristic = distanceTravelled + neigh.getDistance(end);
+                double heuristic = distanceTravelled + getDistance(neigh, end); // Euclidean distance.
 
                 AStarNode newStarNode = new AStarNode(cell, neigh, distanceTravelled, heuristic);
 
-                if (previousNodes.containsKey(neigh)) {
+                if (previousNodes.containsKey(neigh)) { // Node is already visited.
                     AStarNode oldStarNode = previousNodes.get(neigh);
 
-                    if  (newStarNode.heuristic < oldStarNode.heuristic) {
+                    if  (newStarNode.heuristic < oldStarNode.heuristic) { // If shortcut found.
                         priorityQueue.remove(oldStarNode);
                         priorityQueue.add(newStarNode);
                         previousNodes.put(neigh, newStarNode);
                     }
-                } else {
+                } else { // Node hasn't been visited yet.
                     priorityQueue.add(newStarNode);
                     previousNodes.put(newStarNode.current, newStarNode);
                 }
             }
         }
 
-        if (!sameCell(node.current, end)) return false;
+        if (!sameCell(node.current, end)) return false; // Path was unable to be found. End was unreachable.
 
-        Stack<Cell> path = new Stack<>();
+        Stack<Cell> path = new Stack<>(); // Stack of path. NOTE: I could just remember n steps. This was helpful for debugging too!
 
-        while (node != null) {
+        while (node != null) { // Work our way back through the nodes.
             path.push(node.current);
             node = previousNodes.get(node.previous);
         }
 
+        // path.forEach(cell -> System.out.println(cell.getStringCoordinates())); // DEBUGGING LINE.
+
         // Path Can Be Used here if needed.
-        return path.size() - 1 <= diceRoll;
+
+        return path.size() - 1 <= diceRoll; // -1 as first node is start.
     }
 
     /**
@@ -95,6 +101,17 @@ public class PathFinder {
      */
     private boolean sameCell(Cell cell, Cell target) {
         return ((cell.getRoom() != null) && cell.getRoom() == target.getRoom()) || cell == target;
+    }
+
+    /**
+     * getDistance: Return the Euclidean distance of a Cell from another Cell.
+     * (Based on Pythagorean Theorem using row and cols).
+     * @param a Cell to measure distance from.
+     * @param b Cell to measure distance to.
+     * @return Distance between Cells.
+     */
+    public double getDistance(Cell a, Cell b) {
+        return (Math.sqrt(Math.pow(a.getRow() - b.getRow(), 2) + Math.pow(a.getCol() - b.getCol(), 2)));
     }
 
     /**

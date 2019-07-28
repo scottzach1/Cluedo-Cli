@@ -171,18 +171,35 @@ public class Board {
 		return rooms;
 	}
 
+	/**
+	 * getWeapons: Return a map of all the Weapons in the Board.
+	 * (Where keys are their corresponding WeaponAlias).
+	 *
+	 * @return map of Weapons on the Board.
+	 */
 	public Map<Weapon.WeaponAlias, Weapon> getWeapons() {
 		return weapons;
 	}
 
-	public void moveUser(User user, Cell from, Cell to) {
-		if (from == null || to == null || user == null)
+
+	/**
+	 * moveUser: Move a User to another Cell.
+	 * @param user User to move.
+	 * @param target Cell to move to.
+	 */
+	public void moveUser(User user, Cell target) {
+		if (target == null || user == null)
 			throw new InvalidParameterException("Cannot pass a null parameter!");
 
-		Sprite sprite = user.getSprite();
-		sprite.setPosition(to);
+		if (target.getSprite() != null)
+			throw new RuntimeException("Position is already taken!");
 
-		to.setSprite(sprite);
+		Cell from = user.getSprite().getPosition();
+
+		Sprite sprite = user.getSprite();
+		sprite.setPosition(target);
+
+		target.setSprite(sprite);
 		from.setSprite(null);
 	}
 
@@ -199,6 +216,12 @@ public class Board {
 		return cells[row][col];
 	}
 
+	/**
+	 * getCell: Return the Cell stored at the given row/col.
+	 * Throws InvalidParameterException.
+	 * @param cord String of coordinate. Ie, H13
+	 * @return Cell at cord.
+	 */
 	public Cell getCell(String cord) {
 
 		int col, row;
