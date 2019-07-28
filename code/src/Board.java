@@ -175,6 +175,7 @@ public class Board {
 			throw new InvalidParameterException("Cannot pass a null parameter!");
 
 		Sprite sprite = user.getSprite();
+		sprite.setPosition(to);
 
 		to.setSprite(sprite);
 		from.setSprite(null);

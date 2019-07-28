@@ -166,14 +166,12 @@ public class CluedoGame {
 			// 1: Move, 2: Hand, 3: Observations, 4: Suggest, 5: Accuse (Solve), 8: Next
 			// User, 9: Quit Game
 
-			char playerChoice = status.charAt(0);
-
 			// [1] Move the player
-			if (playerChoice == '1') {
+			if (status.equals("") == '1') {
 				LUI.clearConsole();
 				board.printBoardState();
 				status = lui.movePlayer(user);	
-				
+				status.equals("") = status.charAt(0);
 				try {
 					// Get the cell, if null then....
 					Cell cell = board.getCell(status);
@@ -189,19 +187,23 @@ public class CluedoGame {
 			}
 
 			// [2] refresh to menu (do nothing)
-			if (playerChoice == '2')
+			if (status.equals("") == '2') {
 				status = lui.showHand(user);
-
+				status.equals("") = status.charAt(0);
+			}
 			// [3] refresh to menu (do nothing)
-			if (playerChoice == '3')
+			if (status.equals("") == '3') {
 				status = lui.showObservations(user);
+				status.equals("") = status.charAt(0);
+			}
 
-			// [4] check if the next players have a possible card
-			if (playerChoice == '4') {
+				// [4] check if the next players have a possible card
+			if (status.equals("") == '4') {
 				if (user.getSprite().getPosition().getType() != Cell.Type.ROOM) {
 					lui.readInput("You are not in a room, thus you can't make a suggestion \n-[Any] Okay", user.getUserName());
 				} else {
 					status = lui.selectThreeCards(user, "8");
+					status.equals("") = status.charAt(0);
 					String[] components = status.split(":");
 					boolean cardFound = false;
 					if (components.length == 4) {
@@ -246,13 +248,12 @@ public class CluedoGame {
 									+ " - " + r.getName(), user.getUserName());
 						}
 
-						status = "8";
-
+						status.equals("") = '8';
 					}
 				}
 			}
 
-			if (playerChoice == '5') {
+			if (status.equals("") == '5') {
 				lui.selectThreeCards(user, "9");
 				String[] components = status.split(":");
 				if (components.length == 4) {
@@ -269,12 +270,12 @@ public class CluedoGame {
 								+ "Your accusation is incorrect, you can no longer win the game \n\n-[Any] Awwhh man",
 								user.getUserName());
 					}
-					status = "8";
+					status.equals("") = '8';
 				}
 			}
 
 			// [8] Change the user after prev user has exited their turn
-			if (playerChoice == '8') {
+			if (status.equals("") == '8') {
 				userNum = (userNum + 1) % users.size();
 				LUI.rollDice();
 			}
@@ -284,7 +285,7 @@ public class CluedoGame {
 				System.out.println("Thanks for playing");
 			}
 
-			if (!java.lang.Character.isDigit(playerChoice)) {
+			if (!java.lang.Character.isDigit(status.equals(""))) {
 				error = "unknown input";
 			}
 		}
