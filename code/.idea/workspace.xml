@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b25ca44-6460-4a72-97a3-8da892c80de2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/source/src/Cell$Direction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source/src/Cell$Direction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/source/src/Cell$Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source/src/Cell$Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/source/src/Cell.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/source/src/Cell.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/BoardTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/tests/BoardTests.java" afterDir="false" />
     </list>
@@ -57,8 +58,12 @@
               <file pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/src/Room.java">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="618">
-                      <caret line="110" column="53" lean-forward="true" selection-start-line="110" selection-start-column="53" selection-end-line="110" selection-end-column="53" />
+                    <state relative-caret-position="955">
+                      <caret line="173" column="86" lean-forward="true" selection-start-line="173" selection-start-column="86" selection-end-line="173" selection-end-column="86" />
+                      <folding>
+                        <element signature="e#2141#2142#0" expanded="true" />
+                        <element signature="e#2193#2194#0" expanded="true" />
+                      </folding>
                     </state>
                   </provider>
                 </entry>
@@ -72,8 +77,8 @@
                   <file pinned="false" current-in-tab="true">
                     <entry file="file://$PROJECT_DIR$/tests/BoardTests.java">
                       <provider selected="true" editor-type-id="text-editor">
-                        <state relative-caret-position="20">
-                          <caret line="23" selection-start-line="23" selection-end-line="23" />
+                        <state relative-caret-position="620">
+                          <caret line="161" column="34" selection-start-line="161" selection-start-column="34" selection-end-line="161" selection-end-column="34" />
                           <folding>
                             <element signature="imports" expanded="true" />
                           </folding>
@@ -152,9 +157,9 @@
         <option value="$PROJECT_DIR$/src/Board.java" />
         <option value="$PROJECT_DIR$/src/Weapon.java" />
         <option value="$PROJECT_DIR$/src/Sprite.java" />
-        <option value="$PROJECT_DIR$/tests/BoardTests.java" />
         <option value="$PROJECT_DIR$/src/Cell.java" />
         <option value="$PROJECT_DIR$/src/Room.java" />
+        <option value="$PROJECT_DIR$/tests/BoardTests.java" />
       </list>
     </option>
   </component>
@@ -384,14 +389,11 @@
       <workItem from="1564290483630" duration="2451000" />
       <workItem from="1564293948551" duration="3000000" />
       <workItem from="1564298585803" duration="1757000" />
-      <workItem from="1564306605643" duration="12305000" />
+      <workItem from="1564306605643" duration="12554000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_source - 2019.07.28 at 22h 54m 56s.xml">
-      <configuration name="All in source" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_source - 2019.07.28 at 22h 55m 36s.xml">
       <configuration name="All in source" configurationId="JUnit" />
     </history-entry>
@@ -419,15 +421,18 @@
     <history-entry file="BoardTests - 2019.07.29 at 09h 23m 58s.xml">
       <configuration name="BoardTests" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="BoardTests - 2019.07.29 at 10h 35m 58s.xml">
+      <configuration name="BoardTests" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74924000" />
+    <option name="totallyTimeSpent" value="75173000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-640" y="-1448" width="5136" height="1416" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.062253743" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.062253743" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -457,7 +462,7 @@
       <window_info anchor="right" id="Maven" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="8" />
       <window_info anchor="right" id="Palette&#9;" order="9" />
-      <window_info anchor="right" id="Run" order="10" sideWeight="0.4957463" visible="true" weight="0.14696611" />
+      <window_info active="true" anchor="right" id="Run" order="10" sideWeight="0.4957463" visible="true" weight="0.14696611" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.047831252" />
@@ -603,20 +608,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/BoardTests.java">
+    <entry file="file://$PROJECT_DIR$/src/Room.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="955">
+          <caret line="173" column="86" lean-forward="true" selection-start-line="173" selection-start-column="86" selection-end-line="173" selection-end-column="86" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#2141#2142#0" expanded="true" />
+            <element signature="e#2193#2194#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Room.java">
+    <entry file="file://$PROJECT_DIR$/tests/BoardTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="618">
-          <caret line="110" column="53" lean-forward="true" selection-start-line="110" selection-start-column="53" selection-end-line="110" selection-end-column="53" />
+        <state relative-caret-position="620">
+          <caret line="161" column="34" selection-start-line="161" selection-start-column="34" selection-end-line="161" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

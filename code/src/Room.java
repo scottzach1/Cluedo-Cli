@@ -95,16 +95,11 @@ public class Room extends Card {
 	}
 
 	/**
-	 * getInThisRoom: Returns a Set of all the Users in the current Room.
+	 * getInThisRoom: Returns a Set of all the Sprites in the current Room.
 	 * @return Set of users.
 	 */
-	public Set<User> getInThisRoom() {
-		return cells.stream() 					// getStream
-				.map(Cell::getSprite)			// map to Sprite
-				.filter(Objects::nonNull)		// filter out null Sprite
-				.map(Sprite::getUser)			// map to User.
-				.filter(Objects::nonNull)		// filter out null User
-				.collect(Collectors.toSet());	// Store in Set.
+	public Set<Sprite> getInThisRoom() {
+		return cells.stream().map(Cell::getSprite).filter(Objects::nonNull).collect(Collectors.toSet());
 	}
 
 	/**
@@ -174,9 +169,9 @@ public class Room extends Card {
 		StringBuilder peopleStr = new StringBuilder();
 		StringBuilder weaponStr = new StringBuilder();
 
-		Set<User> inThisRoom = getInThisRoom();
+		Set<Sprite> inThisRoom = getInThisRoom();
 		// Append users in the room
-		for (User user : inThisRoom) { peopleStr.append(user.getSprite().getName() + ", ");}
+		for (Sprite sprite : inThisRoom) { peopleStr.append(sprite.getName() + ", ");}
 		if (inThisRoom.isEmpty()) peopleStr.append("NO_ONE");
 		
 		// Append weapons in this room 

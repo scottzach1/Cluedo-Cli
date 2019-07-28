@@ -155,11 +155,11 @@ public class BoardTests {
         b.moveUser(user1, b.getCell("B24"));
         b.moveUser(user2, b.getCell("E20"));
 
-        Set<User> expectedUsers = new HashSet<>(Arrays.asList(user1, user2));
-        Set<User> recordedUsers = b.getRooms().get(Room.RoomAlias.LOUNGE).getInThisRoom();
+        Set<Sprite> expectedSprites = new HashSet<>(Arrays.asList(user1.getSprite(), user2.getSprite()));
+        Set<Sprite> recordedSprites = b.getRooms().get(Room.RoomAlias.LOUNGE).getInThisRoom();
 
-        assertEquals(expectedUsers.size(), recordedUsers.size());
-        assertTrue(recordedUsers.containsAll(expectedUsers));
+        assertEquals(expectedSprites.size(), recordedSprites.size());
+        assertTrue(recordedSprites.containsAll(expectedSprites));
 
         // Checking Room sizes.
         assertEquals(17, b.getRooms().get(Room.RoomAlias.KITCHEN).getCells().size());
