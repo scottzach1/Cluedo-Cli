@@ -36,8 +36,6 @@ public class PathFinder {
      */
     public boolean checkValidPath(Cell start, Cell end, int diceRoll) {
 
-        System.out.println("End Sprite: " + end.getSprite() + " at" + end.printCoordinates());
-
         if (end.getSprite() != null || end.getType().equals(Cell.Type.WALL)) return false;
 
         PriorityQueue<AStarNode> priorityQueue = new PriorityQueue<>();
