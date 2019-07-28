@@ -1,2 +1,6 @@
-/src/
+/.classpath
+/.idea/
+/.project
 /out/
+/src/
+/tests/

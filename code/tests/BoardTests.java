@@ -1,10 +1,7 @@
 package tests;
 
-import com.sun.source.tree.AssertTree;
-import org.graalvm.compiler.lir.sparc.SPARCPrefetchOp;
 import org.junit.jupiter.api.Test;
 import src.*;
-import sun.jvm.hotspot.utilities.Assert;
 
 import static org.junit.jupiter.api.Assertions.*;
 

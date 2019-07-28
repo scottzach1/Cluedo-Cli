@@ -79,7 +79,7 @@ public class CluedoGame {
 	}
 
 	private void gameSetup() {
-		LUI.loading("");
+		LUI.loading();
 
 		status = lui.gameSetup();
 
@@ -99,7 +99,9 @@ public class CluedoGame {
 		try {
 			playerCount = Integer.parseInt(components[1]);
 		} catch (Exception e) {
-			LUI.loading("ERROR ON LOADING GAME: Invalid playerCount" + components[1]);
+			// Pre-checked integer, if failed here, java / programmer error
+			LUI.printError(components[1], "is not an integer");
+			LUI.loading();
 			gameController();
 			return;
 		}
@@ -109,21 +111,11 @@ public class CluedoGame {
 
 		for (int user = 0; user < playerCount; user++) {
 
-			// This is the users entered number
-			int userNumber = 0;
-			try {
-				userNumber = Integer.parseInt(userInformation[1 + (6 * user)]);
-			} catch (Exception e) {
-				LUI.loading("ERROR ON LOADING GAME: Invalid UserNumber" + userInformation[1 + (6 * user)]);
-				gameController();
-				return;
-			}
-
 			// The users entered name preference
-			String userName = userInformation[3 + (6 * user)];
+			String userName = userInformation[1 + (4 * user)];
 
 			// This is the users character alias
-			String userCharacterName = userInformation[5 + (6 * user)];
+			String userCharacterName = userInformation[3 + (4 * user)];
 			Sprite.SpriteAlias userSpriteAlias = Sprite.SpriteAlias.valueOf(userCharacterName);
 
 			// Create a new user object and store in the games list of users
@@ -142,40 +134,41 @@ public class CluedoGame {
 		// Run the game by doing rounds, int user is the users turn
 		String error = "";
 		int userNum = 0;
+		LUI.rollDice();
+		
+		// Whilst a player has not quit
 		while (!status.equals("9")) {
-			// Refresh after option selection --------
+			
+			// Refresh the in game menu panel
 			LUI.clearConsole();
 			board.printBoardState();
+			
+			// Get the user and their position
 			User user = users.get(userNum);
 			Cell position = user.getSprite().getPosition();
 
+			// If they are in a room, display the rooms information too
 			if (position.getType() == Cell.Type.ROOM)
 				System.out.println(position.getRoom().toString());
 
+			// Get the current users choice of what they want to do
 			status = lui.round(user, error);
 			error = "";
+			
 			// 1: Move, 2: Hand, 3: Observations, 4: Suggest, 5: Accuse (Solve), 8: Next
 			// User, 9: Quit Game
 			
-			int playerChoice = status.charAt(0);
+			char playerChoice = status.charAt(0);
 
 			// [1] Move the player
 			if (playerChoice == '1') {
 				String[] components = status.split(":");
 				try {
-					// Already confirmed row and col, but already doing the try catch, so might as
-					// well put here
-					int row = Integer.parseInt(components[1]);
-					int col = Integer.parseInt(components[2]);
-					int diceRoll = Integer.parseInt(components[3]);
 					// Get the cell, if null then....
-					Cell cell = board.getCell(row, col);
+					Cell cell = board.getCell(components[1]);
 					// Make move will break the try
-					status = makeMove(cell, diceRoll, user);
-				} catch (RuntimeException rt) {
-					error = "[" + components[0] + "][" + components[1] + "]" + " can not be reached";
-				} catch (Exception e) {
-					error = "[" + components[0] + "][" + components[1] + "]" + " is not a valid cell";
+					status = tryMove(cell, LUI.getDiceRoll(), user);
+				}catch (Exception e) {
 				}
 			}
 			
@@ -186,6 +179,7 @@ public class CluedoGame {
 			// [8] Change the user after prev user has exited their turn
 			if (playerChoice == '8') {
 				userNum = (userNum + 1) % users.size();
+				LUI.rollDice();
 			}
 			// [9] Finish the game by exiting this while loop
 			if (playerChoice == '9') {
@@ -197,7 +191,7 @@ public class CluedoGame {
 	}
 
 
-	private String makeMove(Cell end, int diceRoll, User user) throws Exception {
+	private String tryMove(Cell end, int diceRoll, User user) throws Exception {
 
 		// Throw an exception is the cell is null
 		if (end == null)

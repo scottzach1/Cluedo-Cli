@@ -11,8 +11,8 @@ import java.util.Random;
  *
  */
 public class LUI {
-
-	// Keywords within the interface
+	
+	private static int diceRoll = - 1;
 
 	// ------------------------
 	// INTERFACE
@@ -36,7 +36,7 @@ public class LUI {
 	 * */
 	public String startUpMenu() {
 		title();
-		return readInput("\n-[1] Play game\n -[2] How to play\n  -[3] Quit\n", "USER").toUpperCase();
+		return readInput("\n-[1] Play game\n -[2] How to play\n  -[3] Quit\n", "USER");
 	}
 
 	public String howToPlay() {
@@ -80,20 +80,18 @@ public class LUI {
 			players = stringToInt(input);
 			if (players < 3 || players > 6) {
 				players = 0;
-				System.out.println("Problem: Need to have 3 to 6 players.\n");
+				printError(input, "is not a number from 3 to 6");
 			}
 		}
 		return players;
 	}
 
 	public String userNameCreation(String name) {
-		String input = "";
-		int wordsInName = 2;
-		while (wordsInName != 1) {
+		String input = ":";
+		while (input.contains(":")) {
 			input = readInput(name + ", What is your name?", name);
-			wordsInName = input.split(":").length;
-			if (wordsInName > 2)
-				System.out.println("':' Can not be used in user name");
+			if (input.contains(":"))
+				printError(input, "contains ':', which is not allowed");
 		}
 		return input;
 	}
@@ -101,16 +99,20 @@ public class LUI {
 	public String characterSelection(int players) {
 		String input = "";
 		StringBuilder str = new StringBuilder();
+		
 		// Setup for character names
 		List<String> characters = new ArrayList<>();
 		Sprite.SpriteAlias[] ca = Sprite.SpriteAlias.values();
+		
 		// Put character names in list/set
 		for (int i = 0; i < Sprite.SpriteAlias.values().length; i++) {
 			Sprite.SpriteAlias c = ca[i];
 			characters.add(c.name());
 		}
-		// Ask each player what they want from all players available.
+
 		clearConsole();
+		
+		// Ask each player what they want from all players available.
 		for (int p = 0; p < players; p++) {
 			// Get username
 			String userName = userNameCreation("Player " + (p + 1));
@@ -134,18 +136,18 @@ public class LUI {
 						characterChoice = characters.get(characterNumber);
 						characters.remove(characterNumber);
 					} catch (Exception e) {
-						System.out.println("Sprite " + input + " is no longer available");
+						printError(input, "is not longer available");
 					}
 				} else {
-					System.out.println("Your input '" + input + "' is not a valid entry");
+					printError(input, "is not a valid entry, use indicated numbers");
 				}
 			}
 
 			clearConsole();
-			str.append("Player:" + p + ":" + "UserName:" + userName + ":" + "Sprite:" + characterChoice + ":");
+			
+			str.append("UserName:" + userName + ":" + "Sprite:" + characterChoice + ":");
 		}
-
-		System.out.println(str.toString());
+		
 		return str.toString();
 
 	}
@@ -165,17 +167,13 @@ public class LUI {
 
 	private String stageOne(User user, String error) {
 		if (error.length() > 0)
-			System.out.println("\n\n-------------------------------------------" + "\n ERROR: " + error
-					+ "\n-------------------------------------------\n \n");
+			printError("",error);
 
-		return readInput(
-				user.getUserName() + " it's your turn:" + "\n  " + user.getSprite().getName() + ": '"
-						+ user.getSprite().toString() + "' -> ["
-						+ ((char) (user.getSprite().getPosition().getCol() + 'A'))
-						+ String.format("%02d", (user.getSprite().getPosition().getRow() + 1)) + "]\n"
-						+ "\n-[1] Move " + "\n -[2] Hand" + "\n  -[3] Observations" + "\n   -[4] Suggest"
-						+ "\n    -[5] Accuse (Solve)" + "\n     -[8] Skip turn" + "\n      -[9] Main Menu",
-				user.getUserName());
+		return readInput(user.getUserName() + " it's your turn:" + "\n  " + user.getSprite().getName() + ": '"
+				+ user.getSprite().toString() + "' -> [" + ((char) (user.getSprite().getPosition().getCol() + 'A'))
+				+ String.format("%02d", (user.getSprite().getPosition().getRow() + 1)) + "]\n" + "\n-[1] Move "
+				+ "\n -[2] Hand" + "\n  -[3] Observations" + "\n   -[4] Suggest" + "\n    -[5] Accuse (Solve)"
+				+ "\n     -[8] Skip turn" + "\n      -[9] Main Menu", user.getUserName());
 	}
 
 	public String stageTwo(String status, User user) {
@@ -199,36 +197,28 @@ public class LUI {
 	}
 
 	private String movePlayer(User user) {
-		//
-		int diceRoll = rollDice();
+		
+		// Clear all strings
 		String input = "";
 		String cellCoordinates = "";
+		// Whilst a cell is not valid
 		while (cellCoordinates.length() == 0) {
-			input = readInput("Enter cell position you would like to move to (e.g 'H,18')." + "\n Dice Roll = "
-					+ diceRoll + "\n\n-[B] Back to Menu\n -[Enter] Enter Cell Position", user.getUserName())
-							.toUpperCase();
+			input = readInput("Enter cell position you would like to move to (e.g 'H18')." + "\n\n Dice Roll = "
+					+ diceRoll + "\n\n-[1] Back to Menu\n -['col+row' + Enter] Enter Cell Position", user.getUserName())
+							;
 
 			if (input.equals("B"))
-				return "MENU";
+				return "";
 
-			String[] position = input.split(",");
-
-			if (position.length == 2) {
-				int row, col;
 				try {
-					row = Integer.parseInt(position[1]) - 1;
-					col = position[0].charAt(0) - 'A';
-					cellCoordinates = row + ":" + col;
+					int col = Character.toUpperCase(input.charAt(0)) - 'A';
+					int row = Integer.parseUnsignedInt(input.substring(1)) - 1;
+					cellCoordinates = col+""+row;
 				} catch (Exception e) {
-					System.out.println("invalid co-ordinates");
-					cellCoordinates = "";
+					printError(input, "does not match the suggested layout");
 				}
-			} else {
-				System.out.println("Unable to read coordinates");
-			}
-
 		}
-		return cellCoordinates + ":" + diceRoll;
+		return cellCoordinates;
 	}
 
 	private String showHand(User user) {
@@ -268,11 +258,15 @@ public class LUI {
 		return "";
 	}
 
-	private int rollDice() {
+	public static void rollDice() {
 		Random dice = new Random();
 		int num1 = dice.nextInt(6) + 1;
 		int num2 = dice.nextInt(6) + 1;
-		return num1 + num2;
+		diceRoll = num1 + num2;
+	}
+	
+	public static int getDiceRoll() {
+		return diceRoll;
 	}
 
 	// ------------------------
@@ -299,7 +293,7 @@ public class LUI {
 			input = reader.readLine();
 			System.out.println();
 		} catch (Exception e) {
-			// TODO
+			printError(input, "READER MALFUNCTION");
 		}
 
 		// Return the string so that the function calling it can use it.
@@ -313,14 +307,19 @@ public class LUI {
 		try {
 			isInteger = Integer.parseInt(input);
 		} catch (Exception e) {
-			System.out.println("String not and Integer");
+			printError(input, "is not an number");
 		}
 
 		return isInteger;
 	}
 
-	public static final void loading(String message) {
-		System.out.println(message);
+	public static final void printError(String input, String error) {
+		System.out.println("\n\n-------------------------------------------" + "\n ERROR: " + input + " " + error + "."
+				+ "\n-------------------------------------------\n \n");
+
+	}
+
+	public static final void loading() {
 		System.out.print("Loading ");
 		for (int i = 0; i < 5; i++) {
 			System.out.print(" .");
