@@ -27,6 +27,9 @@ public class CluedoGame {
 	// CONSTRUCTOR
 	// ------------------------
 
+	/**
+	 * CluedoGame: Constructor
+	 */
 	private CluedoGame() {
 		status = "";
 		lui = new LUI();
@@ -36,6 +39,9 @@ public class CluedoGame {
 	// INTERFACE
 	// ------------------------
 
+	/**
+	 * gameController: Maintains the order of the game
+	 */
 	private void gameController() {
 
 		while (!status.equals("3")) {
@@ -58,9 +64,20 @@ public class CluedoGame {
 
 			// Play the rounds
 			rounds();
+
+			while (!status.equals("1") || !status.equals("2"))
+				status = lui.readInput("\nPlay again?\n-[1] YEAH!\n -[2] Not today", "USER");
+
+			if (status.equals("2"))
+				break;
 		}
+		System.out.println("Thanks for playing!");
 	}
 
+	/**
+	 * mainMenu: Orders and runs the LUI methods for the main menu to print, and
+	 * acts upon user input
+	 */
 	private void mainMenu() {
 		// GAME MENU (below) --------------------------------------------------
 		status = "";
@@ -82,6 +99,10 @@ public class CluedoGame {
 
 	}
 
+	/**
+	 * gameSetup: Orders and runs the LUI methods for the game set up stage to
+	 * print, and acts upon user input
+	 */
 	private void gameSetup() {
 		LUI.loading();
 
@@ -134,6 +155,10 @@ public class CluedoGame {
 			generateHands();
 	}
 
+	/**
+	 * rounds: Acts like a forever loop, controlling what the LUI prints and acts
+	 * upon user inputs
+	 */
 	private void rounds() {
 		// Run the game by doing rounds, int user is the users turn
 		String error = "";
@@ -170,7 +195,7 @@ public class CluedoGame {
 			if (status.equals("1")) {
 				LUI.clearConsole();
 				board.printBoardState();
-				status = lui.movePlayer(user);	
+				status = lui.movePlayer(user);
 				try {
 					// Get the cell, if null then....
 					Cell cell = board.getCell(status);
@@ -185,24 +210,33 @@ public class CluedoGame {
 				}
 			}
 
-			// [2] refresh to menu (do nothing)
+			// [2] Show the users hand refresh to menu (do nothing)
 			if (status.equals("2")) {
 				status = lui.showHand(user);
 			}
-			// [3] refresh to menu (do nothing)
+			// [3] Show the users observations refresh to menu (do nothing)
 			if (status.equals("3")) {
 				status = lui.showObservations(user);
 			}
 
-				// [4] check if the next players have a possible card
+			// [4] check if the next players have a possible card
 			if (status.equals("4")) {
+				// Rule: Players must be in the room to make an suggestion
 				if (user.getSprite().getPosition().getType() != Cell.Type.ROOM) {
-					lui.readInput("You are not in a room, thus you can't make a suggestion \n-[Any] Okay", user.getUserName());
-				} else {
-					status = lui.selectThreeCards(user, "8");
+					lui.readInput("You are not in a room, thus you can't make a suggestion \n-[Any] Okay",
+							user.getUserName());
+				}
+				// If the player is in a room
+				else {
+					// select the three cards in 'NO_ROOM' mode, you can't select a room
+					status = lui.selectThreeCards(user, "NO_ROOM");
+
+					// Split the returned string into the three card strings
 					String[] components = status.split(":");
 					boolean cardFound = false;
-					if (components.length == 4) {
+
+					// If three cards are returned then
+					if (components.length == 3) {
 						Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[1]));
 						Weapon w = board.getWeapons().get(Weapon.WeaponAlias.valueOf(components[2]));
 						Room r = board.getRooms().get(Room.RoomAlias.valueOf(components[3]));
@@ -250,7 +284,7 @@ public class CluedoGame {
 			}
 
 			if (status.equals("5")) {
-				lui.selectThreeCards(user, "9");
+				lui.selectThreeCards(user, "ROOM");
 				String[] components = status.split(":");
 				if (components.length == 4) {
 					Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[1]));
@@ -284,18 +318,37 @@ public class CluedoGame {
 			if (status.length() > 0 && !java.lang.Character.isDigit(status.charAt(0))) {
 				error = "UNKNOWN INPUT";
 			}
+
+			if (users.size() == 1) {
+				System.out.println("\n------------------------------------------------");
+				System.out.println("The Best Detective and WINNER of this game is: " + users.get(0).getUserName());
+				System.out.println("------------------------------------------------\n");
+			}
+
 		}
 
 	}
 
+	/**
+	 * tryMove: Uses the PathFinder test is a suggested path is feasible
+	 * 
+	 * @param end      - Target Cell
+	 * @param diceRoll - Moves player can make
+	 * @param user     - Who is attempting the move
+	 * @return String - "8" allowing for the next player to take their turn if
+	 *         successful
+	 * @throws Exception - If end or user is null, or if the path is not feasible
+	 */
 	private String tryMove(Cell end, int diceRoll, User user) throws Exception {
 
 		// Throw an exception is the cell is null
-		if (end == null)
+		if (end == null || user == null)
 			throw new NullPointerException();
 
+		// Get the starting cell (character position)
 		Cell start = user.getSprite().getPosition();
 
+		// Check that path is valid
 		if (pathFinder.checkValidPath(start, end, diceRoll)) {
 			board.moveUser(user, start, end);
 			return "8";
@@ -303,49 +356,86 @@ public class CluedoGame {
 		throw new RuntimeException();
 	}
 
+	/**
+	 * generateSolution: Randomly selects 3 cards, 1 Player, 1 Weapon, 1 Room, and
+	 * places in the field array 'solution'
+	 */
 	private void generateSolution() {
+		// Create new array (empty array), make random object
 		solution = new Card[3];
 		Random random = new Random();
 
+		// Randomly get a room, sprite, weapon from the board
 		Room room = board.getRooms().get(Room.parseAliasFromOrdinalInt(random.nextInt(9)));
 		Sprite sprite = board.getSprites().get(Sprite.parseAliasFromOrdinalInt(random.nextInt(6)));
 		Weapon weapon = board.getWeapons().get(Weapon.parseAliasFromOrdinalInt(random.nextInt(6)));
 
+		// Set the three cards
 		solution[0] = sprite;
 		solution[1] = weapon;
 		solution[2] = room;
 
 	}
 
+	/**
+	 * generateHands: Randomly deal out the cards that are not solution cards
+	 */
 	private void generateHands() {
+		// Get the list for each sprite, weapon, room
 		Map<Sprite.SpriteAlias, Sprite> nonSolutionSprites = new HashMap<>(board.getSprites());
 		Map<Weapon.WeaponAlias, Weapon> nonSolutionWeapons = new HashMap<>(board.getWeapons());
 		Map<Room.RoomAlias, Room> nonSolutionRooms = new HashMap<>(board.getRooms());
 
+		// Remove solution cards
 		nonSolutionSprites.remove(((Sprite) solution[0]).getSpriteAlias());
 		nonSolutionWeapons.remove(((Weapon) solution[1]).getWeaponAlias());
 		nonSolutionRooms.remove(((Room) solution[2]).getRoomAlias());
+		
+		// Create arraylists of random order for the three maps
+		ArrayList<Sprite> randomSprites = new ArrayList<>(nonSolutionSprites.values());
+		Collections.shuffle(randomSprites);
+		ArrayList<Weapon> randomWeapons = new ArrayList<>(nonSolutionWeapons.values());
+		Collections.shuffle(randomWeapons);
+		ArrayList<Room> randomRooms = new ArrayList<>(nonSolutionRooms.values());
+		Collections.shuffle(randomRooms);
 
+		
+		// Deal the cards out, change user every deal
 		int userNum = 0;
 
-		for (Sprite s : nonSolutionSprites.values()) {
+		for (int s = 0; s < randomSprites.size(); s++) {
+			// Get the user
 			User user = users.get(userNum);
-			user.addToHand(s);
-			user.addToObservedCards(s);
+			// Get a random sprite
+			Sprite randomSprite = randomSprites.get(s);
+			// Add this sprite to the users hand and observed cards
+			user.addToHand(randomSprite);
+			user.addToObservedCards(randomSprite);
+			// Change user
 			userNum = (userNum + 1) % users.size();
 		}
 
-		for (Weapon w : nonSolutionWeapons.values()) {
+		for (int w = 0; w < randomWeapons.size(); w++) {
+			// Get the user
 			User user = users.get(userNum);
-			user.addToHand(w);
-			user.addToObservedCards(w);
+			// Get a random weapon
+			Weapon randomWeapon = randomWeapons.get(w);
+			// Add this weapon to the users hand and observed cards
+			user.addToHand(randomWeapon);
+			user.addToObservedCards(randomWeapon);
+			// Change user
 			userNum = (userNum + 1) % users.size();
 		}
 
-		for (Room r : nonSolutionRooms.values()) {
+		for (int r = 0; r < randomRooms.size(); r++) {
+			// Get the user
 			User user = users.get(userNum);
-			user.addToHand(r);
-			user.addToObservedCards(r);
+			// Get a random room
+			Room randomRoom = randomRooms.get(r);
+			// Add this room to the users hand an observed cards
+			user.addToHand(randomRoom);
+			user.addToObservedCards(randomRoom);
+			// Change the user
 			userNum = (userNum + 1) % users.size();
 		}
 
