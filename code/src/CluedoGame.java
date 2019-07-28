@@ -39,10 +39,10 @@ public class CluedoGame {
 		while (!status.equals("3")) {
 			board = new Board();
 			this.users = new ArrayList<>();
-			
+
 			// Create solution
 			generateSolution();
-			
+
 			// Run the main menu first
 			mainMenu();
 			// If the player has chosen to quit
@@ -85,13 +85,13 @@ public class CluedoGame {
 		// USER INFORMATION (below) --------------------------------------------------
 
 		String[] components = status.split(":");
-		
+
 		/**
 		 * Format of components: [0] String : "Players", [1] Integer : playerCount, [2 *
 		 * playerCount + 2] String: "Player", [3 * playerCount + 2] Integer :
 		 * userNumber, [4 * playerCount + 2] String : "UserName", [5 * playerCount + 2]
-		 * String : userName, [6 * playerCount + 2] String : "Sprite" [7 *
-		 * playerCount + 2] SpriteAlias : Players Sprite
+		 * String : userName, [6 * playerCount + 2] String : "Sprite" [7 * playerCount +
+		 * 2] SpriteAlias : Players Sprite
 		 */
 
 		int playerCount = 0;
@@ -134,14 +134,14 @@ public class CluedoGame {
 		String error = "";
 		int userNum = 0;
 		LUI.rollDice();
-		
+
 		// Whilst a player has not quit
 		while (!status.equals("9")) {
-			
+
 			// Refresh the in game menu panel
 			LUI.clearConsole();
 			board.printBoardState();
-			
+
 			// Get the user and their position
 			User user = users.get(userNum);
 			Cell position = user.getSprite().getPosition();
@@ -153,10 +153,10 @@ public class CluedoGame {
 			// Get the current users choice of what they want to do
 			status = lui.round(user, error);
 			error = "";
-			
+
 			// 1: Move, 2: Hand, 3: Observations, 4: Suggest, 5: Accuse (Solve), 8: Next
 			// User, 9: Quit Game
-			
+
 			char playerChoice = status.charAt(0);
 
 			// [1] Move the player
@@ -167,20 +167,28 @@ public class CluedoGame {
 					Cell cell = board.getCell(components[1]);
 					// Make move will break the try
 					status = tryMove(cell, LUI.getDiceRoll(), user);
-				}catch (NullPointerException np) {
+				} catch (NullPointerException np) {
 					error = "Board cannot find position" + components[1];
 				} catch (RuntimeException rt) {
-					error = "Location can't be reached. \n\tYou can only move " + LUI.getDiceRoll() + "steps";  
+					error = "Location can't be reached. \n\tYou can only move " + LUI.getDiceRoll() + "steps";
 				} catch (Exception e) {
 					error = "Unknown Error";
 				}
 			}
-			
+
 			// [2] refresh to menu (do nothing)
-			
-			
 			// [3] refresh to menu (do nothing)
-			if (playerChoice == '3') {
+
+			// [4] check if the next players have a possible card
+			if (playerChoice == '4') {
+				String[] components = status.split(":");
+				if (components.length == 4) {
+					Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[1]));
+					Weapon w = board.getWeapons().get(Weapon.WeaponAlias.valueOf(components[2]));
+					Room r = board.getRooms().get(Room.RoomAlias.valueOf(components[3]));
+					System.out.println(s + " : " + w + " : " + r);
+				}
+				System.out.println("EXITED");
 			}
 
 			// [8] Change the user after prev user has exited their turn
@@ -192,13 +200,12 @@ public class CluedoGame {
 			if (playerChoice == '9') {
 				System.out.println("Thanks for playing");
 			}
-			
+
 			if (!java.lang.Character.isDigit(playerChoice)) {
 				error = status;
 			}
 		}
 	}
-
 
 	private String tryMove(Cell end, int diceRoll, User user) throws Exception {
 

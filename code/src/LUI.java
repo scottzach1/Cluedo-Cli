@@ -11,8 +11,8 @@ import java.util.Random;
  *
  */
 public class LUI {
-	
-	private static int diceRoll = - 1;
+
+	private static int diceRoll = -1;
 
 	// ------------------------
 	// INTERFACE
@@ -36,12 +36,12 @@ public class LUI {
 	 * */
 	public String startUpMenu() {
 		title();
-		return readInput("\n-[1] Play game\n -[2] How to play\n  -[3] Quit\n", "USER");
+		return readInput("-[1] Play game\n -[2] How to play\n  -[3] Quit\n", "USER");
 	}
 
 	public String howToPlay() {
 		return readInput(
-				"\nAim:\t\tFigure out the mystery to who murdered the butler, what weapon they used, and in what room."
+				"Aim:\t\tFigure out the mystery to who murdered the butler, what weapon they used, and in what room."
 						+ "\nGame:\t\tThe game is turn based. Upon starting, each player is dealt a hand of cards. These cards are secret"
 						+ "\n\t\tand give you evidence as to who, what and where the murder DIDN'T take place."
 						+ "\n\t\tOn your turn, you roll two dice and navigate your around the map. To find out what other players have,"
@@ -99,11 +99,11 @@ public class LUI {
 	public String characterSelection(int players) {
 		String input = "";
 		StringBuilder str = new StringBuilder();
-		
+
 		// Setup for character names
 		List<String> characters = new ArrayList<>();
 		Sprite.SpriteAlias[] ca = Sprite.SpriteAlias.values();
-		
+
 		// Put character names in list/set
 		for (int i = 0; i < Sprite.SpriteAlias.values().length; i++) {
 			Sprite.SpriteAlias c = ca[i];
@@ -111,7 +111,7 @@ public class LUI {
 		}
 
 		clearConsole();
-		
+
 		// Ask each player what they want from all players available.
 		for (int p = 0; p < players; p++) {
 			// Get username
@@ -144,10 +144,10 @@ public class LUI {
 			}
 
 			clearConsole();
-			
+
 			str.append("UserName:" + userName + ":" + "Sprite:" + characterChoice + ":");
 		}
-		
+
 		return str.toString();
 
 	}
@@ -167,7 +167,7 @@ public class LUI {
 
 	private String stageOne(User user, String error) {
 		if (error.length() > 0)
-			printError("",error);
+			printError("", error);
 
 		return readInput(user.getUserName() + " it's your turn:" + "\n  " + user.getSprite().getName() + ": '"
 				+ user.getSprite().toString() + "' -> [" + ((char) (user.getSprite().getPosition().getCol() + 'A'))
@@ -185,9 +185,9 @@ public class LUI {
 		if (status.contentEquals("3"))
 			return "3:" + showObservations(user);
 		if (status.contentEquals("4"))
-			return "4:" + suggestion(user);
+			return "4:" + selectThreeCards(user);
 		if (status.contentEquals("5"))
-			return "5:" + accusation(user);
+			return "5:" + selectThreeCards(user);
 		if (status.contentEquals("8"))
 			return "8";
 		if (status.contentEquals("9"))
@@ -197,26 +197,26 @@ public class LUI {
 	}
 
 	private String movePlayer(User user) {
-		
+
 		// Clear all strings
 		String input = "";
 		String cellCoordinates = "";
 		// Whilst a cell is not valid
 		while (cellCoordinates.length() == 0) {
 			input = readInput("Enter cell position you would like to move to (e.g 'H18')." + "\n\n Dice Roll = "
-					+ diceRoll + "\n\n-[1] Back to Menu\n -['col+row' + Enter] Enter Cell Position", user.getUserName())
-							;
+					+ diceRoll + "\n\n-[1] Back to Menu\n -['col+row' + Enter] Enter Cell Position",
+					user.getUserName());
 
 			if (input.equals("B"))
 				return "";
 
-				try {
-					int col = Character.toUpperCase(input.charAt(0)) - 'A';
-					int row = Integer.parseUnsignedInt(input.substring(1)) - 1;
-					cellCoordinates = col+""+row;
-				} catch (Exception e) {
-					printError(input, "does not match the suggested layout");
-				}
+			try {
+				int col = Character.toUpperCase(input.charAt(0)) - 'A';
+				int row = Integer.parseUnsignedInt(input.substring(1)) - 1;
+				cellCoordinates = col + "" + row;
+			} catch (Exception e) {
+				printError(input, "does not match the suggested layout");
+			}
 		}
 		return cellCoordinates;
 	}
@@ -240,29 +240,29 @@ public class LUI {
 			handIndex++;
 		}
 
-		return readInput("\n-[ANY] Go back to menu", user.getUserName());
+		return readInput("-[ANY] Back to menu", user.getUserName());
 	}
 
 	/**
-	 * showObservations: used in the CluedoGame class, public as CluedoGame needs to parse
-	 * 					 a list of all the possible cards. Which are displayed to indicate
-	 * 					 what cards the player has seen. 
-	 * @param user - who's observations are being displayed
-	 * 		  allCards - all the possible cards in the game
+	 * showObservations: used in the CluedoGame class, public as CluedoGame needs to
+	 * parse a list of all the possible cards. Which are displayed to indicate what
+	 * cards the player has seen.
+	 * 
+	 * @param user - who's observations are being displayed allCards - all the
+	 *             possible cards in the game
 	 * @return String - indication of the players choice on what to do
 	 */
 	private String showObservations(User user) {
 		System.out.println("\nSprites:");
-		for (Sprite.SpriteAlias s : Sprite.SpriteAlias.values()){
+		for (Sprite.SpriteAlias s : Sprite.SpriteAlias.values()) {
 			System.out.print("   " + s.name());
 			if (user.observedContainsAlias(s.name()))
 				System.out.print(" - SEEN");
 			System.out.println();
 		}
-		
 
 		System.out.println("\nWeapons:");
-		for (Weapon.WeaponAlias w : Weapon.WeaponAlias.values()){
+		for (Weapon.WeaponAlias w : Weapon.WeaponAlias.values()) {
 			System.out.print("   " + w.name());
 			if (user.observedContainsAlias(w.name()))
 				System.out.print(" - SEEN");
@@ -270,24 +270,146 @@ public class LUI {
 		}
 
 		System.out.println("\nRooms:");
-		for (Room.RoomAlias r : Room.RoomAlias.values()){
+		for (Room.RoomAlias r : Room.RoomAlias.values()) {
 			System.out.print("   " + r.name());
 			if (user.observedContainsAlias(r.name()))
 				System.out.print(" - SEEN");
 			System.out.println();
-		}		
+		}
 
-		return readInput("\n-[ANY] Back to menu", user.getUserName());
+		return readInput("-[ANY] Back to menu", user.getUserName());
 	}
 
-	private String suggestion(User user) {
-		// TODO
-		return "";
-	}
+	private String selectThreeCards(User user) {
+		StringBuilder str = new StringBuilder();
+		int currentTalkingPoint = -1;
+		String accusation = "";
+		while (accusation.isEmpty()) {
+			clearConsole();
+			String input, spriteSuspect = "", weaponSuspect = "", roomSuspect = "";
+			int restart, back;
 
-	private String accusation(User user) {
-		// TODO
-		return "";
+			// CHARACTER SELECTION
+			// -----------------------------------------------------------------------
+
+			while (spriteSuspect.isEmpty()) {
+				for (int s = 0; s < Sprite.SpriteAlias.values().length; s++) {
+					System.out.println(indent(s) + "-[" + (s + 1) + "] " + Sprite.SpriteAlias.values()[s].name());
+				}
+
+				restart = Sprite.SpriteAlias.values().length + 1;
+				back = Sprite.SpriteAlias.values().length + 2;
+
+				System.out.println(indent(restart - 1) + "-[" + (restart) + "] " + "Reset Selection");
+				System.out.println(indent(back - 1) + "-[" + (back) + "] " + "Back to menu");
+
+				input = readInput("Choose who you wish to blame!", user.getUserName());
+				
+				currentTalkingPoint = stringToInt(input);
+				// Check it is a valid integer
+				if (currentTalkingPoint == -1) {
+					continue;
+				}
+				// Check if restarting selection process
+				if (currentTalkingPoint == restart)
+					break;
+				// Check if returning to menu
+				if (currentTalkingPoint == back)
+					return "";
+				// Check if number is valid for a sprite selection
+				if (currentTalkingPoint < 1 || currentTalkingPoint > Sprite.SpriteAlias.values().length - 1) {
+					printError(input, "is not a valid choice");
+					continue;
+				}
+
+				spriteSuspect = Sprite.SpriteAlias.values()[(currentTalkingPoint - 1)].name();
+				str.append(spriteSuspect + ":");
+			}
+
+			// WEAPON SELECTION
+			// -----------------------------------------------------------------------
+
+			while (!spriteSuspect.isEmpty() && weaponSuspect.isEmpty()) {
+				for (int w = 0; w < Weapon.WeaponAlias.values().length; w++) {
+					System.out.println(indent(w) + "-[" + (w + 1) + "] " + Weapon.WeaponAlias.values()[w].name());
+				}
+
+				restart = Weapon.WeaponAlias.values().length + 1;
+				back = Weapon.WeaponAlias.values().length + 2;
+
+				System.out.println(indent(restart - 1) + "-[" + (restart) + "] " + "Reset Selection");
+				System.out.println(indent(back - 1) + "-[" + (back) + "] " + "Back to menu");
+
+				input = readInput(spriteSuspect + "???\n... what did they use then?", user.getUserName());
+				
+				currentTalkingPoint = stringToInt(input);
+				// Check it is a valid integer
+				if (currentTalkingPoint == -1) {
+					continue;
+				}
+
+				if (currentTalkingPoint == restart)
+					break;
+				if (currentTalkingPoint == back)
+					return "";
+
+				if (currentTalkingPoint < 1 || currentTalkingPoint > Weapon.WeaponAlias.values().length - 1) {
+					printError(input, "is not a valid choice");
+					continue;
+				}
+
+				weaponSuspect = Weapon.WeaponAlias.values()[(currentTalkingPoint - 1)].name();
+				str.append(weaponSuspect + ":");
+			}
+
+			// ROOM SELECTION
+			// -----------------------------------------------------------------------
+
+			while (!spriteSuspect.isEmpty() && !weaponSuspect.isEmpty() && roomSuspect.isEmpty()) {
+				for (int r = 0; r < Room.RoomAlias.values().length; r++) {
+					System.out.println(indent(r) + "-[" + (r + 1) + "] " + Room.RoomAlias.values()[r].name());
+				}
+
+				restart = Room.RoomAlias.values().length + 1;
+				back = Room.RoomAlias.values().length + 2;
+
+				System.out.println(indent(restart - 1) + "-[" + (restart) + "] " + "Reset Selection");
+				System.out.println(indent(back - 1) + "-[" + (back) + "] " + "Back to menu");
+
+				input = readInput(spriteSuspect + " used the" + weaponSuspect + "???\n... so where did this take place?", user.getUserName());
+
+				currentTalkingPoint = stringToInt(input);
+				// Check it is a valid integer
+				if (currentTalkingPoint == -1) {
+					printError(input, "is not a valid choice");
+					continue;
+				}
+
+				if (currentTalkingPoint == restart)
+					break;
+				if (currentTalkingPoint == back)
+					return "";
+
+				if (currentTalkingPoint < 1 || currentTalkingPoint > Room.RoomAlias.values().length - 1) {
+					printError(input, "is not a valid choice");
+					continue;
+				}
+
+				roomSuspect = Room.RoomAlias.values()[(currentTalkingPoint - 1)].name();
+				str.append(roomSuspect);
+			}
+
+			if (!roomSuspect.isEmpty()) {
+				input = readInput(spriteSuspect + " used the " + weaponSuspect + " in the " + roomSuspect + "?"
+						+ "\n-[1] Yes / Confirm"
+						+ "\n -[2] No / Try Again", user.getUserName());
+				
+				
+				accusation = str.toString();
+			}
+		}
+
+		return str.toString();
 	}
 
 	public static void rollDice() {
@@ -296,7 +418,7 @@ public class LUI {
 		int num2 = dice.nextInt(6) + 1;
 		diceRoll = num1 + num2;
 	}
-	
+
 	public static int getDiceRoll() {
 		return diceRoll;
 	}
@@ -321,7 +443,7 @@ public class LUI {
 
 		// Print message and read input
 		try {
-			System.out.print(message + "\n\n" + player + ":  ");
+			System.out.print("\n" + message + "\n\n" + player + ":  ");
 			input = reader.readLine();
 			System.out.println();
 		} catch (Exception e) {
@@ -339,7 +461,7 @@ public class LUI {
 		try {
 			isInteger = Integer.parseInt(input);
 		} catch (Exception e) {
-			printError(input, "is not an number");
+			printError(input, "is not a number");
 		}
 
 		return isInteger;
@@ -361,6 +483,15 @@ public class LUI {
 				return;
 			}
 		}
+	}
+
+	private String indent(int length) {
+		StringBuilder str = new StringBuilder();
+		for (int i = 0; i < length; i++) {
+			str.append(" ");
+		}
+
+		return str.toString();
 	}
 
 	public final static void clearConsole() {
