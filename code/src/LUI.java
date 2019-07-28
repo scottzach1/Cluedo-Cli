@@ -75,10 +75,10 @@ public class LUI {
 	public int playerCount() {
 		String input = "";
 		int players = 0;
-		while (players == 0) {
+		while (players <= 0) {
 			input = readInput("How many players do we have today? (3-6 needed)", "USER");
 			players = stringToInt(input);
-			if (players < 3 || players > 6) {
+			if ((players < 3 || players > 6) && players != -1) {
 				players = 0;
 				printError(input, "is not a number from 3 to 6");
 			}
@@ -138,8 +138,9 @@ public class LUI {
 					} catch (Exception e) {
 						printError(input, "is not longer available");
 					}
-				} else {
-					printError(input, "is not a valid entry, use indicated numbers");
+				}
+				else if (characterNumber + 1 != -1) {
+					printError(input, "is not a valid number");
 				}
 			}
 
@@ -158,10 +159,8 @@ public class LUI {
 		// Stage one, choose whether to Move, Accuse, Suggest, look at hand, look at
 		// cheat sheet.
 		input = stageOne(user, error);
-
-		// Deal with the choice made in stage one.
-		input = stageTwo(input, user);
-
+		
+		
 		return input;
 	}
 
@@ -176,41 +175,21 @@ public class LUI {
 				+ "\n     -[8] Skip turn" + "\n      -[9] Main Menu", user.getUserName());
 	}
 
-	public String stageTwo(String status, User user) {
-		// Do something based on stage 1's output
-		if (status.contentEquals("1"))
-			return "1:" + movePlayer(user);
-		if (status.contentEquals("2"))
-			return "2" + showHand(user);
-		if (status.contentEquals("3"))
-			return "3:" + showObservations(user);
-		if (status.contentEquals("4")) {
-			if (user.getSprite().getPosition().getType() == Cell.Type.ROOM)
-				return "4:" + selectThreeCards(user, "8");
-			return "You are not in a room, thus you can't make a suggestion";
-		}
-		if (status.contentEquals("5"))
-			return "5:" + selectThreeCards(user, "9");
-		if (status.contentEquals("8"))
-			return "8";
-		if (status.contentEquals("9"))
-			return "9";
-
-		return "???";
-	}
-
-	private String movePlayer(User user) {
+	String movePlayer(User user) {
 
 		// Clear all strings
 		String input = "";
 		String cellCoordinates = "";
+		
 		// Whilst a cell is not valid
-		while (cellCoordinates.length() == 0) {
-			input = readInput("Enter cell position you would like to move to (e.g 'H18')." + "\n\n Dice Roll = "
-					+ diceRoll + "\n\n-[1] Back to Menu\n -['col+row' + Enter] Enter Cell Position",
-					user.getUserName());
+		while (cellCoordinates.length() == 0) {			
+			input = readInput(user.getUserName() + " it's your turn:" + "\n  " + user.getSprite().getName() + ": '"
+					+ user.getSprite().toString() + "' -> [" + ((char) (user.getSprite().getPosition().getCol() + 'A'))
+					+ String.format("%02d", (user.getSprite().getPosition().getRow() + 1)) + "]\n"
+					+ "\nEnter cell position you would like to move to (e.g 'H18')." + "\n Dice Roll = " + diceRoll
+					+ "\n\n-[1] Back to Menu\n -['col+row' + Enter] Enter Cell Position", user.getUserName());
 
-			if (input.equals("B"))
+			if (input.equals("1"))
 				return "";
 
 			if (Character.isAlphabetic(input.charAt(0))) {
@@ -226,7 +205,7 @@ public class LUI {
 		return cellCoordinates;
 	}
 
-	private String showHand(User user) {
+	public String showHand(User user) {
 		List<Card> usersHand = user.getHand();
 		int handIndex = 0, handSize = usersHand.size();
 		System.out.println("Sprites:");
@@ -257,7 +236,7 @@ public class LUI {
 	 *             possible cards in the game
 	 * @return String - indication of the players choice on what to do
 	 */
-	private String showObservations(User user) {
+	public String showObservations(User user) {
 		System.out.println("\nSprites:");
 		for (Sprite.SpriteAlias s : Sprite.SpriteAlias.values()) {
 			System.out.print("   " + s.name());
@@ -285,7 +264,7 @@ public class LUI {
 		return readInput("-[ANY] Back to menu", user.getUserName());
 	}
 
-	private String selectThreeCards(User user, String code) {
+	public String selectThreeCards(User user, String code) {
 		StringBuilder str = new StringBuilder();
 		int currentTalkingPoint = -1;
 		String accusation = "";
