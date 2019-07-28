@@ -172,15 +172,15 @@ public class CluedoGame {
 			if (playerChoice == '1') {
 				LUI.clearConsole();
 				board.printBoardState();
-				lui.movePlayer(user);
-				String[] components = status.split(":");
+				status = lui.movePlayer(user);	
+				
 				try {
 					// Get the cell, if null then....
-					Cell cell = board.getCell(components[1]);
+					Cell cell = board.getCell(status);
 					// Make move will break the try
 					status = tryMove(cell, LUI.getDiceRoll(), user);
 				} catch (NullPointerException np) {
-					error = "Board cannot find position " + components[1];
+					error = "Board cannot find position " + status;
 				} catch (RuntimeException rt) {
 					error = "Location can't be reached. \n\t  You can only move " + LUI.getDiceRoll() + " steps";
 				} catch (Exception e) {

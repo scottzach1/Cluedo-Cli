@@ -176,7 +176,6 @@ public class LUI {
 	}
 
 	String movePlayer(User user) {
-
 		// Clear all strings
 		String input = "";
 		String cellCoordinates = "";
@@ -185,9 +184,9 @@ public class LUI {
 		while (cellCoordinates.length() == 0) {			
 			input = readInput(user.getUserName() + " it's your turn:" + "\n  " + user.getSprite().getName() + ": '"
 					+ user.getSprite().toString() + "' -> [" + ((char) (user.getSprite().getPosition().getCol() + 'A'))
-					+ String.format("%02d", (user.getSprite().getPosition().getRow() + 1)) + "]\n"
-					+ "\nEnter cell position you would like to move to (e.g 'H18')." + "\n Dice Roll = " + diceRoll
-					+ "\n\n-[1] Back to Menu\n -['col+row' + Enter] Enter Cell Position", user.getUserName());
+					+ String.format("%02d", (user.getSprite().getPosition().getRow() + 1)) + "]"
+					+ "\n\nEnter cell position you would like to move to (e.g 'H18')." + "\n Dice Roll = " + diceRoll
+					+ "\n-[1] Back to Menu\n -['col+row' + Enter] Enter Cell Position", user.getUserName());
 
 			if (input.equals("1"))
 				return "";
