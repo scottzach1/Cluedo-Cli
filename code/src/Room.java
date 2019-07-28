@@ -99,7 +99,12 @@ public class Room extends Card {
 	 * @return Set of users.
 	 */
 	public Set<User> getInThisRoom() {
-		return cells.stream().map(Cell::getSprite).filter(Objects::nonNull).map(Sprite::getUser).collect(Collectors.toSet());
+		return cells.stream() 					// getStream
+				.map(Cell::getSprite)			// map to Sprite
+				.filter(Objects::nonNull)		// filter out null Sprite
+				.map(Sprite::getUser)			// map to User.
+				.filter(Objects::nonNull)		// filter out null User
+				.collect(Collectors.toSet());	// Store in Set.
 	}
 
 	/**

@@ -54,12 +54,13 @@ public class BoardTests {
 
 
         // End is a wall
+        assertEquals(Cell.Type.WALL, b.getCell("F2").getType());
         assertFalse(pathFinder.checkValidPathFromString("H1", "F2", 10));
 
+        // End holds a character
         assertNotNull(b.getCell("H1").getSprite());
         assertNull(b.getCell("H5").getSprite());
 
-        // End holds a character
         assertFalse(pathFinder.checkValidPath(b.getCell("H5"), b.getCell("H1"), 10));
         assertFalse(pathFinder.checkValidPathFromString("H5", "H1", 10));
     }
