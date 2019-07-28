@@ -193,7 +193,7 @@ public class LUI {
 		if (status.contentEquals("9"))
 			return "9";
 
-		return status;
+		return "???";
 	}
 
 	private String movePlayer(User user) {
@@ -316,8 +316,9 @@ public class LUI {
 				// Check if returning to menu
 				if (currentTalkingPoint == back)
 					return "";
+				
 				// Check if number is valid for a sprite selection
-				if (currentTalkingPoint < 1 || currentTalkingPoint > Sprite.SpriteAlias.values().length - 1) {
+				if (currentTalkingPoint < 1 || currentTalkingPoint > Sprite.SpriteAlias.values().length) {
 					printError(input, "is not a valid choice");
 					continue;
 				}
@@ -353,7 +354,7 @@ public class LUI {
 				if (currentTalkingPoint == back)
 					return "";
 
-				if (currentTalkingPoint < 1 || currentTalkingPoint > Weapon.WeaponAlias.values().length - 1) {
+				if (currentTalkingPoint < 1 || currentTalkingPoint > Weapon.WeaponAlias.values().length) {
 					printError(input, "is not a valid choice");
 					continue;
 				}
@@ -376,7 +377,7 @@ public class LUI {
 				System.out.println(indent(restart - 1) + "-[" + (restart) + "] " + "Reset Selection");
 				System.out.println(indent(back - 1) + "-[" + (back) + "] " + "Back to menu");
 
-				input = readInput(spriteSuspect + " used the" + weaponSuspect + "???\n... so where did this take place?", user.getUserName());
+				input = readInput(spriteSuspect + " used the " + weaponSuspect + "???\n... so where did this take place?", user.getUserName());
 
 				currentTalkingPoint = stringToInt(input);
 				// Check it is a valid integer
@@ -390,7 +391,7 @@ public class LUI {
 				if (currentTalkingPoint == back)
 					return "";
 
-				if (currentTalkingPoint < 1 || currentTalkingPoint > Room.RoomAlias.values().length - 1) {
+				if (currentTalkingPoint < 1 || currentTalkingPoint > Room.RoomAlias.values().length) {
 					printError(input, "is not a valid choice");
 					continue;
 				}

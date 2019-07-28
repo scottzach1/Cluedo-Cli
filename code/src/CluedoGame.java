@@ -69,6 +69,7 @@ public class CluedoGame {
 			// Switch cases of status, 1: Play, 2: How to Play, 3: Quit
 			if (status.contentEquals("2")) {
 				status = lui.howToPlay() + "MENU";
+				
 			} else if (status.contentEquals("3")) {
 				System.out.println("Thanks for playing");
 				return;
@@ -170,7 +171,7 @@ public class CluedoGame {
 				} catch (NullPointerException np) {
 					error = "Board cannot find position" + components[1];
 				} catch (RuntimeException rt) {
-					error = "Location can't be reached. \n\tYou can only move " + LUI.getDiceRoll() + "steps";
+					error = "Location can't be reached. \n\t  You can only move " + LUI.getDiceRoll() + " steps";
 				} catch (Exception e) {
 					error = "Unknown Error";
 				}
@@ -186,23 +187,43 @@ public class CluedoGame {
 					Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[1]));
 					Weapon w = board.getWeapons().get(Weapon.WeaponAlias.valueOf(components[2]));
 					Room r = board.getRooms().get(Room.RoomAlias.valueOf(components[3]));
-					System.out.println(s + " : " + w + " : " + r);
+					
+					
+					for (int u = 0; u < users.size() - 1; u++) {
+						User other = users.get(u);
+						
+					}
 				}
-				System.out.println("EXITED");
 			}
+			
+			if (playerChoice == '5') {
+				String[] components = status.split(":");
+				if (components.length == 4) {
+					Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[1]));
+					Weapon w = board.getWeapons().get(Weapon.WeaponAlias.valueOf(components[2]));
+					Room r = board.getRooms().get(Room.RoomAlias.valueOf(components[3]));
+					
+					if (s.equals(solution[0]) && w.equals(solution[1]) && r.equals(solution[2])) {
+						// WINNER = USER
+					}
+				}
+			}
+			
+			
 
 			// [8] Change the user after prev user has exited their turn
 			if (playerChoice == '8') {
 				userNum = (userNum + 1) % users.size();
 				LUI.rollDice();
 			}
+			
 			// [9] Finish the game by exiting this while loop
 			if (playerChoice == '9') {
 				System.out.println("Thanks for playing");
 			}
 
 			if (!java.lang.Character.isDigit(playerChoice)) {
-				error = status;
+				error = "Unknown input from user";
 			}
 		}
 	}
