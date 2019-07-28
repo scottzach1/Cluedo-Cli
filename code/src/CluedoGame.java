@@ -214,7 +214,8 @@ public class CluedoGame {
 			throw new NullPointerException();
 
 		Cell start = user.getSprite().getPosition();
-		if (board.calcValidPath(start, end, diceRoll)) {
+
+		if (PathFinder.checkValidPath(start, end, diceRoll)) {
 			board.moveCharacter(user, start, end);
 			return "8";
 		}

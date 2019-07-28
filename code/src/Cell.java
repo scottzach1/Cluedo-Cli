@@ -66,4 +66,9 @@ public class Cell {
 		else if (type == Type.START_PAD) return "$";		
 		return "ERROR ON TYPE";
 	}
+
+	public double getDistance(Cell other) {
+		return (Math.sqrt(Math.pow(this.getRow() - other.getRow(), 2) + Math.pow(this.getCol() - other.getCol(), 2)));
+	}
+
 }
