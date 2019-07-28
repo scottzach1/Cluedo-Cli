@@ -40,13 +40,18 @@ public class Board {
 		// Generate character cards
 		sprites = new HashMap<>();
 		for (Sprite.SpriteAlias alias : Sprite.SpriteAlias.values()) {
-			sprites.put(alias, new Sprite(alias.toString()));
+			sprites.put(alias, new Sprite(alias));
 		}
+
+		List<Room> roomList = new ArrayList<>(rooms.values());
+		Collections.shuffle(roomList);
 
 		// Generate Weapon cards
 		weapons = new HashMap<>();
 		for (Weapon.WeaponAlias alias : Weapon.WeaponAlias.values()) {
-			weapons.put(alias, new Weapon(alias));
+			Weapon weapon = new Weapon(alias);
+			weapons.put(alias, weapon);
+			weapon.setRoom(roomList.remove(roomList.size()-1));
 		}
 
 		// Load Map Based off file layout
@@ -166,18 +171,35 @@ public class Board {
 		return rooms;
 	}
 
+	/**
+	 * getWeapons: Return a map of all the Weapons in the Board.
+	 * (Where keys are their corresponding WeaponAlias).
+	 *
+	 * @return map of Weapons on the Board.
+	 */
 	public Map<Weapon.WeaponAlias, Weapon> getWeapons() {
 		return weapons;
 	}
 
-	public void moveUser(User user, Cell from, Cell to) {
-		if (from == null || to == null || user == null)
+
+	/**
+	 * moveUser: Move a User to another Cell.
+	 * @param user User to move.
+	 * @param target Cell to move to.
+	 */
+	public void moveUser(User user, Cell target) {
+		if (target == null || user == null)
 			throw new InvalidParameterException("Cannot pass a null parameter!");
 
-		Sprite sprite = user.getSprite();
-		sprite.setPosition(to);
+		if (target.getSprite() != null)
+			throw new RuntimeException("Position is already taken!");
 
-		to.setSprite(sprite);
+		Cell from = user.getSprite().getPosition();
+
+		Sprite sprite = user.getSprite();
+		sprite.setPosition(target);
+
+		target.setSprite(sprite);
 		from.setSprite(null);
 	}
 
@@ -194,6 +216,12 @@ public class Board {
 		return cells[row][col];
 	}
 
+	/**
+	 * getCell: Return the Cell stored at the given row/col.
+	 * Throws InvalidParameterException.
+	 * @param cord String of coordinate. Ie, H13
+	 * @return Cell at cord.
+	 */
 	public Cell getCell(String cord) {
 
 		int col, row;
@@ -261,15 +289,5 @@ public class Board {
 				"24|#|E|E|E|E|#|_|_|#|H|H|H|H|H|#|_|_|#|S|S|S|S|S|#|\r\n" + 
 				"25|#|#|#|#|#|#|4|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|\r\n" + 
 				"   A B C D E F G H I J K L M N O P Q R S T U V W X";
-	}
-
-	/**
-	 * main: Launch point for testing rendering of the map.
-	 * @param args invocation arguments. (ignored).
-	 */
-	public static void main(String[] args) {
-		Board b = new Board();
-		b.printBoardState();
-
 	}
 }

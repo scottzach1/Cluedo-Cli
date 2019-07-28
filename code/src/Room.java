@@ -89,8 +89,8 @@ public class Room extends Card {
 	 * @param cell Cell to add to the room.
 	 */
 	public void addCell(Cell cell) {
-		if (cell == null) return;
 		this.cells.add(cell);
+		if (cell == null || cell.getRoom() == this) return;
 		cell.setRoom(this);
 	}
 
@@ -114,7 +114,7 @@ public class Room extends Card {
 	 */
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
-		if (weapon == null) return;
+		if (weapon == null || weapon.getRoom() == this) return;
 		weapon.setRoom(this);
 	}
 

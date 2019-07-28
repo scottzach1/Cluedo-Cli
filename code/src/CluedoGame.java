@@ -1,5 +1,6 @@
 package src;
 
+
 import java.util.*;
 
 /* Created by Harrison Cook and Zac Scott - 2019 */
@@ -45,6 +46,7 @@ public class CluedoGame {
 	private void gameController() {
 
 		while (!status.equals("3")) {
+			User.resetUserNoCounter();
 			board = new Board();
 			pathFinder = new PathFinder(board);
 			this.users = new ArrayList<>();
@@ -350,7 +352,7 @@ public class CluedoGame {
 
 		// Check that path is valid
 		if (pathFinder.checkValidPath(start, end, diceRoll)) {
-			board.moveUser(user, start, end);
+			board.moveUser(user, end);
 			return "8";
 		}
 		throw new RuntimeException();
@@ -374,7 +376,6 @@ public class CluedoGame {
 		solution[0] = sprite;
 		solution[1] = weapon;
 		solution[2] = room;
-
 	}
 
 	/**
