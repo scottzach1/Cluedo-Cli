@@ -75,6 +75,8 @@ public class User {
 
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
+		if (sprite.getUser() == this) return;
+		sprite.setUser(this);
 	}
 	
 	public boolean observedContainsAlias(String s) {

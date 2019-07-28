@@ -204,18 +204,6 @@ public class Board {
 	}
 
 	/**
-	 * getRows: Return the number of rows on the map.
-	 * @return int Number of rows on the map.
-	 */
-	public int getRows() { return rows; }
-
-	/**
-	 * getCols: Return the number of cols on the map.
-	 * @return int Number of cols on the map.
-	 */
-	public int getCols() { return cols; }
-
-	/**
 	 * printBoardState: Prints the current state of the board to the console.
 	 */
 	public void printBoardState() {

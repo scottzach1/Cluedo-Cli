@@ -56,6 +56,8 @@ public class Sprite extends Card {
 
 	public void setUser(User user) {
 		this.user = user;
+		if (user.getSprite() == this) return;
+		user.setSprite(this);
 	}
 
 	public SpriteAlias getSpriteAlias() {
@@ -87,32 +89,21 @@ public class Sprite extends Card {
 	}
 	
 	public String toString() {
-		String str = "";
 		switch(charAlias) {
-		case MRS_WHITE:
-			str = "W";
-			break;
-		case MR_GREEN:
-			str = "G";
-			break;
-		case MRS_PEACOCK:
-			str = "Q";
-			break;
-		case PROFESSOR_PLUM:
-			str = "P";
-			break;
-		case MISS_SCARLETT:
-			str = "S";
-			break;
-		case COLONEL_MUSTARD:
-			str = "M";
-			break;
-		default:
-			throw new RuntimeException("Sprite alias not found.");
+			case MRS_WHITE:
+				return "W";
+			case MR_GREEN:
+				return "G";
+			case MRS_PEACOCK:
+				return "Q";
+			case PROFESSOR_PLUM:
+				return "P";
+			case MISS_SCARLETT:
+				return "S";
+			case COLONEL_MUSTARD:
+				return "M";
 		}
-		
-		
-		return str;
+		throw new RuntimeException("Sprite alias not found.");
 	}
 
 }
