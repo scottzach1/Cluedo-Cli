@@ -2,6 +2,9 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 import src.*;
+
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardTests {
@@ -96,6 +99,27 @@ public class BoardTests {
         assertEquals(4, b.getRooms().get(Room.RoomAlias.HALL).getDoors().size());
         assertEquals(1, b.getRooms().get(Room.RoomAlias.LOUNGE).getDoors().size());
         assertEquals(2, b.getRooms().get(Room.RoomAlias.DINING_ROOM).getDoors().size());
+
+        Queue<String> roomAliasStrings = new ArrayDeque<>(Arrays.asList("KITCHEN", "BALLROOM", "CONSERVATORY", "BILLARD_ROOM", "DINING_ROOM", "LIBRARY", "LOUNGE", "HALL", "STUDY"));
+        Queue<Character> roomCharList = new ArrayDeque<>(Arrays.asList('K', 'B', 'C', 'A', 'D', 'L', 'E', 'H', 'S'));
+        for (int i = 0; i < Room.RoomAlias.values().length; i++) {
+            assertEquals(roomAliasStrings.peek(), Room.parseAliasFromOrdinalInt(i).toString());
+            assertEquals(roomAliasStrings.poll(), Room.parseAliasFromChar(roomCharList.poll()).toString());
+        }
+
+        User user1 = new User(), user2 = new User();
+
+        user1.setSprite(b.getSprites().get(Sprite.SpriteAlias.MRS_WHITE));
+        user2.setSprite(b.getSprites().get(Sprite.SpriteAlias.COLONEL_MUSTARD));
+
+        b.moveCharacter(user1, user1.getSprite().getPosition(), b.getCell("B24"));
+        b.moveCharacter(user2, user2.getSprite().getPosition(), b.getCell("E20"));
+
+        Set<User> expectedUsers = new HashSet<>(Arrays.asList(user1, user2));
+        Set<User> recordedUsers = b.getRooms().get(Room.RoomAlias.LOUNGE).getInThisRoom();
+
+        assertEquals(expectedUsers.size(), recordedUsers.size());
+        assertTrue(recordedUsers.containsAll(expectedUsers));
     }
 
     @Test void testSpriteAndUser() {
@@ -114,7 +138,36 @@ public class BoardTests {
             assertEquals(user, sprite.getUser());
         }
 
+        for (Sprite.SpriteAlias spriteAlias : Sprite.SpriteAlias.values()) {
+            Sprite sprite = b.getSprites().get(spriteAlias);
+            switch (sprite.getSpriteAlias()) {
+                case MRS_WHITE:
+                    assertEquals("W", sprite.toString());
+                    break;
+                case MR_GREEN:
+                    assertEquals("G", sprite.toString());
+                    break;
+                case MRS_PEACOCK:
+                    assertEquals("Q", sprite.toString());
+                    break;
+                case PROFESSOR_PLUM:
+                    assertEquals("P", sprite.toString());
+                    break;
+                case MISS_SCARLETT:
+                    assertEquals("S", sprite.toString());
+                    break;
+                case COLONEL_MUSTARD:
+                    assertEquals("M", sprite.toString());
+                    break;
+            }
+        }
 
+        Queue<String> spriteAliasStrings = new ArrayDeque<>(Arrays.asList("MRS_WHITE", "MR_GREEN", "MRS_PEACOCK", "PROFESSOR_PLUM", "MISS_SCARLETT", "COLONEL_MUSTARD"));
+
+        for (int i = 0; i < Sprite.SpriteAlias.values().length; i++) {
+            assertEquals(spriteAliasStrings.peek(), Sprite.parseAliasFromOrdinalInt(i).toString());
+            assertEquals(spriteAliasStrings.poll(), Sprite.parseAliasFromOrdinalChar((i + "").charAt(0)).toString());
+        }
     }
 
 

@@ -2,6 +2,7 @@ package src;
 
 import java.security.InvalidParameterException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Board {
 
@@ -86,7 +87,7 @@ public class Board {
 							// Continue as normal as if it were blank.
 						}
 					} else if (type == Cell.Type.ROOM) {
-						Room room = rooms.get(Room.parseAliasFromOrdinalChar(c));
+						Room room = rooms.get(Room.parseAliasFromChar(c));
 						room.addCell(cell);
 						cell.setRoom(room);
 					}
@@ -194,6 +195,7 @@ public class Board {
 	}
 
 	public Cell getCell(String cord) {
+
 		int col, row;
 		try {
 			col = Character.toUpperCase(cord.charAt(0)) - 'A';
