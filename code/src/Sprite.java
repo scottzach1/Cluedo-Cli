@@ -11,39 +11,16 @@ public class Sprite extends Card {
 	// ------------------------
 
 	private User user;
-	private SpriteAlias charAlias;
+	private SpriteAlias spriteAlias;
 	private Cell positionCell;
 
 	// ------------------------
 	// CONSTRUCTOR
 	// ------------------------
 
-	public Sprite(String aName) {
-		super(aName);
-
-		// Set character alias
-		switch (aName) {
-		case "MRS_WHITE":
-			charAlias = SpriteAlias.MRS_WHITE;
-			break;
-		case "MR_GREEN":
-			charAlias = SpriteAlias.MR_GREEN;
-			break;
-		case "MRS_PEACOCK":
-			charAlias = SpriteAlias.MRS_PEACOCK;
-			break;
-		case "PROFESSOR_PLUM":
-			charAlias = SpriteAlias.PROFESSOR_PLUM;
-			break;
-		case "MISS_SCARLETT":
-			charAlias = SpriteAlias.MISS_SCARLETT;
-			break;
-		case "COLONEL_MUSTARD":
-			charAlias = SpriteAlias.COLONEL_MUSTARD;
-			break;
-		default:
-			throw new RuntimeException("Sprite alias not found.");
-		}
+	public Sprite(SpriteAlias spriteAlias) {
+		super(spriteAlias.toString());
+		this.spriteAlias = spriteAlias;
 	}
 
 	// ------------------------
@@ -61,7 +38,7 @@ public class Sprite extends Card {
 	}
 
 	public SpriteAlias getSpriteAlias() {
-		return charAlias;
+		return spriteAlias;
 	}
 
 	public void setPosition(Cell position) {
@@ -91,7 +68,7 @@ public class Sprite extends Card {
 	}
 	
 	public String toString() {
-		switch(charAlias) {
+		switch(spriteAlias) {
 			case MRS_WHITE:
 				return "W";
 			case MR_GREEN:

@@ -114,7 +114,7 @@ public class Room extends Card {
 	 */
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
-		if (weapon == null) return;
+		if (weapon == null || weapon.getRoom() == this) return;
 		weapon.setRoom(this);
 	}
 

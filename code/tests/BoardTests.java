@@ -100,6 +100,18 @@ public class BoardTests {
     @Test void testCellToString() {
         Cell cell = new Cell(5, 5, Cell.Type.WALL);
         assertEquals(cell.printCoordinates(), "F6");
+
+        cell = new Cell(5, 5, Cell.Type.WALL);
+        assertEquals("#", cell.toString());
+
+        cell = new Cell(5, 5, Cell.Type.BLANK);
+        assertEquals("_", cell.toString());
+
+        cell = new Cell(5, 5, Cell.Type.ROOM);
+        assertEquals("_", cell.toString());
+
+        cell = new Cell(5, 5, Cell.Type.START_PAD);
+        assertEquals("$", cell.toString());
     }
 
     @Test void testRoom() {
@@ -134,9 +146,21 @@ public class BoardTests {
 
         assertEquals(expectedUsers.size(), recordedUsers.size());
         assertTrue(recordedUsers.containsAll(expectedUsers));
+
+        assertEquals(17, b.getRooms().get(Room.RoomAlias.KITCHEN).getCells().size());
+        assertEquals(30, b.getRooms().get(Room.RoomAlias.BALLROOM).getCells().size());
+        assertEquals(15, b.getRooms().get(Room.RoomAlias.CONSERVATORY).getCells().size());
+        assertEquals(14, b.getRooms().get(Room.RoomAlias.BILLARD_ROOM).getCells().size());
+        assertEquals(15, b.getRooms().get(Room.RoomAlias.LIBRARY).getCells().size());
+        assertEquals(11, b.getRooms().get(Room.RoomAlias.STUDY).getCells().size());
+        assertEquals(29, b.getRooms().get(Room.RoomAlias.HALL).getCells().size());
+        assertEquals(17, b.getRooms().get(Room.RoomAlias.LOUNGE).getCells().size());
+        assertEquals(29, b.getRooms().get(Room.RoomAlias.DINING_ROOM).getCells().size());
+
     }
 
     @Test void testSpriteAndUser() {
+        User.resetUserNoCounter();
         Board b = new Board();
         User user = new User();
 
@@ -184,5 +208,46 @@ public class BoardTests {
         }
     }
 
+    @Test void testWeapon() {
+        Board b = new Board();
+        Weapon w1 = b.getWeapons().get(Weapon.WeaponAlias.CANDLE_STICK);
+        Room r = w1.getRoom();
+
+        Weapon w2 = new Weapon(Weapon.WeaponAlias.DAGGER);
+
+        assertEquals(w1, r.getWeapon());
+        assertEquals(r, w1.getRoom());
+
+        w1.setRoom(b.getRooms().get(Room.RoomAlias.KITCHEN));
+        w2.setRoom(r);
+
+        assertEquals(w2, r.getWeapon());
+        assertEquals(r, w2.getRoom());
+
+        assertNotEquals(w1, w2);
+    }
+
+    @Test void testUser() {
+        User.resetUserNoCounter();
+
+        User user = null;
+        for (int i=1; i<User.userNo.values().length; i++) {
+            user = new User();
+            user.setUserName("Meep" + i);
+            assertEquals(i, User.getUserNoCounter());
+            assertEquals(i, user.getUserNo().ordinal());
+            assertEquals("Meep" + i, user.getUserName());
+        }
+
+        Card card = new Room(Room.RoomAlias.KITCHEN);
+        assertNotNull(user);
+        assertEquals(0, user.getHand().size());
+        user.addToHand(card);
+        user.addToHand(new Weapon(Weapon.WeaponAlias.DAGGER));
+        assertEquals(2, user.getHand().size());
+        assertTrue(user.getHand().contains(card));
+
+        Card obC = new Sprite(Sprite.SpriteAlias.MR_GREEN);
+    }
 
 }

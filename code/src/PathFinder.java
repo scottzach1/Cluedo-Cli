@@ -4,7 +4,7 @@ import java.util.*;
 
 public class PathFinder {
 
-    public Board board;
+    private Board board;
 
     public PathFinder(Board board) {
         this.board = board;
@@ -84,7 +84,6 @@ public class PathFinder {
         }
 
         // Path Can Be Used here if needed.
-        System.out.println("steps taken: " + (path.size() - 1));
         return path.size() - 1 <= diceRoll;
     }
 

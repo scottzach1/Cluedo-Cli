@@ -40,13 +40,18 @@ public class Board {
 		// Generate character cards
 		sprites = new HashMap<>();
 		for (Sprite.SpriteAlias alias : Sprite.SpriteAlias.values()) {
-			sprites.put(alias, new Sprite(alias.toString()));
+			sprites.put(alias, new Sprite(alias));
 		}
+
+		List<Room> roomList = new ArrayList<>(rooms.values());
+		Collections.shuffle(roomList);
 
 		// Generate Weapon cards
 		weapons = new HashMap<>();
 		for (Weapon.WeaponAlias alias : Weapon.WeaponAlias.values()) {
-			weapons.put(alias, new Weapon(alias));
+			Weapon weapon = new Weapon(alias);
+			weapons.put(alias, weapon);
+			weapon.setRoom(roomList.remove(roomList.size()-1));
 		}
 
 		// Load Map Based off file layout
@@ -261,15 +266,5 @@ public class Board {
 				"24|#|E|E|E|E|#|_|_|#|H|H|H|H|H|#|_|_|#|S|S|S|S|S|#|\r\n" + 
 				"25|#|#|#|#|#|#|4|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|#|\r\n" + 
 				"   A B C D E F G H I J K L M N O P Q R S T U V W X";
-	}
-
-	/**
-	 * main: Launch point for testing rendering of the map.
-	 * @param args invocation arguments. (ignored).
-	 */
-	public static void main(String[] args) {
-		Board b = new Board();
-		b.printBoardState();
-
 	}
 }
