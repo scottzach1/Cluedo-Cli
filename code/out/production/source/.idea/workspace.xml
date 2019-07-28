@@ -59,7 +59,7 @@
                     </entry>
                   </file>
                   <file pinned="false" current-in-tab="false">
-                    <entry file="file://$PROJECT_DIR$/src/User.java">
+                    <entry file="file://$PROJECT_DIR$/src/Cell.java">
                       <provider selected="true" editor-type-id="text-editor">
                         <state relative-caret-position="615">
                           <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
@@ -224,6 +224,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -246,7 +247,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">

@@ -1,7 +1,10 @@
 package src;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Room extends Card {
 
@@ -26,7 +29,6 @@ public class Room extends Card {
 
 	// Room Attributes
 	private Set<Cell> cells;
-	private Set<User> inThisRoom;
 	private Set<Cell> doors;
 	private Weapon weapon;
 	private RoomAlias roomAlias;
@@ -44,7 +46,6 @@ public class Room extends Card {
 		this.roomAlias = roomAlias;
 		cells = new HashSet<>();
 		doors = new HashSet<>();
-		inThisRoom = new HashSet<>();
 	}
 
 	/**
@@ -97,19 +98,9 @@ public class Room extends Card {
 	 * getInThisRoom: Returns a Set of all the Users in the current Room.
 	 * @return Set of users.
 	 */
-	public Set<User> getInThisRoom() { return inThisRoom; }
-
-	/**
-	 * addToRoom: Add a current user to the room.
-	 * @param user User to add to the room.
-	 */
-	public void addToRoom(User user) { this.inThisRoom.add(user); }
-
-	/**
-	 * removeFromRoom: Remove a provided User from the room.
-	 * @param user User to remove from the room.
-	 */
-	public void removeFromRoom(User user) { this.inThisRoom.remove(user); }
+	public Set<User> getInThisRoom() {
+		return cells.stream().map(Cell::getSprite).filter(Objects::nonNull).map(Sprite::getUser).collect(Collectors.toSet());
+	}
 
 	/**
 	 * getWeapon: Gets the Weapon stored in the Room.
@@ -139,7 +130,7 @@ public class Room extends Card {
 	 * @param c The char corresponding to a Room on the MapFile.
 	 * @return The corresponding RoomAlias.
 	 */
-	public static RoomAlias parseAliasFromOrdinalChar(char c) {
+	public static RoomAlias parseAliasFromChar(char c) {
 		switch (c) {
 			case 'K': return RoomAlias.KITCHEN;
 			case 'B': return RoomAlias.BALLROOM;
@@ -177,8 +168,9 @@ public class Room extends Card {
 	public String toString() {
 		StringBuilder peopleStr = new StringBuilder();
 		StringBuilder weaponStr = new StringBuilder();
-		
-		// Append users in the room 
+
+		Set<User> inThisRoom = getInThisRoom();
+		// Append users in the room
 		for (User user : inThisRoom) { peopleStr.append(user.getSprite().getName() + ", ");}
 		if (inThisRoom.isEmpty()) peopleStr.append("no one");
 		
