@@ -216,7 +216,7 @@ public class CluedoGame {
 		Cell start = user.getSprite().getPosition();
 
 		if (PathFinder.checkValidPath(start, end, diceRoll)) {
-			board.moveCharacter(user, start, end);
+			board.moveUser(user, start, end);
 			return "8";
 		}
 		throw new RuntimeException();

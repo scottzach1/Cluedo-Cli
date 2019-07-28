@@ -65,18 +65,18 @@ public class BoardTests {
         assertNull(b.getCell("H3").getSprite());
         assertEquals(user.getSprite(), b.getCell("H1").getSprite());
 
-        b.moveCharacter(user, b.getCell("H1"), b.getCell("H3"));
+        b.moveUser(user, b.getCell("H1"), b.getCell("H3"));
 
         assertNull(b.getCell("H1").getSprite());
         assertEquals(user.getSprite(), b.getCell("H3").getSprite());
 
         try {
-            b.moveCharacter(user, b.getCell("H-1"), b.getCell("H3"));
+            b.moveUser(user, b.getCell("H-1"), b.getCell("H3"));
             fail("Invalid Move didn't throw Exception");
         } catch (Exception e) {}
 
         try {
-            b.moveCharacter(null, b.getCell("H1"), b.getCell("H3"));
+            b.moveUser(null, b.getCell("H1"), b.getCell("H3"));
             fail("Invalid Move didn't throw Exception");
         } catch (Exception e) {}
 
@@ -112,8 +112,8 @@ public class BoardTests {
         user1.setSprite(b.getSprites().get(Sprite.SpriteAlias.MRS_WHITE));
         user2.setSprite(b.getSprites().get(Sprite.SpriteAlias.COLONEL_MUSTARD));
 
-        b.moveCharacter(user1, user1.getSprite().getPosition(), b.getCell("B24"));
-        b.moveCharacter(user2, user2.getSprite().getPosition(), b.getCell("E20"));
+        b.moveUser(user1, user1.getSprite().getPosition(), b.getCell("B24"));
+        b.moveUser(user2, user2.getSprite().getPosition(), b.getCell("E20"));
 
         Set<User> expectedUsers = new HashSet<>(Arrays.asList(user1, user2));
         Set<User> recordedUsers = b.getRooms().get(Room.RoomAlias.LOUNGE).getInThisRoom();

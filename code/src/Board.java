@@ -171,7 +171,7 @@ public class Board {
 		return weapons;
 	}
 
-	public void moveCharacter(User user, Cell from, Cell to) {
+	public void moveUser(User user, Cell from, Cell to) {
 		if (from == null || to == null || user == null)
 			throw new InvalidParameterException("Cannot pass a null parameter!");
 
