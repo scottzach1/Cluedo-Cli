@@ -179,7 +179,7 @@ public class Room extends Card {
 		else weaponStr.append("no weapon");
 		
 		
-		return getName() + ":\n\t has " + peopleStr.toString() + "in it"
-				+ "\n\t along with " + weaponStr.toString();
+		return getName() + ": \n  -PEOPLE:" + peopleStr.toString()
+				+ "\n  -WEAPONS: " + weaponStr.toString();
 	}
 }

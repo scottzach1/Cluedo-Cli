@@ -194,7 +194,7 @@ public class LUI {
 			if (Character.isAlphabetic(input.charAt(0))) {
 				try {
 					char col = input.charAt(0);
-					int row = Integer.parseUnsignedInt(input.substring(1)) - 1;
+					int row = Integer.parseUnsignedInt(input.substring(1));
 					cellCoordinates = col + "" + row;
 				} catch (Exception e) {
 					printError(input, "does not match the suggested layout");

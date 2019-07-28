@@ -167,11 +167,10 @@ public class CluedoGame {
 			// User, 9: Quit Game
 
 			// [1] Move the player
-			if (status.equals("") == '1') {
+			if (status.equals("1")) {
 				LUI.clearConsole();
 				board.printBoardState();
 				status = lui.movePlayer(user);	
-				status.equals("") = status.charAt(0);
 				try {
 					// Get the cell, if null then....
 					Cell cell = board.getCell(status);
@@ -187,23 +186,20 @@ public class CluedoGame {
 			}
 
 			// [2] refresh to menu (do nothing)
-			if (status.equals("") == '2') {
+			if (status.equals("2")) {
 				status = lui.showHand(user);
-				status.equals("") = status.charAt(0);
 			}
 			// [3] refresh to menu (do nothing)
-			if (status.equals("") == '3') {
+			if (status.equals("3")) {
 				status = lui.showObservations(user);
-				status.equals("") = status.charAt(0);
 			}
 
 				// [4] check if the next players have a possible card
-			if (status.equals("") == '4') {
+			if (status.equals("4")) {
 				if (user.getSprite().getPosition().getType() != Cell.Type.ROOM) {
 					lui.readInput("You are not in a room, thus you can't make a suggestion \n-[Any] Okay", user.getUserName());
 				} else {
 					status = lui.selectThreeCards(user, "8");
-					status.equals("") = status.charAt(0);
 					String[] components = status.split(":");
 					boolean cardFound = false;
 					if (components.length == 4) {
@@ -248,12 +244,12 @@ public class CluedoGame {
 									+ " - " + r.getName(), user.getUserName());
 						}
 
-						status.equals("") = '8';
+						status = "8";
 					}
 				}
 			}
 
-			if (status.equals("") == '5') {
+			if (status.equals("5")) {
 				lui.selectThreeCards(user, "9");
 				String[] components = status.split(":");
 				if (components.length == 4) {
@@ -270,23 +266,23 @@ public class CluedoGame {
 								+ "Your accusation is incorrect, you can no longer win the game \n\n-[Any] Awwhh man",
 								user.getUserName());
 					}
-					status.equals("") = '8';
+					status = "8";
 				}
 			}
 
 			// [8] Change the user after prev user has exited their turn
-			if (status.equals("") == '8') {
+			if (status.equals("8")) {
 				userNum = (userNum + 1) % users.size();
 				LUI.rollDice();
 			}
 
 			// [9] Finish the game by exiting this while loop
-			if (playerChoice == '9') {
+			if (status.equals("9")) {
 				System.out.println("Thanks for playing");
 			}
 
-			if (!java.lang.Character.isDigit(status.equals(""))) {
-				error = "unknown input";
+			if (status.length() > 0 && !java.lang.Character.isDigit(status.charAt(0))) {
+				error = "UNKNOWN INPUT";
 			}
 		}
 
