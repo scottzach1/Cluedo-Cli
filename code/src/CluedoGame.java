@@ -66,13 +66,11 @@ public class CluedoGame {
 			// Play the rounds
 			rounds();
 
-			while (!status.equals("1") || !status.equals("2"))
+			while (!status.equals("1") && !status.equals("2")) 
 				status = lui.readInput("\nPlay again?\n-[1] YEAH!\n -[2] Not today", "USER");
 
-			if (status.charAt(0) == '2')
+			if (status.contentEquals("2"))
 				return;
-
-			System.out.println(status);
 		}
 	}
 
@@ -214,6 +212,12 @@ public class CluedoGame {
 					}
 
 					status = lui.movePlayer(user);
+					
+					if (status.equals("MENU")) {
+						status = "1";
+						break;	
+					}
+					
 					try {
 						// Get the cell, if null then....
 						Cell cell = board.getCell(status);
@@ -234,11 +238,11 @@ public class CluedoGame {
 			}
 
 			// [2] Show the users hand refresh to menu (do nothing)
-			if (status.equals("2")) {
+			if (status.contentEquals("2")) {
 				status = lui.showHand(user);
 			}
 			// [3] Show the users observations refresh to menu (do nothing)
-			if (status.equals("3")) {
+			if (status.contentEquals("3")) {
 				status = lui.showObservations(user);
 			}
 
