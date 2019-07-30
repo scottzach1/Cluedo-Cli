@@ -7,7 +7,7 @@ public class Cell {
 
 	/**
 	 * An Enum defining the different possible directions of neighbours of a Cell.
-	 */
+			*/
 	public enum Direction {NORTH, SOUTH, EAST, WEST}
 
 	/**
