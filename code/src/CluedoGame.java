@@ -69,10 +69,11 @@ public class CluedoGame {
 			while (!status.equals("1") || !status.equals("2"))
 				status = lui.readInput("\nPlay again?\n-[1] YEAH!\n -[2] Not today", "USER");
 
-			if (status.equals("2"))
-				break;
+			if (status.charAt(0) == '2')
+				return;
+
+			System.out.println(status);
 		}
-		System.out.println("Thanks for playing!");
 	}
 
 	/**
@@ -161,7 +162,7 @@ public class CluedoGame {
 	 * upon user inputs
 	 */
 	/**
-	 * 
+	 *
 	 */
 	private void rounds() {
 		// Run the game by doing rounds, int user is the users turn
@@ -383,7 +384,7 @@ public class CluedoGame {
 
 	/**
 	 * tryMove: Uses the PathFinder test is a suggested path is feasible
-	 * 
+	 *
 	 * @param end      - Target Cell
 	 * @param diceRoll - Moves player can make
 	 * @param user     - Who is attempting the move

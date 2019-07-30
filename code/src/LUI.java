@@ -21,7 +21,7 @@ public class LUI {
 
 	/**
 	 * startUpMenu: Displays the title graphic
-	 * 
+	 *
 	 * @void
 	 */
 	public void title() {
@@ -34,7 +34,7 @@ public class LUI {
 
 	/**
 	 * startUpMenu: Displays the players choice at the main menu
-	 * 
+	 *
 	 * @return String - indication of players choice
 	 */
 	public String startUpMenu() {
@@ -44,8 +44,8 @@ public class LUI {
 
 	/**
 	 * howToPlay: Displays the rules of the game
-	 * 
-	 * 
+	 *
+	 *
 	 * @return String - nothing, allows user get use to game set up
 	 */
 	public String howToPlay() {
@@ -69,8 +69,8 @@ public class LUI {
 	 * gameSetup: public method for CluedoGame to use to get all the relavant
 	 * information from the beginning set up of the game. I.e usernames, characters
 	 * choices, player count
-	 * 
-	 * 
+	 *
+	 *
 	 * @return String - colon separated information for each user
 	 */
 	public String gameSetup() {
@@ -91,8 +91,8 @@ public class LUI {
 
 	/**
 	 * userNameCreation: Asks user for the amount of players in the game
-	 * 
-	 * 
+	 *
+	 *
 	 * @return Integer - the amount of players in the game
 	 */
 	private int playerCount() {
@@ -113,10 +113,11 @@ public class LUI {
 	/**
 	 * userNameCreation: Asks user for their user name, ensure that it doesnt
 	 * contain ':' as that is used to split string information in CluedoGame
-	 * 
-	 * 
-	 * 
-	 * @param name - temporary player name 'Player1'
+	 *
+	 *
+	 *
+	 * @param name
+	 *            - temporary player name 'Player1'
 	 * @return String - username
 	 */
 	private String userNameCreation(String name) {
@@ -133,10 +134,11 @@ public class LUI {
 	/**
 	 * characterSelection: Used in the pregame, displays and retrives the users
 	 * information. I.e Character choice, user name
-	 * 
-	 * 
-	 * 
-	 * @param players - how many people are playing
+	 *
+	 *
+	 *
+	 * @param players
+	 *            - how many people are playing
 	 * @return String - user information
 	 */
 	private String characterSelection(int players) {
@@ -198,9 +200,10 @@ public class LUI {
 	/**
 	 * round: Displays the in game menu for each player, indicating their options
 	 * for their turn
-	 * 
-	 * 
-	 * @param user - who's turn is it error - a message to display under the board
+	 *
+	 *
+	 * @param user
+	 *            - who's turn is it error - a message to display under the board
 	 * @return String - indication of the players choice on what to do
 	 */
 	public String round(User user, String error) {
@@ -217,9 +220,10 @@ public class LUI {
 	/**
 	 * movePlayer: Get's the users inputs and makes sure that the input is a
 	 * char+int. Unable to check validity of cell without board
-	 * 
-	 * 
-	 * @param user - who's character is being moved
+	 *
+	 *
+	 * @param user
+	 *            - who's character is being moved
 	 * @return String - indication of the players choice on what to do
 	 */
 	public String movePlayer(User user) {
@@ -238,7 +242,7 @@ public class LUI {
 
 			// Return nothing to indicate no cell has been choosen
 			if (input.equals("1"))
-				return "";
+				return "MENU";
 
 			// check that the input conforms to general outline
 			if (Character.isAlphabetic(input.charAt(0))) {
@@ -256,8 +260,9 @@ public class LUI {
 
 	/**
 	 * showHand: Used by the user to show their hand
-	 * 
-	 * @param user - who's hand is being shown
+	 *
+	 * @param user
+	 *            - who's hand is being shown
 	 * @return String - indication of the players choice on what to do
 	 */
 	public String showHand(User user) {
@@ -290,9 +295,10 @@ public class LUI {
 	 * showObservations: Used in the CluedoGame class, public as CluedoGame needs to
 	 * parse a list of all the possible cards. Which are displayed to indicate what
 	 * cards the player has seen.
-	 * 
-	 * @param user - who's observations are being displayed allCards - all the
-	 *             possible cards in the game
+	 *
+	 * @param user
+	 *            - who's observations are being displayed allCards - all the
+	 *            possible cards in the game
 	 * @return String - indication of the players choice on what to do
 	 */
 	public String showObservations(User user) {
@@ -506,9 +512,11 @@ public class LUI {
 
 	/**
 	 * chooseCardToGiveAway: forces a player to choose a card in question to display
-	 * 
-	 * @param other - the user giving up the card
-	 * @param cards - a list of the other users possible cards to give up
+	 *
+	 * @param other
+	 *            - the user giving up the card
+	 * @param cards
+	 *            - a list of the other users possible cards to give up
 	 * @return Card - what card the other user chooses
 	 */
 	public Card chooseCardToGiveAway(User other, ArrayList<Card> cards) {
@@ -517,12 +525,12 @@ public class LUI {
 		while (choosenCard == null) {
 			// Keeps the screen clean
 			clearConsole();
-			
+
 			// Display all the possible options
 			for (int i = 0; i < cards.size(); i++) {
 				System.out.println(indent(i) + "-[" + (i + 1) + "]" + cards.get(i).getName());
 			}
-			
+
 			// Get the users input
 			String input = readInput(other.getUserName() + ", please select a card that you are required to show.",
 					other.getUserName());
@@ -542,6 +550,7 @@ public class LUI {
 	 * rollDice: returns the sum of two randomly generated numbers. Two randomly
 	 * generated numbers were used to keep the probabilities of sums maintained.
 	 * Sets the diceRoll field to the sum.
+	 *
 	 * @void
 	 */
 	public static void rollDice() {
@@ -551,9 +560,9 @@ public class LUI {
 		diceRoll = num1 + num2;
 	}
 
-
 	/**
 	 * getDiceRoll: diceRoll getter.
+	 *
 	 * @return Integer - the current sum of the two dice rolled
 	 */
 	public static int getDiceRoll() {
@@ -568,9 +577,10 @@ public class LUI {
 	 * readInput: Prints a message and reads the users input using
 	 * System.in.read(byte[]). Can read up to 50 bytes of information (about 50
 	 * characters) and will convert the input into a string to then return.
-	 * 
-	 * @param message - A String to be printed before user input. player - A String
-	 *                for the
+	 *
+	 * @param message
+	 *            - A String to be printed before user input. player - A String for
+	 *            the
 	 * @return The users input.
 	 */
 	public String readInput(String message, String player) {
@@ -594,11 +604,13 @@ public class LUI {
 
 	/**
 	 * stringToInt: Checks if a string is an integer
-	 * @param input - The string checking for integer
+	 *
+	 * @param input
+	 *            - The string checking for integer
 	 * @return Integer - The integer value if a valid input, else -1
 	 */
 	public static final int stringToInt(String input) {
-		// Get rid of all the excess 
+		// Get rid of all the excess
 		input.replaceAll("\\D\\s", "");
 		int isInteger = -1;
 		// Try parse the string to and int
@@ -613,8 +625,11 @@ public class LUI {
 
 	/**
 	 * printError: Generalized display for any error
-	 * @param input - What the user input
-	 * @param error - What is wrong with the input
+	 *
+	 * @param input
+	 *            - What the user input
+	 * @param error
+	 *            - What is wrong with the input
 	 */
 	public static final void printError(String input, String error) {
 		System.out.println("\n\n-------------------------------------------" + "\n ERROR: " + input + " " + error + "."
@@ -638,8 +653,11 @@ public class LUI {
 	}
 
 	/**
-	 * indent: Allows for loops to create a string of spaces maintaining consistency in design
-	 * @param length - Amount of spaces
+	 * indent: Allows for loops to create a string of spaces maintaining consistency
+	 * in design
+	 *
+	 * @param length
+	 *            - Amount of spaces
 	 * @return String - String of spaces based on length
 	 */
 	private String indent(int length) {
@@ -655,8 +673,8 @@ public class LUI {
 	 * clearConsole: Prints 52 lines, keeps the current state of the game clean
 	 */
 	public final static void clearConsole() {
-		for (int i = 0; i < 52; i++)
-			System.out.println();
+		System.out.println(
+				"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 	}
 
 }
