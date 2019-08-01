@@ -521,6 +521,7 @@ public class LUI {
 	 */
 	public Card chooseCardToGiveAway(User other, ArrayList<Card> cards) {
 		Card choosenCard = null;
+		readInput(other.getUserName() + ", the game is about to show your cards.\n-[Any] I'm ready", other.getUserName());
 		// Forces other user to give up a card
 		while (choosenCard == null) {
 			// Keeps the screen clean
