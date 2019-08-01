@@ -23,11 +23,11 @@ public class BoardTests {
 
         PathFinder pathFinder = new PathFinder(b);
 
-        assertEquals(realDist, pathFinder.findShortestPath(start, end));
-        assertEquals(realDist, pathFinder.findShortestPath(end, start));
+        assertEquals(realDist, pathFinder.findShortestPath(start, end, new HashSet<>()));
+        assertEquals(realDist, pathFinder.findShortestPath(end, start, new HashSet<>()));
 
-        assertEquals(realDist, pathFinder.findShortestPathFromString(startSting, endString));
-        assertEquals(realDist, pathFinder.findShortestPathFromString(endString, startSting));
+        assertEquals(realDist, pathFinder.findShortestPathFromString(startSting, endString, new HashSet<>()));
+        assertEquals(realDist, pathFinder.findShortestPathFromString(endString, startSting, new HashSet<>()));
     }
 
     @Test void testPathFinding() {
@@ -49,8 +49,19 @@ public class BoardTests {
         assertNotNull(b.getCell("H1").getSprite());
         assertNull(b.getCell("H5").getSprite());
 
-        testShortestPath(b, "H5", "H1", Integer.MAX_VALUE);
-        testShortestPath(b, "H5", "H1", Integer.MAX_VALUE);
+        assertEquals(Integer.MAX_VALUE, pathFinder.findShortestPathFromString("H5", "H1", new HashSet<>()));
+        assertEquals(Integer.MAX_VALUE, pathFinder.findShortestPathFromString("H5", "C3",
+                new HashSet<>(Collections.singleton(b.getCell("C3").getRoom()))));
+
+        assertTrue(pathFinder.findExactPathFromString("H2", "H7", 15, new HashSet<>()));
+        assertFalse(pathFinder.findExactPathFromString("H2", "H7", 3, new HashSet<>()));
+        assertTrue(pathFinder.findExactPathFromString("H2", "H7", 7, new HashSet<>()));
+
+        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 3, new HashSet<>()));
+        assertFalse(pathFinder.findExactPathFromString("P21", "J18", 7, new HashSet<>()));
+        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 5, new HashSet<>()));
+        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 4, new HashSet<>()));
+        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 9, new HashSet<>()));
     }
 
     @Test void testBoard() {
