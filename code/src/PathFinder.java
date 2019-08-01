@@ -7,9 +7,29 @@ public class PathFinder {
 
     // Needed for checkValidFromString
     private Board board;
+    private Set<Cell> visitedCells;
+    private Set<Room> visitedRooms;
 
+    /**
+     * PathFinder: The constructor for Path Finder
+     * @param board board
+     */
     public PathFinder(Board board) {
         this.board = board;
+        visitedCells = new HashSet<>();
+        visitedRooms = new HashSet<>();
+    }
+
+    /**
+     * PathFinder: The constructor for Path Finder
+     * @param board board
+     * @param visitedCells any cells already visited.
+     * @param visitedRooms any rooms visited.
+     */
+    public PathFinder(Board board, Set<Cell> visitedCells, Set<Room> visitedRooms) {
+        this.board = board;
+        this.visitedCells = (visitedCells == null) ? new HashSet<>() : visitedCells;
+        this.visitedRooms = (visitedRooms == null) ? new HashSet<>() : visitedRooms;
     }
 
     /**
@@ -21,9 +41,9 @@ public class PathFinder {
      * @param end the desired cell on the map.
      * @return true valid, false otherwise.
      */
-    public int findShortestPathFromString(String start, String end, Set<Room> visitedRooms) {
+    public int findShortestPathFromString(String start, String end) {
         if (board == null) throw new RuntimeException("PathFinder does not have a Board!");
-        return findShortestPath(board.getCell(start), board.getCell(end), visitedRooms);
+        return findShortestPath(board.getCell(start), board.getCell(end));
     }
 
     /**
@@ -34,7 +54,7 @@ public class PathFinder {
      * @return int number of steps using shortest path,
      *  or Integer.MAX_VALUE if none can be found.
      */
-    public int findShortestPath(Cell start, Cell end, Set<Room> visitedRooms) {
+    public int findShortestPath(Cell start, Cell end) {
         // NOTE: Commenting will be nearly identical to my 261 asg.  - (Zac Scott 300447976)
 
         if (end.getSprite() != null || end.getType().equals(Cell.Type.WALL)) return Integer.MAX_VALUE;
@@ -62,6 +82,7 @@ public class PathFinder {
                 AStarNode newStarNode = new AStarNode(cell, neigh, distanceTravelled, heuristic);
 
                 if (visitedRooms.contains(neigh.getRoom())) continue; // Room forbidden.
+                if (visitedCells.contains(neigh)) continue; // Cell forbidden.
 
                 if (previousNodes.containsKey(neigh)) { // Node is already visited.
                     AStarNode oldStarNode = previousNodes.get(neigh);
@@ -89,6 +110,7 @@ public class PathFinder {
 
         // Visit all rooms in the path.
         if (visitedRooms != null) visitedRooms.addAll(path.stream().map(Cell::getRoom).filter(Objects::nonNull).collect(Collectors.toSet()));
+        if (visitedCells != null) visitedCells.addAll(path);
 
         // Path Can Be Used here if needed.
 
@@ -106,11 +128,10 @@ public class PathFinder {
      * @param start the starting Cell on the map.
      * @param end the desired cell on the map.
      * @param steps the number of steps that have to be taken.
-     * @param visitedRooms the rooms forbidden as they are visited this turn.
      * @return true path was found meeting parameters, false otherwise.
      */
-    public boolean findExactPathFromString(String start, String end, int steps, Set<Room> visitedRooms) {
-        return findExactPath(board.getCell(start), board.getCell(end), steps, visitedRooms);
+    public boolean findExactPathFromString(String start, String end, int steps) {
+        return findExactPath(board.getCell(start), board.getCell(end), steps);
     }
 
     /**
@@ -125,13 +146,13 @@ public class PathFinder {
      * @param start the starting Cell on the map.
      * @param end the desired cell on the map.
      * @param steps the number of steps that have to be taken.
-     * @param visitedRooms the rooms forbidden as they are visited this turn.
      * @return true path was found meeting parameters, false otherwise.
      */
-    private boolean findExactPath(Cell start, Cell end, int steps, Set<Room> visitedRooms) {
+    private boolean findExactPath(Cell start, Cell end, int steps) {
         if (board == null) throw new RuntimeException("PathFinder does not have a Board!");
-        if (visitedRooms == null) visitedRooms = new HashSet<>();
-        return findExactPathHelper(new DFSNode(start, null), end, visitedRooms, steps);
+        visitedRooms = new HashSet<>(visitedRooms);
+        visitedCells = new HashSet<>(visitedCells);
+        return findExactPathHelper(new DFSNode(start, null), end, visitedRooms, visitedCells, steps);
     }
 
     /**
@@ -142,11 +163,15 @@ public class PathFinder {
      * @param visitedRooms the rooms forbidden as they are visited this turn.
      * @return true path was found meeting parameters, false otherwise.
      */
-    private boolean findExactPathHelper(DFSNode node, Cell end, Set<Room> visitedRooms, int steps) {
+    private boolean findExactPathHelper(DFSNode node, Cell end, Set<Room> visitedRooms, Set<Cell> visitedCells, int steps) {
         Cell current = node.current;
 
         // Success Termination.
-        if (sameRoom(current, end) || (sameCell(current, end) && node.depth == steps)) return true;
+        if (sameRoom(current, end) || (sameCell(current, end) && node.depth == steps)) {
+            if (current.getRoom() != null) visitedRooms.add(current.getRoom());
+            visitedCells.add(current);
+            return true;
+        }
 
         // Failed Termination.
         if (steps < node.depth) return false;
@@ -160,10 +185,14 @@ public class PathFinder {
         } else neighbours = new HashSet<>(current.getNeighbors().values());
 
         for (Cell neigh : neighbours) {
-            if (node.visited.contains(neigh) || visitedRooms.contains(neigh.getRoom())) continue;
+            if (node.visited.contains(neigh) || visitedRooms.contains(neigh.getRoom()) || visitedCells.contains(neigh)) continue;
 
             // Return success of child to parent.
-            if (findExactPathHelper(new DFSNode(neigh, node), end, visitedRooms, steps)) return true;
+            if (findExactPathHelper(new DFSNode(neigh, node), end, visitedRooms, visitedCells, steps)) {
+                if (current.getRoom() != null) visitedRooms.add(current.getRoom());
+                visitedCells.add(current);
+                return true;
+            }
         }
 
         // Note we don't add to add all neighbours as visited as there is not path from this Cell.

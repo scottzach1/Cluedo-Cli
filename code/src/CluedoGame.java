@@ -47,7 +47,6 @@ public class CluedoGame {
 		while (!status.equals("3")) {
 			User.resetUserNoCounter();
 			board = new Board();
-			pathFinder = new PathFinder(board);
 			this.users = new ArrayList<>();
 			this.losers = new ArrayList<>();
 
@@ -394,9 +393,8 @@ public class CluedoGame {
 	 * @param user     - Who is attempting the move
 	 * @return String - "8" allowing for the next player to take their turn if
 	 *         successful
-	 * @throws Exception - If end or user is null, or if the path is not feasible
 	 */
-	private String tryMove(Cell end, int diceRoll, User user) throws Exception {
+	private String tryMove(Cell end, int diceRoll, User user) {
 
 		// Throw an exception is the cell is null
 		if (end == null || user == null)
@@ -406,7 +404,8 @@ public class CluedoGame {
 		Cell start = user.getSprite().getPosition();
 
 		// Check that path is valid
-		if (pathFinder.findShortestPath(start, end, new HashSet<>()) < diceRoll) {
+		PathFinder pathFinder = new PathFinder(board);
+		if (pathFinder.findShortestPath(start, end) < diceRoll) {
 			board.moveUser(user, end);
 			return "8";
 		}
@@ -447,7 +446,7 @@ public class CluedoGame {
 		nonSolutionWeapons.remove(((Weapon) solution[1]).getWeaponAlias());
 		nonSolutionRooms.remove(((Room) solution[2]).getRoomAlias());
 
-		// Create arraylists of random order for the three maps
+		// Create lists of random order for the three maps
 		ArrayList<Sprite> randomSprites = new ArrayList<>(nonSolutionSprites.values());
 		Collections.shuffle(randomSprites);
 		ArrayList<Weapon> randomWeapons = new ArrayList<>(nonSolutionWeapons.values());

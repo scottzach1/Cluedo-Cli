@@ -21,19 +21,23 @@ public class BoardTests {
         Cell start = b.getCell(startSting);
         Cell end = b.getCell(endString);
 
-        PathFinder pathFinder = new PathFinder(b);
+        PathFinder pathFinder;
 
-        assertEquals(realDist, pathFinder.findShortestPath(start, end, new HashSet<>()));
-        assertEquals(realDist, pathFinder.findShortestPath(end, start, new HashSet<>()));
+        pathFinder = new PathFinder(b);
+        assertEquals(realDist, pathFinder.findShortestPath(start, end));
+        pathFinder = new PathFinder(b);
+        assertEquals(realDist, pathFinder.findShortestPath(end, start));
 
-        assertEquals(realDist, pathFinder.findShortestPathFromString(startSting, endString, new HashSet<>()));
-        assertEquals(realDist, pathFinder.findShortestPathFromString(endString, startSting, new HashSet<>()));
+        pathFinder = new PathFinder(b);
+        assertEquals(realDist, pathFinder.findShortestPathFromString(startSting, endString));
+        pathFinder = new PathFinder(b);
+        assertEquals(realDist, pathFinder.findShortestPathFromString(endString, startSting));
     }
 
     @Test void testPathFinding() {
         // Test generic paths.
         Board b = new Board();
-        PathFinder pathFinder = new PathFinder(b);
+        PathFinder pathFinder;
 
         testShortestPath(b, "H2", "H4", 2);
         testShortestPath(b, "H2", "G7", 6);
@@ -43,25 +47,52 @@ public class BoardTests {
 
         // End is a wall
         assertEquals(Cell.Type.WALL, b.getCell("F2").getType());
+        pathFinder = new PathFinder(b);
         testShortestPath(b, "H1", "F2", Integer.MAX_VALUE);
 
         // End holds a character
         assertNotNull(b.getCell("H1").getSprite());
         assertNull(b.getCell("H5").getSprite());
 
-        assertEquals(Integer.MAX_VALUE, pathFinder.findShortestPathFromString("H5", "H1", new HashSet<>()));
-        assertEquals(Integer.MAX_VALUE, pathFinder.findShortestPathFromString("H5", "C3",
-                new HashSet<>(Collections.singleton(b.getCell("C3").getRoom()))));
+        pathFinder = new PathFinder(b);
+        assertEquals(Integer.MAX_VALUE, pathFinder.findShortestPathFromString("H5", "H1"));
 
-        assertTrue(pathFinder.findExactPathFromString("H2", "H7", 15, new HashSet<>()));
-        assertFalse(pathFinder.findExactPathFromString("H2", "H7", 3, new HashSet<>()));
-        assertTrue(pathFinder.findExactPathFromString("H2", "H7", 7, new HashSet<>()));
+        pathFinder = new PathFinder(b, new HashSet<>(), new HashSet<>(Collections.singleton(b.getCell("C3").getRoom())));
+        assertEquals(Integer.MAX_VALUE, pathFinder.findShortestPathFromString("H5", "C3"));
 
-        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 3, new HashSet<>()));
-        assertFalse(pathFinder.findExactPathFromString("P21", "J18", 7, new HashSet<>()));
-        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 5, new HashSet<>()));
-        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 4, new HashSet<>()));
-        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 9, new HashSet<>()));
+        // Test Basic Path Finding
+        pathFinder = new PathFinder(b);
+        assertTrue(pathFinder.findExactPathFromString("H2", "H7", 15));
+        pathFinder = new PathFinder(b);
+        assertFalse(pathFinder.findExactPathFromString("H2", "H7", 3));
+        pathFinder = new PathFinder(b);
+        assertTrue(pathFinder.findExactPathFromString("H2", "H7", 7));
+
+        pathFinder = new PathFinder(b);
+        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 3));
+        pathFinder = new PathFinder(b);
+        assertFalse(pathFinder.findExactPathFromString("P21", "J18", 7));
+        pathFinder = new PathFinder(b);
+        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 5));
+        pathFinder = new PathFinder(b);
+        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 4));
+        pathFinder = new PathFinder(b);
+        assertTrue(pathFinder.findExactPathFromString("P21", "J18", 9));
+
+        pathFinder = new PathFinder(b);
+        assertEquals(7, pathFinder.findShortestPathFromString("I8", "P8"));
+        // Test Visited Cells
+        assertEquals(6, pathFinder.findShortestPathFromString("J9", "K7"));
+        // Test Visited Rooms
+        assertTrue(30 < pathFinder.findShortestPathFromString("H6", "Q6"));
+
+        pathFinder = new PathFinder(b);
+        assertEquals(7, pathFinder.findShortestPathFromString("I8", "P8"));
+        // Test Visited Cells
+        assertTrue(pathFinder.findExactPathFromString("J9", "K7", 6));
+        // Test Visited Rooms
+        assertFalse(pathFinder.findExactPathFromString("H6", "Q6", 3));
+
     }
 
     @Test void testBoard() {
