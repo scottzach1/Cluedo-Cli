@@ -11,34 +11,23 @@ public class BoardTests {
 
     /**
      * Tests edge case distance for path finding.
-     * @param b board
+     *
+     * @param b          board
      * @param startSting string cord of start cell
-     * @param endString string cord of end cell
-     * @param realDist the true distance expected on map.
+     * @param endString  string cord of end cell
+     * @param realDist   the true distance expected on map.
      */
-    private void testDistance(Board b, String startSting, String endString, int realDist) {
+    private void testShortestPath(Board b, String startSting, String endString, int realDist) {
         Cell start = b.getCell(startSting);
         Cell end = b.getCell(endString);
 
         PathFinder pathFinder = new PathFinder(b);
 
-        assertTrue(pathFinder.checkValidPath(start, end, realDist));
-        assertTrue(pathFinder.checkValidPath(end, start, realDist));
+        assertEquals(realDist, pathFinder.findShortestPath(start, end));
+        assertEquals(realDist, pathFinder.findShortestPath(end, start));
 
-        assertTrue(pathFinder.checkValidPath(start, end, realDist + 1));
-        assertTrue(pathFinder.checkValidPath(end, start, realDist + 1));
-
-        assertFalse(pathFinder.checkValidPath(start, end, realDist - 1));
-        assertFalse(pathFinder.checkValidPath(end, start, realDist - 1));
-
-        assertTrue(pathFinder.checkValidPathFromString(startSting, endString, realDist));
-        assertTrue(pathFinder.checkValidPathFromString(endString, startSting, realDist));
-
-        assertTrue(pathFinder.checkValidPathFromString(startSting, endString, realDist + 1));
-        assertTrue(pathFinder.checkValidPathFromString(endString, startSting, realDist + 1));
-
-        assertFalse(pathFinder.checkValidPathFromString(startSting, endString, realDist - 1));
-        assertFalse(pathFinder.checkValidPathFromString(endString, startSting, realDist - 1));
+        assertEquals(realDist, pathFinder.findShortestPathFromString(startSting, endString));
+        assertEquals(realDist, pathFinder.findShortestPathFromString(endString, startSting));
     }
 
     @Test void testPathFinding() {
@@ -46,23 +35,22 @@ public class BoardTests {
         Board b = new Board();
         PathFinder pathFinder = new PathFinder(b);
 
-        testDistance(b, "H2", "H4", 2);
-        testDistance(b, "H2", "G7", 6);
-        testDistance(b, "B2","H2", 9);
-        testDistance(b, "Q21","B24", 11);
-        testDistance(b, "H2", "H7", 5);
-
+        testShortestPath(b, "H2", "H4", 2);
+        testShortestPath(b, "H2", "G7", 6);
+        testShortestPath(b, "B2","H2", 9);
+        testShortestPath(b, "Q21","B24", 11);
+        testShortestPath(b, "H2", "H7", 5);
 
         // End is a wall
         assertEquals(Cell.Type.WALL, b.getCell("F2").getType());
-        assertFalse(pathFinder.checkValidPathFromString("H1", "F2", 10));
+        testShortestPath(b, "H1", "F2", Integer.MAX_VALUE);
 
         // End holds a character
         assertNotNull(b.getCell("H1").getSprite());
         assertNull(b.getCell("H5").getSprite());
 
-        assertFalse(pathFinder.checkValidPath(b.getCell("H5"), b.getCell("H1"), 10));
-        assertFalse(pathFinder.checkValidPathFromString("H5", "H1", 10));
+        testShortestPath(b, "H5", "H1", Integer.MAX_VALUE);
+        testShortestPath(b, "H5", "H1", Integer.MAX_VALUE);
     }
 
     @Test void testBoard() {
