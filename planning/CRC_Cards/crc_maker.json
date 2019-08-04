@@ -22,12 +22,12 @@
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Generate Characters, Cells, Weapons and Rooms.",
-      "Update Character, Cell and Weapon and Room information.",
-      "Store Position of Character, Cell and Weapons."
+      "Generate Sprites, Cells, Weapons and Rooms.",
+      "Update Sprite, Cell and Weapon and Room information.",
+      "Store Position of Sprite, Cell and Weapons."
     ],
     "collaborators": [
-      "Character",
+      "Sprite",
       "Cell",
       "Weapon",
       "Room."
@@ -40,18 +40,18 @@
     "type": 1,
     "responsibilities": [
       "Store User information. Ie, name, number.",
-      "Store User Character choice.",
+      "Store User Sprite choice.",
       "Store a hand of Cards and observed Cards. (Both Sets)"
     ],
     "collaborators": [
-      "Character",
+      "Sprite",
       "Card"
     ]
   },
   {
     "name": "Card",
     "superclasses": "",
-    "subclasses": "Character, Weapon, Room",
+    "subclasses": "Sprite, Weapon, Room",
     "type": 2,
     "responsibilities": [
       "Store Card Name"
@@ -61,12 +61,12 @@
     ]
   },
   {
-    "name": "Character",
+    "name": "Sprite",
     "superclasses": "Card",
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Store Character information. Ie, name, position, user"
+      "Store Sprite information. Ie, name, position, user"
     ],
     "collaborators": [
       "Cell",
@@ -104,7 +104,7 @@
     "subclasses": "",
     "type": 1,
     "responsibilities": [
-      "Stores its Position on Board, and any Character on it.",
+      "Stores its Position on Board, and any Sprite on it.",
       "Knows its type, and any relevant information. Ie, RoomType -> Room.",
       "Knows its Neighbour Cells."
     ],
