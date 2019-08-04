@@ -1,19 +1,19 @@
+// Generated from https://cruise.eecs.uottawa.ca/umpleonline/
 associationClass Game
 {
   1 Board controls;
+  1 PathFinder  utilises;
   3..6 User enables;
   1 LUI;
   21 Card collects;
-  
-  
   Board map;
-  List characters;
+  List sprites;
   List weapons;
   List rooms;
   List solution;
 }
 
-class LUI {  
+class LUI {
   readInput(){}
   checkExit(){}
 }
@@ -25,11 +25,11 @@ class Board
   List rooms;
   List cells;
 }
-  
+
 
 class Cell
 {
-  1 -- 1 Character;
+  1 -- 1 Sprite;
   Map neighbors;
   Character p;
   Room r;
@@ -40,8 +40,8 @@ class Cell
 class User
 {
   1..6 -- 3..6 Card;
-  1 -- 1 Character;
-  
+  1 -- 1 Sprite;
+
   Integer userNo;
   String userName;
   List hand;
@@ -50,7 +50,7 @@ class User
 
 class Card
 {
-  String name;  
+  String name;
 }
 
 class Room
@@ -58,10 +58,11 @@ class Room
   isA Card;
   * -- 1 Cell;
   String name;
-  List cells;
+  Set cells;
+  Set doors;
 }
 
-class Character
+class Sprite
 {
   isA Card;
 }
@@ -71,4 +72,9 @@ class Weapon
    isA Card;
   Room location;
   1 -- 1 Room;
+}
+
+class PathFinder
+{
+  Board board;
 }

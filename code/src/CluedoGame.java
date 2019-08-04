@@ -404,7 +404,7 @@ public class CluedoGame {
 		Cell start = user.getSprite().getPosition();
 
 		// Check that path is valid
-		PathFinder pathFinder = new PathFinder(board);
+		pathFinder = new PathFinder(board);
 		if (pathFinder.findShortestPath(start, end) < diceRoll) {
 			board.moveUser(user, end);
 			return "8";

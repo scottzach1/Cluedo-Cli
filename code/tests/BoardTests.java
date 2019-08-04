@@ -47,7 +47,6 @@ public class BoardTests {
 
         // End is a wall
         assertEquals(Cell.Type.WALL, b.getCell("F2").getType());
-        pathFinder = new PathFinder(b);
         testShortestPath(b, "H1", "F2", Integer.MAX_VALUE);
 
         // End holds a character

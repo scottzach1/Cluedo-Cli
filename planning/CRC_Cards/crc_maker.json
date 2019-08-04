@@ -11,6 +11,7 @@
     ],
     "collaborators": [
       "Board",
+      "Path Finder",
       "Users",
       "LUI"
     ]
@@ -123,6 +124,21 @@
     ],
     "collaborators": [
       "CluedoGame."
+    ]
+  },
+  {
+    "name": "Path Finder",
+    "superclasses": "",
+    "subclasses": "",
+    "type": 1,
+    "responsibilities": [
+      "Calculate Paths to and from Cells on the Board.",
+      "Find Shortest Path",
+      "Find Direct Path",
+      "Remember visited Cells and Rooms."
+    ],
+    "collaborators": [
+      "Board"
     ]
   }
 ]
