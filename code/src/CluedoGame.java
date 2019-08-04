@@ -52,6 +52,10 @@ public class CluedoGame {
 
 			// Create solution
 			generateSolution();
+			
+			for (int i = 0; i < 3; i++) {
+				System.out.println(solution[i]);
+			}
 
 			// Run the main menu first
 			mainMenu();
@@ -65,7 +69,7 @@ public class CluedoGame {
 			// Play the rounds
 			rounds();
 
-			while (!status.equals("1") && !status.equals("2")) 
+			while (!status.equals("1") && !status.equals("2"))
 				status = lui.readInput("\nPlay again?\n-[1] YEAH!\n -[2] Not today", "USER");
 
 			if (status.contentEquals("2"))
@@ -165,22 +169,37 @@ public class CluedoGame {
 		// Run the game by doing rounds, int user is the users turn
 		String error = "";
 		int userNum = 0;
-		LUI.rollDice();
+		lui.rollDice();
 
 		// Whilst a player has not quit
 		while (!status.equals("9")) {
 
 			// Refresh the in game menu panel
 			LUI.clearConsole();
-			board.printBoardState();
 
 			// Get the user and their position
 			User user = users.get(userNum);
 			Cell position = user.getSprite().getPosition();
 
-			if (losers.contains(user)) {
+			// Check the play can continue
+			if (users.size() == losers.size()) {
+				System.out.println("\n------------------------------------------------");
+				System.out.println("Unfortunately, no one can win the game :/");
+				System.out.println("------------------------------------------------\n");
+				status = "9";
 				continue;
 			}
+
+			// Don't let players out of the game play
+			if (losers.contains(user)) {
+				userNum = (userNum + 1) % users.size();
+				lui.rollDice();
+				continue;
+			}
+
+			// Display board and moves
+			board.printBoardState();
+			System.out.println("\nMoves left: " + lui.getDiceRoll());
 
 			// If they are in a room, display the rooms information too
 			if (position.getType() == Cell.Type.ROOM)
@@ -190,46 +209,76 @@ public class CluedoGame {
 			status = lui.round(user, error);
 			error = "";
 
+			// This number is used later, needs to be preserved here
+			if (status.equals("6"))
+				continue;
+
 			// 1: Move, 2: Hand, 3: Observations, 4: Suggest, 5: Accuse (Solve), 8: Next
 			// User, 9: Quit Game
 
 			// [1] Move the player
 			if (status.equals("1")) {
+
+				if (lui.getDiceRoll() == 0) {
+					error = "No moves left!\n\tChoose another option";
+				}
+
 				while (status.equals("1")) {
 					// Clear screen
 					LUI.clearConsole();
 					board.printBoardState();
+					System.out.println("\nMoves left: " + lui.getDiceRoll());
 
 					// Print user error
 					if (error.length() > 0) {
 						if (error.charAt(0) == '1')
 							LUI.printError("", "Not a valid cell on the board");
 						if (error.charAt(0) == '2')
-							LUI.printError("", "Out of reach, check dice roll");
+							LUI.printError("",
+									"Move type was exact. \n\t There is no possible way to get there exactly.\n\t Try using shortest path");
 						if (error.charAt(0) == '3')
+							LUI.printError("", "Out of reach, check dice roll");
+						if (error.charAt(0) == '4')
 							LUI.printError("", "Please use the form 'H18'");
 					}
 
+					// Get the type of move, exact or shortest path
+					String moveType = lui.moveType(user);
+
+					if (moveType.equals("1")) {
+						status = "1";
+						break;
+					}
+
+					// Clear screen
+					LUI.clearConsole();
+					board.printBoardState();
+					System.out.println("\nMoves left: " + lui.getDiceRoll());
+
+					// get the users cell wanting to move to
 					status = lui.movePlayer(user);
-					
+
 					if (status.equals("MENU")) {
 						status = "1";
-						break;	
+						break;
 					}
-					
+
 					try {
 						// Get the cell, if null then....
 						Cell cell = board.getCell(status);
 						// Make move will break the try
-						status = tryMove(cell, LUI.getDiceRoll(), user);
+						status = tryMove(cell, user, moveType);
 					} catch (NullPointerException np) {
 						error = "1-NULLPOINTER ERROR";
 						status = "1";
+					} catch (IllegalArgumentException ae) {
+						error = "2-ILLEGAL ERROR";
+						status = "1";
 					} catch (RuntimeException rt) {
-						error = "2-RUNTIME ERROR";
+						error = "3-RUNTIME ERROR";
 						status = "1";
 					} catch (Exception e) {
-						error = "3-UNKNOWN ERROR";
+						error = "4-UNKNOWN ERROR";
 						status = "1";
 					}
 				}
@@ -238,11 +287,11 @@ public class CluedoGame {
 
 			// [2] Show the users hand refresh to menu (do nothing)
 			if (status.contentEquals("2")) {
-				status = lui.showHand(user);
+				lui.showHand(user);
 			}
 			// [3] Show the users observations refresh to menu (do nothing)
 			if (status.contentEquals("3")) {
-				status = lui.showObservations(user);
+				lui.showObservations(user);
 			}
 
 			// [4] check if the next players have a possible card
@@ -321,7 +370,9 @@ public class CluedoGame {
 									+ " - " + r.getName(), user.getUserName());
 						}
 
+						// End the turn
 						status = "8";
+						lui.removeMovesFromRoll(lui.getDiceRoll());
 					}
 				}
 			}
@@ -333,15 +384,15 @@ public class CluedoGame {
 			// circulation.
 			if (status.equals("5")) {
 				// Get three cards allowing them to select a room
-				lui.selectThreeCards(user, "ROOM");
+				status = lui.selectThreeCards(user, "ROOM");
 				String[] components = status.split(":");
 
 				// If the user has entered three cards
 				if (components.length == 3) {
 					// Get the three cards
-					Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[1]));
-					Weapon w = board.getWeapons().get(Weapon.WeaponAlias.valueOf(components[2]));
-					Room r = board.getRooms().get(Room.RoomAlias.valueOf(components[3]));
+					Sprite s = board.getSprites().get(Sprite.SpriteAlias.valueOf(components[0]));
+					Weapon w = board.getWeapons().get(Weapon.WeaponAlias.valueOf(components[1]));
+					Room r = board.getRooms().get(Room.RoomAlias.valueOf(components[2]));
 
 					// Check if the user has the answer, end the game if so ...
 					if (s.equals(solution[0]) && w.equals(solution[1]) && r.equals(solution[2])) {
@@ -353,32 +404,45 @@ public class CluedoGame {
 					// ... else put them on the losers list, no longer allowed to play
 					else {
 						lui.readInput(user.getUserName()
-								+ "Your accusation is incorrect, you can no longer win the game \n\n-[Any] Awwhh man",
+								+ " your accusation is incorrect, you can no longer win the game \n\n-[Any] Awwhh man",
 								user.getUserName());
+						losers.add(user);
 					}
+					// End the turn
+					status = "8";
+					lui.removeMovesFromRoll(lui.getDiceRoll());
+				}
+			}
+
+			// Not an option, checking shortest path has not used all the players moves
+			if (status.equals("6")) {
+				if (user.getSprite().getPosition().getType() == Cell.Type.ROOM
+						|| (lui.getOriginalDiceRoll() - lui.getDiceRoll()) > 0) {
+					continue;
+				} else {
 					status = "8";
 				}
 			}
 
 			// [8] Change the user after prev user has exited their turn
 			if (status.equals("8")) {
-				userNum = (userNum + 1) % users.size();
-				LUI.rollDice();
-			}
-
-			// [9] Finish the game by exiting this while loop
-			if (status.equals("9")) {
-				System.out.println("Thanks for playing");
+				if (lui.getDiceRoll() == lui.getOriginalDiceRoll() || lui.getDiceRoll() == 0 || user.getSprite().getPosition().getType() == Cell.Type.ROOM) {
+					userNum = (userNum + 1) % users.size();
+					if (losers.size() != 1)
+						lui.rollDice();
+					continue;
+				} else {
+					error = user.getUserName() + ", you need to use the rest of you moves";
+				}
 			}
 
 			if (status.length() > 0 && !java.lang.Character.isDigit(status.charAt(0))) {
 				error = "UNKNOWN INPUT";
 			}
 
-			if (users.size() == 1) {
-				System.out.println("\n------------------------------------------------");
-				System.out.println("The Best Detective and WINNER of this game is: " + users.get(0).getUserName());
-				System.out.println("------------------------------------------------\n");
+			// [9] Finish the game by exiting this while loop
+			if (status.equals("9")) {
+				System.out.println("Thanks for playing");
 			}
 
 		}
@@ -394,7 +458,7 @@ public class CluedoGame {
 	 * @return String - "8" allowing for the next player to take their turn if
 	 *         successful
 	 */
-	private String tryMove(Cell end, int diceRoll, User user) {
+	private String tryMove(Cell end, User user, String moveType) {
 
 		// Throw an exception is the cell is null
 		if (end == null || user == null)
@@ -405,11 +469,25 @@ public class CluedoGame {
 
 		// Check that path is valid
 		pathFinder = new PathFinder(board);
-		if (pathFinder.findShortestPath(start, end) < diceRoll) {
+		int movesUsed = -1;
+
+		// Shortest path option
+		if (moveType.equals("3")) {
+			if ((movesUsed = pathFinder.findShortestPath(start, end)) <= lui.getDiceRoll()) {
+				board.moveUser(user, end);
+				lui.removeMovesFromRoll(movesUsed);
+				return "6";
+			}
+			throw new RuntimeException();
+		}
+
+		// Exact path option
+		if (pathFinder.findExactPath(start, end, lui.getDiceRoll())) {
 			board.moveUser(user, end);
+			lui.removeMovesFromRoll(lui.getDiceRoll());
 			return "8";
 		}
-		throw new RuntimeException();
+		throw new IllegalArgumentException();
 	}
 
 	/**

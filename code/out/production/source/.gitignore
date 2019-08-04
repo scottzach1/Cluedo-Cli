@@ -1,2 +1,8 @@
-/src/
+/.classpath
+/.idea/
+/.project
+/launchLinux.sh
+/launchWindows.bat
 /out/
+/src/
+/tests/

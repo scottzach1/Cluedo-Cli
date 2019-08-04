@@ -13,7 +13,7 @@ import java.util.Random;
 public class LUI {
 
 	// diceRoll field means that players can't re-roll by reloading the menu
-	private static int diceRoll = -1;
+	private int diceRoll = -1, originalDiceRoll = -1;
 
 	// ------------------------
 	// INTERFACE
@@ -216,6 +216,19 @@ public class LUI {
 				+ "\n -[2] Hand" + "\n  -[3] Observations" + "\n   -[4] Suggest" + "\n    -[5] Accuse (Solve)"
 				+ "\n     -[8] Skip turn" + "\n      -[9] Main Menu", user.getUserName());
 	}
+	
+	public String moveType(User user) {
+		String input = "0";
+		while (!input.equals("1") && !input.equals("2") && !input.equals("3")) {
+			if (!input.equals("0"))
+				System.out.println("Sorry, " + input + " is not a valid option.");
+			input = readInput("Making a move! But what kind of move?"
+					+ "\n-[1] Back to Menu"
+					+ "\n -[2] Exact move (Landing outside a room, using all of your roll now)"
+					+ "\n  -[3] Shortest Path move (Land somewhere with moves left, and or in a room)", user.getUserName());
+		}
+		return input;
+	}
 
 	/**
 	 * movePlayer: Get's the users inputs and makes sure that the input is a
@@ -237,8 +250,8 @@ public class LUI {
 			input = readInput(user.getUserName() + " it's your turn:" + "\n  " + user.getSprite().getName() + ": '"
 					+ user.getSprite().toString() + "' -> [" + ((char) (user.getSprite().getPosition().getCol() + 'A'))
 					+ String.format("%02d", (user.getSprite().getPosition().getRow() + 1)) + "]"
-					+ "\n\nEnter cell position you would like to move to (e.g 'H18')." + "\n DICE ROLL = " + diceRoll
-					+ "\n-[1] Back to Menu\n -['col+row' + Enter] Enter Cell Position", user.getUserName());
+					+ "\n\nEnter cell position you would like to move to (e.g 'H18')."
+					+ "\n\n-[1] Back to Menu\n -['col+row' + Enter] Enter Cell Position", user.getUserName());
 
 			// Return nothing to indicate no cell has been choosen
 			if (input.equals("1"))
@@ -266,6 +279,7 @@ public class LUI {
 	 * @return String - indication of the players choice on what to do
 	 */
 	public String showHand(User user) {
+		clearConsole();
 		List<Card> usersHand = user.getHand();
 		int handIndex = 0, handSize = usersHand.size();
 
@@ -302,6 +316,7 @@ public class LUI {
 	 * @return String - indication of the players choice on what to do
 	 */
 	public String showObservations(User user) {
+		clearConsole();
 		// Print out all the sprites
 		System.out.println("\nSprites:");
 		for (Sprite.SpriteAlias s : Sprite.SpriteAlias.values()) {
@@ -346,6 +361,7 @@ public class LUI {
 
 		// Allows to reset your accusation
 		while (accusation.isEmpty()) {
+			clearConsole();
 			// Reset the accusation process
 			clearConsole();
 			String input, spriteSuspect = "", weaponSuspect = "", roomSuspect = "";
@@ -507,7 +523,7 @@ public class LUI {
 			}
 		}
 
-		return str.toString();
+		return accusation;
 	}
 
 	/**
@@ -554,11 +570,12 @@ public class LUI {
 	 *
 	 * @void
 	 */
-	public static void rollDice() {
+	public void rollDice() {
 		Random dice = new Random();
 		int num1 = dice.nextInt(6) + 1;
 		int num2 = dice.nextInt(6) + 1;
 		diceRoll = num1 + num2;
+		originalDiceRoll = num1 + num2;
 	}
 
 	/**
@@ -566,8 +583,16 @@ public class LUI {
 	 *
 	 * @return Integer - the current sum of the two dice rolled
 	 */
-	public static int getDiceRoll() {
+	public int getDiceRoll() {
 		return diceRoll;
+	}	
+
+	public int getOriginalDiceRoll() {
+		return originalDiceRoll;
+	}
+	
+	public void removeMovesFromRoll(int i) {
+		diceRoll -= i;
 	}
 
 	// ------------------------

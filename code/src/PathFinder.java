@@ -148,7 +148,7 @@ public class PathFinder {
      * @param steps the number of steps that have to be taken.
      * @return true path was found meeting parameters, false otherwise.
      */
-    private boolean findExactPath(Cell start, Cell end, int steps) {
+    public boolean findExactPath(Cell start, Cell end, int steps) {
         if (board == null) throw new RuntimeException("PathFinder does not have a Board!");
         visitedRooms = new HashSet<>(visitedRooms);
         visitedCells = new HashSet<>(visitedCells);
