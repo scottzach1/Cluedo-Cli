@@ -20,9 +20,7 @@ public class LUI {
 	// ------------------------
 
 	/**
-	 * startUpMenu: Displays the title graphic
-	 *
-	 * @void
+	 * title: Displays the title graphic 
 	 */
 	public void title() {
 		clearConsole();
@@ -202,8 +200,8 @@ public class LUI {
 	 * for their turn
 	 *
 	 *
-	 * @param user
-	 *            - who's turn is it error - a message to display under the board
+	 * @param user - who's turn is it error - a message to display under the board
+	 * @param error - printed message if an error was to occur
 	 * @return String - indication of the players choice on what to do
 	 */
 	public String round(User user, String error) {
@@ -568,7 +566,7 @@ public class LUI {
 	 * generated numbers were used to keep the probabilities of sums maintained.
 	 * Sets the diceRoll field to the sum.
 	 *
-	 * @void
+	 * 
 	 */
 	public void rollDice() {
 		Random dice = new Random();
@@ -615,6 +613,7 @@ public class LUI {
 	 * @param message
 	 *            - A String to be printed before user input. player - A String for
 	 *            the
+	 * @param player - players name to represent
 	 * @return The users input.
 	 */
 	public String readInput(String message, String player) {
