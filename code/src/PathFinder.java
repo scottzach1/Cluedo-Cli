@@ -83,6 +83,7 @@ public class PathFinder {
 
                 if (visitedRooms.contains(neigh.getRoom())) continue; // Room forbidden.
                 if (visitedCells.contains(neigh)) continue; // Cell forbidden.
+                if (neigh.getSprite() != null) continue; // Character on cell.
 
                 if (previousNodes.containsKey(neigh)) { // Node is already visited.
                     AStarNode oldStarNode = previousNodes.get(neigh);
@@ -186,6 +187,7 @@ public class PathFinder {
 
         for (Cell neigh : neighbours) {
             if (node.visited.contains(neigh) || visitedRooms.contains(neigh.getRoom()) || visitedCells.contains(neigh)) continue;
+            if (neigh.getSprite() != null) continue; // Sprite on Cell.
 
             // Return success of child to parent.
             if (findExactPathHelper(new DFSNode(neigh, node), end, visitedRooms, visitedCells, steps)) {
