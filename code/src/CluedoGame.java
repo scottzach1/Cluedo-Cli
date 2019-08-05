@@ -432,13 +432,13 @@ public class CluedoGame {
 				}
 			}
 
-			if (status.length() > 0 && !java.lang.Character.isDigit(status.charAt(0))) {
-				error = "UNKNOWN INPUT";
-			}
-
 			// [9] Finish the game by exiting this while loop
 			if (status.equals("9")) {
 				System.out.println("Thanks for playing");
+			}
+
+			if (status.length() > 0 && !java.lang.Character.isDigit(status.charAt(0))) {
+				error = "UNKNOWN INPUT";
 			}
 
 		}

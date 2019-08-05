@@ -587,10 +587,18 @@ public class LUI {
 		return diceRoll;
 	}	
 
+	/**
+	 * getOriginalDiceRoll: get the players dice roll when rolled.
+	 * @return Integer - the sum of the dice roll when rolled.
+	 */
 	public int getOriginalDiceRoll() {
 		return originalDiceRoll;
 	}
 	
+	/**
+	 * removeMovesFromRoll: removes a certain amount of moves from the diceRoll
+	 * @param i - moves to remove
+	 */
 	public void removeMovesFromRoll(int i) {
 		diceRoll -= i;
 	}
