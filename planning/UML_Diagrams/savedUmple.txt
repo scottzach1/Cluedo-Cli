@@ -1,5 +1,4 @@
-// Generated from https://cruise.eecs.uottawa.ca/umpleonline/
-associationClass Game
+associationClass CluedoGame
 {
   1 Board controls;
   1 PathFinder  utilises;
